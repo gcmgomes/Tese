@@ -1,0 +1,23 @@
+Nesta tese, cinco problemas em teoria dos grafos foram estudados do ponto de vista da complexidade computacional: coloração equilibrada, clique coloração, biclique coloração, $d$-corte, e reconhecimento de grafos estrela.
+
+Coloração equilibrada foi investigada em termos de grafos cordais, grafos bloco e algumas subclasses.
+Resultados incluem um algoritmo polinomial para grafos cordais quando o número de cores é fixo, um algoritmo linear para grafos bloco livres de rede e garra, um algortimo de complexidade quadrática para grafos bloco livres de garra e um algoritmo de complexidade cúbica para cordais livres de garra.
+Uma prova de $\NPct$ para grafos bloco livres de rede que também são cografos é apresentada.
+Investigações futuras incluem a determinação de classes onde, mesmo para um número fixo de cores, coloração equilibrada continua sendo um problema difícil e para grafos livres de garra com largura arbórea limitada.
+
+É apresentado o primeiro algoritmo $\bigOs{2^n}$ para biclique coloração, que faz uso de propriedades associadas ao hipergrafo biclique e do princípio da inclusão exclusão.
+Algoritmos parametrizados por diversidade de vizinhança são discutidos para os problemas de clique e biclique coloração, sendo esses os primeiros algoritmos parametrizados para esses problemas.
+Biclique coloração foi apenas recentemente introduzida na literatura, e muito do trabalho exploratório em diferentes classes de grafos ainda deve ser feito.
+
+Foi definido e investigado o problema $d$-corte, uma generalização natural do problema de corte emparelhado.
+São generalizados e, em alguns casos, melhorados, vários resultados do estado-da-arte para corte emparelhado.
+Em particular, são apresentados reduções de \NP dificuldade para $d$-corte em grafos $(2d+2)$-regulares, um algoritmo polinomial para grafos de grau máximo $d + 2$, e um algoritmo exato exponencial marginalmente mais eficiente que a estratégia ingênua por força bruta, cuja complexidade é $\bigOs{2^n}$.
+Em seguida, são dados algoritmos \FPT para diversos parâmetros: número máximo de arestas cruzando o corte, treewidth, distância para cluster e distância para co-cluster.
+A principal contribuição é um kernel polinomial para $d$-corte quando parametrizado pela distância para cluster; ao mesmo tempo, descartamos a existência de um kernel polinomial quando parametrizado simultaneamente por treewidth, grau máximo e número máximo de arestas cruzando o corte.
+
+Por fim, grafos estrela - grafos de interseção das estrelas maximais de um grafo - foram discutidos e definidos em termos de uma cobertura de arestas por cliques, com o intuito de que tal class possa ser uma ferramenta útil na investigação de grafos biclique.
+O problema natural de reconhecimento foi apresentado e, apesar de não termos uma prova concreta de seu pertencimento em $\NP$, um algoritmo de verificação que faz uso da cobertura de arestas por cliques característica é apresentado.
+De interesse, vale destacar a conexão entre grafos estrela e o quadrado de grafos livres de triangulo.
+Essa relação é explorada para demonstrar a $\NPct$ do reconhecimento de grafos estrela de grafos com cintura exatamente 4.
+Próximos objetivos incluem a determinação de pertencimento (ou não) do problema, no caso geral, em $\NP$.
+Instâncias particulares de grafos biclique podem render conexões semelhantes com outros problemas; tal exploração configura entre trabalhos futuros nesse tópico.

@@ -1,0 +1,30 @@
+\chapter{Conclusions and Future Work}
+\label{ch:cfw}
+
+In this thesis proposal, four problems which, in some sense, are concerned about the maximal cliques and bicliques in a graph were studied;
+namely: \textsc{equitable coloring}, \textsc{clique coloring}, \textsc{biclique coloring} and \textsc{star graph}.
+Results ranged from the presentation of polynomial time algorithms, to hardness proofs and class characterizations.
+
+In Chapter~\ref{ch:eq_coloring}, \textsc{equitable coloring} was studied in terms of block graphs, where the problem was shown to be $\NPc$ and $\W[1]\text{-}\Hard$ even for net-free block graphs.
+For \{net,claw\}-free block graphs the problem admits a linear time algorithm, for claw-free block graphs a quadratic time algorithm is given and for claw-free chordal graphs a cubic algorithm is shown.
+These results are a constructive counterpart to a previous existential result of de Werra.
+We also propose to investigate for which graph classes \textsc{equitable $k$-coloring} is also a hard problem, since every investigation so far has led to polynomial time algorithms for it, and conjecture that, if \textsc{vertex coloring} is polynomial for a class, \textsc{equitable $k$-coloring} is not $\NPc$.
+Claw-free graphs of bounded treewidth are also interesting subjects, as they have analogous structures to the clique trees used in this chapter, and some of the observations made for claw-free chordal graphs may be extended for this class.
+
+When the number of colors $k$ is fixed, \textsc{equitable $k$-coloring} for chordal graphs was shown to admit an $\bigO{n^{2k + 2}}$ time algorithm, which is a slight improvement over the algorithm for bounded treewidth graphs given by~\citep{equitable_treewidth}, as no additional hypothesis on the size of the bags is required; the number $k$ of colors suffices.
+Further work should handle graph classes that are not subclasses of perfect graphs.
+
+In terms of \textsc{biclique coloring}, Chapter~\ref{ch:cb_coloring} described the first $\bigOs{2^n}$ exact algorithm for the problem, naturally extending some of the results of~\citep{clique_color_algorithm}, who presented an $\bigOs{2^n}$ time algorithm for \textsc{clique coloring}.
+Moreover, for both of these problems, algorithms parameterized by neighbourhood diversity ($d$) were given, with time complexity $\bigOs{(k + 2)^{2d}}$ for \textsc{biclique coloring} and $\bigOs{2^{2d}}$ for \textsc{clique coloring}.
+To the best of our knowledge, these are the first parameterized algorithms for these problems.
+Next steps shall, most likely, include the study of \textsc{biclique coloring} when restricted to certain graph classes, a natural exploration given the scarcity of results on the topic.
+
+Chapter~\ref{ch:star_graph} discussed the class of star graphs.
+A Krausz type characterization for this class was given and some properties presented.
+Of note is the connection between star graphs of graphs with girth 4 and squares of graphs.
+A consequence of this link is an $\NPcness$ proof for this subclass of star graphs.
+At this point, it is not known whether or not the general \textsc{star graph} problem is in $\NP$ or if resides in a higher level of the polynomial hierarchy;
+such membership appears to depend entirely on the relationship between the size of the edge clique cover used to characterize the star graph and said graphs size, which will be the primary effort on this front.
+
+It was conjectured by~\citep{girth_powers} that recognizing squares of graphs of girth exactly 5 is polynomial and, as such, it is does not seem like tackling biclique graphs in terms of powers of graphs of girth equal to 5 will yield results as general as those presented for star graphs.
+Nevertheless, biclique graph recognition is a topic of interest and merits further study.

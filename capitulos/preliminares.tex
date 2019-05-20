@@ -1,0 +1,737 @@
+\chapter{Preliminaries and Related Work}
+\label{ch:prelims}
+
+\section{Basic Definitions}
+\label{sec:basic_defs}
+
+We denote by $[n] = \{1, \dots, n\}$.
+A (\tdef{multi})\tdef{family} is a (multi)set of sets.
+The \tdef{power set} $2^S$ of a set $S$ is the family of all subsets of $S$.
+A \tdef{k-partition} of $S$ into $k$ sets is denoted by $S \sim \{S_1, \dots, S_k\}$ such that $S_i \cap S_j = \emptyset$ and $\bigcup_{i \leq k} S_i = S$.
+A \tdef{k-(multi)cover} of $S$ is a (multi)family $\{S_1, \dots, S_k\}$ of subsets of $S$ such that $\bigcup_{i \in [k]} S_i = S$.
+A (multi)family $\mathcal{F}$ satisfies the \tdef{Helly condition} or \tdef{Helly property} if and only if, for every pairwise intersecting subfamily $\mathcal{F}'$ of $\mathcal{F}$, $\bigcap_{F \in \mathcal{F}'} F \neq \emptyset$.
+
+A \tdef{simple graph} of \tdef{order} (or \tdef{size}) $n$ is an ordered pair $G = (V(G), E(G))$, where $V(G)$ is its \tdef{vertex set} of cardinality $n$ and its \tdef{edge set}, $E(G)$, is a family of subsets of $V(G)$, each of cardinality two. A graph is \tdef{trivial} if $|V(G)| = 1$.
+Instead of $\{u,v\} \in E(G)$, we identify an edge by $uv$, simply due to convenience. Moreover, when there is no ambiguity, we denote $V(G)$ by $V$, $E(G)$ by $E$, $|V|$ as $n$ and $|E|$ as $m$.
+
+We say that two vertices $u,v \in V$ are \tdef{adjacent} or \tdef{neighbours} if $uv \in E$.
+A graph $G' = (V', E')$ is a \tdef{subgraph} of $G$ if $V' \subseteq V$ and $E' \subseteq E$.
+If $E' = \{uv \in E \mid u,v \in V'\}$ we say that $V'$ \tdef{induces} $G'$, $G' = G[V']$ and that $G'$ is the \tdef{induced subgraph} of $G$ by $V$.
+For simplicity, we denote by $G - v$ the graph $G[V(G) \setminus \{v\}]$ and, similarly, for $S \subseteq V(G)$, $G \setminus S$ is equivalent to $G[V(G) \setminus S]$.
+
+The \tdef{open neighbourhood}, or just \tdef{neighbourhood} of a vertex $v$ in $G$ is given by $N_G(v) = \{u \mid uv \in E(G)\}$, its \tdef{closed neighbourhood} by $N_G[v] = N_G(v) \cup \{v\}$ and its \tdef{degree} by $d_G(v) = |N_G(v)|$.
+A vertex is \tdef{simplicial} if its neighbours are pairwise adjacent.
+For a set $S \subseteq V$, we denote its open and closed neighbourhood as $N_G(S) = \bigcup_{v \in S} N_G(v) \setminus S$, $N_G[S] = N_G(S) \cup S$ and $d_G(S) = |N_G(S)|$, respectively.
+The \tdef{complement} $\overline{G}$ of $G$ is defined as $V(\overline{G}) = V(G)$ and $E(\overline{G}) = \{uv | uv \notin E\}$.
+Given a graph $G$, we denote its \tdef{maximum degree} by $\Delta(G)$ and \tdef{minimum degree} by $\delta(G)$.
+A graph $G$ is \tdef{$k$-regular} if , for every $u \in V(G)$, $d_G(u) = k$.
+
+Two vertices $u,v$ are \tdef{false twins} if $N_G(u) = N_G(v)$ and \tdef{true twins} if $N_G[u] = N_G[v]$. $u,v$ are of the same \tdef{type} if they are either true or false twins.
+Being of the same type is an equivalence relation~\citep{neighbourhood_diversity}, and the number of different types on a graph $G$ is called its \tdef{neighbourhood diversity}, $\nd(G)$.
+
+Two graphs $G$ and $H$ are \tdef{isomorphic} if and only if there is a bijection $f: V(G) \mapsto V(H)$ such that $uv \in E(G) \Leftrightarrow f(u)f(v) \in E(H)$.
+We denote isomorphism by $G \simeq H$.
+A graph $G$ is said to be \tdef{free} of a graph $H$, or $H$-free, if there is no induced subgraph $G'$ of $G$ such that $G'$ and $H$ are isomorphic.
+
+The \tdef{path} of length $k$, or $P_k$, is a graph with $k$ vertices $v_1 \dots v_k$ such that $v_iv_j \in E(P_k)$ if and only if $j = i+1$. Moreover, we say that $v_1, v_k$ are the \tdef{extremities}, or \tdef{endvertices}, of $P_k$ and all other $v_i$ are its \tdef{inner} vertices.
+The length of a path is the number of edges contained in it, that is, $P_k$ has length $k-1$.
+An \tdef{induced path} of $G$ is a subgraph $G'$ of $G$ that is isomorphic to a path.
+A \tdef{cycle} with  $k \geq 3$ vertices is a path with $k$ vertices plus the edge $v_kv_1$; analogously, the length of a cycle is defined as the number of edges it contains.
+An \tdef{induced cycle} of $G$ is an induced subgraph $G'$ of $G$ that is isomorphic to a cycle.
+A \tdef{chord} in a cycle $C$ of length at least 4 is an edge between two non-consecutive vertices of $C$.
+The \tdef{girth} of $G$, denoted by $\girth(G)$, is the length of the smallest induced cycle of $G$.
+A \tdef{hole} is a chordless cycle of length at least 4; it is an even-hole if it has an even number of vertices, or an odd-hole, otherwise. An \tdef{anti-hole} is the complement of a hole.
+$G$ is \tdef{acyclic} if and only if there is no induced cycle in $G$.
+
+
+A graph $G$ is \tdef{connected} if and only if there is an induced path between every pair $u,v \in V$.
+A \tdef{connected component}, or simply a \tdef{component}, of $G$ is a maximal connected induced subgraph of $G$.
+Given a graph $G$, the \tdef{distance} $\dist_G(u,v)$ between two vertices $u,v$ in $G$ is the minimum number of edges in any path between them.
+If $u,v$ are in different components, we say that $\dist_G(u,v) = \infty$.
+The \tdef{diameter} of a connected graph $G$ is defined as the length of the longest shortest path between any pair of vertices $u,v \in V(G)$.
+The \tdef{$k$-th power} $G^k$ of a graph $G$ is the graph where $V(G^k) = V(G)$ and $E(G^k) = \{uv \mid \dist_G(u,v) \leq k\}$.
+When the graph in question is clear, we will omit the $G$ subscript.
+
+An \tdef{articulation point}, \tdef{cut point} or \tdef{cut vertex} of a connected graph $G$ is a vertex $v$ such that $G - v$ is disconnected.
+A \tdef{bridge} is an edge of $G$ whose removal increases the number of connected components of $G$.
+$G$ is \tdef{biconnected} if $G$ is connected and does not have a cut vertex.
+A \tdef{cutset} of a connected graph $G$ is a set $S \subset V$ such that $G \setminus S$ is disconnected.
+In particular, a cut vertex is a cutset of size one.
+
+The \tdef{complete} graph $K_n$ of order $n$ is a graph where every pair of vertices is adjacent.
+A \tdef{clique} of $G$ with $n$ vertices is an induced subgraph of $G$ isomorphic to $K_n$.
+An \tdef{independent set} of $G$ with $n$ vertices is an induced subgraph of $G$ isomorphic to $\overline{K_n}$.
+We denote by $\omega(G)$ and $\alpha(G)$ the size of the maximum induced clique and maximum independent set of a given $G$.
+Both of these values are examples of \tdef{graph parameters}, that is, a value that describes some property of interest of the underlying graph.
+Determining certain parameters of a generic graph $G$ is efficient (such as $\Delta(G)$ and $\delta(G)$); however, others (such as $\omega(G)$ and $\alpha(G)$) are widely believed to be hard to ascertain.
+
+A graph $G$ is \tdef{bipartite} if $V(G) \sim \{X, Y\}$ such that both $X$ and $Y$ are independent sets. Such property implies that a graph is bipartite if and only if it is $C_{2k+1}$-free, for any $k \geq 1$.
+A \tdef{biclique} $K_{n_1,n_2}$ is a bipartite graph with $|X| = n_1$, $|Y| = n_2$ and $uv \in E(G)$ for every pair $u \in X$ and $v \in Y$.
+A \tdef{star} is a biclique with $|X| = 1$ and $|Y| \geq 1$.
+Clearly, we can also define \tdef{induced bicliques} and \tdef{induced stars} much like induced cliques.
+
+A \tdef{hypergraph} $\hypergraph = (V, \mathcal{E})$ is a natural generalization of a graph.
+That is, $V(\hypergraph)$ is its vertex set and $\mathcal{E} \subseteq 2^{V}$ its \tdef{hyperedge} set~\citep{hypergraphs}.
+A graph $G$ is said to be a \tdef{host} of $\mathcal{H}$ if $V(G) = V(\hypergraph)$, every hyperedge of $\hypergraph$ induces a connected subgraph of $G$ and every edge of $G$ is contained in at least one hyperedge of $\mathcal{H}$.
+
+A \tdef{transversal} of a hypergraph $\hypergraph$ is a set $X \subseteq V(\hypergraph)$ such that, for every hyperedge $\varepsilon \in \mathcal{E}(\hypergraph)$, $X \cap \varepsilon \neq \emptyset$.
+If $X$ is not a transversal we say that it is an \tdef{oblique}.
+
+The \tdef{clique hypergraph} $\Hyper{C}(G)$ of a graph $G$ is the hypergraph on the same vertex set of $G$ and with hyperedge set equal to the family of maximal cliques of $G$.
+Similarly, the \tdef{biclique hypergraph} $\Hyper{B}(G)$ of a graph $G$ is the hypergraph on the same vertex set of $G$ and with hyperedge set equal to the family of maximal bicliques of $G$.
+
+%Maybe talk about hypergraphs here, not sure where
+
+\section{Complexity Classes}
+
+We discuss problems in different complexity classes; in particular, we work with the usual $\P$ and $\NP$ classes, but also the $\SiP{2}$ class of the \tdef{polynomial hierarchy}~\citep{polynomial_hierarchy}.
+We say that an algorithm is \tdef{efficient} if its running time is bounded by a polynomial on the size of the input and that a problem belonging to $\NPH$ is most likely intractable.
+As such, our complexity results will be given either by efficient algorithms or polynomial reductions from $\NPH$ problems.
+
+Besides the classic complexity classes, we also deal with the much newer field of \tdef{parameterized complexity} (also called \tdef{multivariate complexity}).
+In this area, algorithms are designed and analyzed not only with respect to the size of the input object, but also with other \tdef{parameters} of the input.
+A parameter can be anything, from the size of the problem's solution to a measurement of how complicated the structure of the instance is.
+
+A problem is said to be \tdef{fixed-parameter tractable} (or FPT) when \tdef{parameterized by} $k$ if there is an algorithm with running time $f(k)n^{\bigO{1}}$, where $n$ is the size of the input object.
+We denote complexities of this form by $\bigOs{f(k)}$.
+In fact, we shall use $\bigOs{}$ to omit polynomial factors of the running time; that is, an algorithm with complexity $2^{f(n)}\text{poly}(n)$ is said to execute in $\bigOs{2^{f(n)}}$.
+In a slight abuse of notation, $k$ is simultaneously the parameter we are working with and the value of such parameter.
+An instance of a parameterized algorithm is, therefore, the pair $(x,k)$, with $x$ the input object and $k$ as previously defined.
+The class of all problems that admit an FPT algorithm is the class $\FPT$.
+If an algorithm presents running time $\bigO{n^{f(k)}}$, for some computable function on $k$,  we say it is an XP (slicewise polynomial) algorithm, and the corresponding problem it solves is in $\XP$. 
+
+Much like classical univariate theory, some problems do not appear to admit an FPT algorithm for certain parameterizations. In particular, its widely believed that finding a clique of size $k$ in a graph, parameterized by $k$, is not in $\FPT$.
+In an analogue to the classical case, hardness results are usually given by what are called \tdef{parameterized reductions}.
+
+\begin{class_definition*}[Parameterized Reduction]
+    A parameterized reduction from problem $\Pi$ to problem $\Pi'$ is a transformation from an instance $(x, k)$ of $\Pi$ to an instance $(x',k')$ of $\Pi'$ such that:
+    \begin{enumerate}
+        \item There is a solution to $(x,k)$ if and only if there is a solution to $(x',k')$;
+        \item $k' \leq g(k)$ for some computable function $g$;
+        \item The transformation's running time is $\bigOs{f(k)}$.
+    \end{enumerate}
+\end{class_definition*}
+
+Note that the constraints imposed by parameterized reductions are quite similar to those imposed by polynomial reductions.
+We ask that $k'$ does not depend on $|x|$ - which doesn't always happen with polynomial reductions - but, at the same time, allow $\FPT$ time for the transformation, instead of the more restrictive polynomial time.
+These differences imply that polynomial reductions and parameterized reductions are incomparable, with some rare cases where the transformation is both polynomial and parameterized.
+
+Unlike the theory of $\NPcness$, where most hard problems are equivalent to each other under polynomial reductions, in parameterized complexity problems seem to be distributed along a hierarchy of difficulty.
+Before handling the classes themselves, we must first define the problems of parameterized complexity that play the same role as \tsc{satisfability} for the classical theory. 
+
+The \tdef{depth} of a circuit is the length (in terms of number of gates) of the longest path from any one variable to the output.
+The \tdef{weft} of a circuit is the the maximum number of gates with more than 2 input variables in any path from any one variable to the circuit's output.
+The circuits with weft $t$ and depth $d$, denoted by \pname{wcs}$_{t,d}$, will be the fundamental problems of the $t$-th level of our hierarchy.
+
+\pproblem{weighted circuit satisfability of weft $t$ and depth $d$ (\pname{wcs}$_{t,d}$)}{A Boolean circuit $C$ with $n$ variables, weft $t$ and depth $d$.}{A positive integer $k$.}{Is $C$ satisfiable with exactly $k$ variables set to $\TRUEt$?}
+
+\begin{class_definition*}[$\W$-hierarchy]
+    For $t \geq 1$, a parameterized problem $\Pi$ is in $\W[t]$ if there is a parameterized reduction from $\tsc{wsc}_{t,d}$ to it, for some $d \geq 1$. Moreover,
+    \begin{equation*}
+        \FPT \subseteq \W[1] \subseteq \W[2] \subseteq \cdots \subset \XP
+    \end{equation*}
+\end{class_definition*}
+
+For further reading and other more insightful discussions on the subject, we point to~\citep{downey_fellows} and~\citep{cygan_parameterized}, from where most of the given definitions come from. 
+
+\section{Intersection Graphs}
+\label{sec:intersections}
+
+The \tdef{intersection graph} of a multifamily $\mathcal{F} \subseteq 2^S$, denoted by $G = \Omega(\mathcal{F})$ is the graph of order $|\mathcal{F}|$ and, for every $F_u, F_v \in \mathcal{F}$, $uv \in E(G) \Leftrightarrow F_u \cap F_v \neq \emptyset$.
+Any $\mathcal{F}$ such that $\Omega(\mathcal{F}) \simeq G$ is a \tdef{set representation} of $G$.
+A known theorem states that every graph is the intersection graph of a family of subgraphs of a graph~\citep{intersection_graphs}.
+
+An \tdef{edge clique cover} $\mathcal{Q} = \{Q_1, \dots, Q_n\}$ of a graph $G$ is a (multi)family of cliques of $G$ such that every edge of $G$ is contained in at least one element of $\mathcal{Q}$.
+The \tdef{dual edge clique cover} of a set representation $\mathcal{F} = \{F_1, \dots, F_n\}$, with $|\bigcup_{i \leq n} F_i| = m$, is defined as $\mathcal{Q}(\mathcal{F}) = \{Q_1, \dots, Q_m\}$ such that $Q_j = \{i \mid j \in F_i\}$.
+The \tdef{dual set representation} of an edge clique cover $\mathcal{Q} = \{Q_1, \dots, Q_m\}$, with $|\bigcup_{j \leq m} Q_j| = n$, is $\mathcal{F}(\mathcal{Q}) = \{F_1, \dots, F_n\}$ with $F_i = \{j \mid i \in Q_j\}$.
+
+Some interesting intersection graphs are usually defined in terms of the intersection of structures of other graphs. For instance, \tdef{line graphs} are precisely the graphs that are the intersection graphs of the edges of a graph; \tdef{clique graphs} are the intersection graphs of the maximal induced cliques of a graph.
+Both of these classes, however have nice characterizations in terms of edge clique covers, which are commonly called \tdef{Krausz-type characterizations}.
+
+\begin{class_definition*}[Line Graph]
+    $G$ is a line graph if and only if there is an edge clique cover $\mathcal{Q}$ of $G$ such that both conditions hold:
+        \begin{itemize}
+            \item[(i)] Every vertex of $G$ appears in exactly two members of $\mathcal{Q}$;
+            \item[(ii)] Every edge of $G$ is in only one member of $\mathcal{Q}$.
+        \end{itemize}
+\end{class_definition*}
+
+\begin{class_definition*}[Clique Graph]
+    $G$ is a clique graph if and only if it there is an edge clique cover of $G$ satisfying the Helly property.
+\end{class_definition*}
+
+\begin{figure}[!htb]
+    \centering
+        \begin{tikzpicture}
+            \begin{scope}[rotate=-90,scale=0.5]
+                \def\x{-2}
+                \GraphInit[vstyle=Normal]
+                \SetVertexNormal[Shape=circle, FillColor=black, LineWidth=1pt,MinSize=2pt,]
+                \tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+                \Vertices[Lpos=270,Ldist=3pt,LabelOut=TRUE,unit=3]{circle}{a,b,c,d}
+                \Edge(a)(b)
+                \Edge(a)(d)
+                \Edge(c)(b)
+                \Edge(d)(b)
+                \Edge(c)(d)
+            \end{scope}
+        \end{tikzpicture}
+    \hfill
+        \begin{tikzpicture}
+            \begin{scope}[rotate=-90,scale=0.5]
+                \def\x{-2}
+                \GraphInit[vstyle=Normal]
+                \SetVertexNormal[Shape=circle, FillColor=black, LineWidth=1pt,MinSize=2pt,]
+            \tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+                \Vertices[Lpos=270,Ldist=3pt,LabelOut=TRUE,unit=3]{circle}{abd,bcd}
+                \Edge(abd)(bcd)
+            \end{scope}
+        \end{tikzpicture}
+    \hfill
+        \begin{tikzpicture}
+            \begin{scope}[rotate=315,scale=0.5]
+                \def\x{-2}
+                \GraphInit[vstyle=Normal]
+                \SetVertexNormal[Shape=circle, FillColor=black, LineWidth=1pt,MinSize=2pt,]
+            \tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+                \Vertices[Lpos=315,Ldist=3pt,LabelOut=TRUE,unit=3]{circle}{ab,bc,cd,ad}
+                \Vertex[Lpos=270,Ldist=3pt,LabelOut=TRUE,unit=3,x=0,y=0]{bd}
+                \Edge(ab)(bc)
+                \Edge(ab)(ad)
+                \Edge(bc)(cd)
+                \Edge(cd)(ad)
+                \Edge(bd)(ab)
+                \Edge(bd)(ad)
+                \Edge(bd)(cd)
+                \Edge(bd)(bc)
+            \end{scope}
+        \end{tikzpicture}
+    \hfill
+    \caption{A graph (left), its clique graph (center) and its line graph (right).}
+    %  Some graph
+    \label{fig:my_label}
+\end{figure}
+
+The recognition of line graphs is known to be efficient, as shown by~\citep{line_dynamic,line_nich,line_naor}.
+For clique graphs, however, the situation was not so simple, and the complexity of clique graph recognition was left open for several years, finally being proven to be $\NPc$ by~\citep{clique_recognition} with a quite complicated argument.
+
+Recently, \citep{biclique_graph} defined the \tdef{biclique graph} as the intersection graph of the maximal induced bicliques of a graph.
+Their characterization for even limited input graphs, however, is a bit convoluted, and even checking membership in $\NP$ does not appear to be an easy task.
+
+For other classical results in the area we point to~\citep{intersection_graphs}, from where most of the given definitions come from.
+
+\section{Graph Classes}
+\label{sec:graph_classes}
+
+Most problems in graph theory can be tackled with an arbitrary input, that is, there is no particular property that we can exploit; this can happen if the considered application is too broad or little is known about its domain.
+However, it might be possible to guarantee certain characteristics for the given graph, either due constraints of the application~\citep{fernando_chordal} or due to theoretical interest.
+Regardless, such guarantees might be strong enough to provide an efficient algorithm to an otherwise $\NPH$ problem.
+When constraining our analysis to certain graphs, we refer to the family of all graphs that satisfy the same properties as a \tdef{graph class}.
+A subfamily of a class that satisfies additional properties is referred to as a \tdef{subclass}.
+For (much) more on graph classes, \citep{classes_survey} give an extensive survey of much of the work done on the field until the late 1990s.
+
+In this section, we review some of the most studied classes and some of their properties that will aid us in the design of our algorithms.
+
+A graph is a \tdef{tree} $T$ if it is a connected acyclic graph or, equivalently, the connected graph such that, between every pair of vertices $u$ and $v$, there exists a unique path.
+The vertices of degree one of a tree are called its \tdef{leaves}, and all others are \tdef{inner} nodes. A \tdef{subtree} $T'$ of a tree $T$ is a connected subgraph which, clearly, must also be a tree.
+A \tdef{rooted tree} $T_v$ is a tree with a special vertex $v$, called its \tdef{root}.
+Rooted trees offer a straight forward ordering of the vertices of a tree and a nice way to decompose problems into smaller instances and combine their solutions.
+A \tdef{rooted subtree} $T_u$ of $T_v$ is the subgraph of $T_v$ induced by $u$ and all vertices of $T_v$ whose path to $v$ passes through $u$.
+The vertices in $T_u \setminus \{u\}$ are called the \tdef{descendants} of $u$ and its neighbours are its \tdef{children}.
+
+A \tdef{forest} is a graph where every connected component is a tree.
+Many problems which are usually quite hard for general graphs, or even some classes, usually have a straightforward answer for forests, either using a greedy strategy or a slightly more sofisticated dynamic programming idea.
+
+\begin{figure}
+    \centering
+    % Define style for nodes
+    \begin{tikzpicture}[scale=0.7]
+    %\draw[help lines] (-5,-5) grid (5,5);
+        \def\x{-2}
+        \GraphInit[vstyle=Normal]
+        \SetVertexNormal[Shape=circle, FillColor=black, MinSize=2pt]
+        \tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+        \Vertex[x=0,y=1,Lpos=270,NoLabel=true]{a}
+        \Vertex[x=-1,y=3,Lpos=90,NoLabel=true]{b}
+        \Vertex[x=1,y=2,Lpos=90,NoLabel=true]{c}
+        \Vertex[x=-3,y=2,Lpos=90,NoLabel=true]{d}
+        \Vertex[x=-2,y=-1,Lpos=90,NoLabel=true]{e}
+        \Vertex[x=1,y=-1,Lpos=90,NoLabel=true]{f}
+        \Vertex[x=-4,y=-1,Lpos=90,NoLabel=true]{g}
+        \Vertex[x=-2,y=-3,Lpos=90,NoLabel=true]{h}
+        \Vertex[x=1,y=-3,Lpos=90,NoLabel=true]{i}
+        \Vertex[x=3,y=-3,Lpos=90,NoLabel=true]{j}
+        \Vertex[x=2.5,y=3,Lpos=90,NoLabel=true]{k}
+        
+        
+        \Edge(a)(b)
+        \Edge(a)(c)
+        \Edge(k)(c)
+        \Edge(a)(d)
+        \Edge(a)(e)
+        \Edge(a)(f)
+        \Edge(e)(g)
+        \Edge(e)(h)
+        \Edge(f)(i)
+        \Edge(j)(i)
+        
+        
+    \end{tikzpicture}
+    \caption{A tree.}
+    %  Some graph
+    \label{fig:some_tree}
+\end{figure}
+
+
+\tdef{Chordal graphs} have many nice properties that enable the computation of different graph parameters in polynomial time~\citep{golumbic}. A \tdef{perfect elimination ordering} of a graph $G$ is an ordering $v_1, \dots, v_n$ of its vertices such that for the graph $G[\{v_i, \dots, v_n\}]$, $v_i$ is a simplicial vertex. As the name implies, chordal graphs are exactly the graphs where every cycle of size at least 4 has at least one chord. 
+
+\begin{class_definition*}[Chordal Graph]
+    For a graph $G$, the following properties are equivalent:
+    \begin{itemize}
+        \item[(i)] $G$ is chordal;
+        \item[(ii)] It is $C_k$-free, for any $k \geq 4$;
+        \item[(iii)] Every minimal cutset is a clique;
+        \item[(iv)] It is the intersection graph of subtrees of a tree;
+        \item[(v)] There is a perfect elimination ordering of its vertices.
+    \end{itemize}
+\end{class_definition*}
+
+\begin{figure}[!htb]
+    \centering
+    % Define style for nodes
+    
+        \begin{tikzpicture}
+            \begin{scope}[rotate=90,scale=1]
+                %\draw[help lines] (-4,-4) grid (4,4);
+                \GraphInit[vstyle=Simple]
+                \SetVertexSimple[Shape=circle, FillColor=black, MinSize=2pt]
+                \tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+                \Vertex[x=0,y=2]{a}
+                \Vertex[x=-1,y=3]{b}
+                \Vertex[x=1,y=3]{c}
+                \Vertex[x=0,y=4]{d}
+                
+                \Vertex[x=-1,y=1]{e}
+                \Vertex[x=1,y=1]{f}
+                
+                \Vertex[x=-2,y=0]{h}
+                \Vertex[x=0,y=0]{i}
+                \Vertex[x=-1,y=-1]{j}
+                
+                \Vertex[x=2,y=2]{k}
+                
+                
+                \Edge(a)(b)
+                \Edge(a)(c)
+                \Edge(a)(d)
+                \Edge(b)(c)
+                \Edge(b)(d)
+                \Edge(d)(c)
+                
+                \Edge(c)(f)
+                \Edge(c)(k)
+                \Edge(k)(f)
+                
+                \Edge(a)(i)
+                \Edge(a)(f)
+                \Edge(i)(f)
+                
+                \Edge(e)(h)
+                \Edge(e)(i)
+                \Edge(e)(j)
+                \Edge(h)(j)
+                \Edge(i)(j)
+            \end{scope}
+        \end{tikzpicture}
+    \hfill
+        \begin{tikzpicture}
+            \begin{scope}[rotate=90,scale=1]
+                %\draw[help lines] (-4,-4) grid (4,4);
+                \GraphInit[vstyle=Simple]
+                \SetVertexSimple[Shape=circle, FillColor=black, MinSize=2pt]
+                \tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+                
+                \Vertex[x=-1.5,y=0]{c1}
+                \Vertex[x=-0.5,y=0]{c2}
+                \Vertex[x=0,y=1]{c3}
+                \Vertex[x=0.5,y=2]{c4}
+                \Vertex[x=0,y=3]{c5}
+                \Vertex[x=1.5,y=2]{c6}
+                
+                \Edge(c1)(c2)
+                \Edge(c2)(c3)
+                \Edge(c3)(c4)
+                \Edge(c4)(c5)
+                \Edge(c4)(c6)
+            \end{scope}
+        \end{tikzpicture}
+    \hfill
+    \caption{A chordal graph and its clique tree.}
+    %  Some graph
+    \label{fig:some_chordal}
+\end{figure}
+
+For a chordal graph $G$, its \tdef{clique tree} is a tree $\mathcal{T}(G)$ such that: its vertex set, each of which is called a \tdef{bag}, is the set of maximal cliques of $G$, and, for every vertex $v$ of $G$, the set of bags which contains $v$ induces a subtree of $\mathcal{T}(G)$. It can be shown that such a tree satisfies property \textit{(iv)}.
+For more on clique trees and other chordal graph properties please refer to~\citep{clique_tree}.
+
+Not surprisingly, many subclasses of chordal graphs have also been studied, since even forests are chordal graphs. A \tdef{block graph} is a chordal graph where every minimal cutset is a single vertex. An \tdef{interval graph} is the intersection graph of a set of intervals over the real numbers. A \tdef{split graph} is a graph whose vertex set can be partitioned into a clique and an independent set.
+
+\tdef{Cographs} are the graphs $G$ such that either $G$ or its complement is disconnected. At first glance, such property may not seem very helpful to the algorithm designer, but it is equivalent to a very nice recursive definition, first given in~\citep{cographs}.
+Given two graphs $G$ and $H$, we define their \tdef{disjoint union} as the graph $G \cup H$ with $V(G \cup H)= V(G) \cup V(H)$ and $E(G \cup H) = E(G) \cup E(H)$, and their \tdef{join} as the graph $G \otimes H$ with vertex set is $V(G \otimes H)= V(G) \cup V(H)$ and edge set $E(G \otimes H)= E(G) \cup E(H) \cup \{uv \mid u \in V(G), v \in V(H)\}$.
+
+\begin{class_definition*}[Cograph]
+    For a graph $G$, the following properties are equivalent:
+    \begin{itemize}
+        \item[(i)] $G$ is a cograph;
+        \item[(ii)] $G$ is $P_4$-free;
+        \item[(iii)] $G$ can be constructed from isolated vertices by successively applying disjoint union and join operations.
+    \end{itemize}
+\end{class_definition*}
+
+\begin{figure}[!htb]
+    \centering
+    \begin{tikzpicture}[scale=0.7]
+            \GraphInit[vstyle=Simple]
+            \SetVertexSimple[Shape=circle, FillColor=black, MinSize=2pt]
+            \tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+            \Vertices[unit=3]{circle}{a,b,c,d,e,f}
+            \Vertex[x=0,y=0]{g}
+            
+            \Edge(b)(a)
+            \Edge(c)(b)
+            
+            \Edge(e)(f)
+            \Edge(e)(d)
+            \Edge(f)(d)
+            
+            \Edge(g)(a)
+            \Edge(g)(b)
+            \Edge(g)(c)
+            \Edge(g)(d)
+            \Edge(g)(e)
+            \Edge(g)(f)
+        \end{tikzpicture}
+    \caption{A cograph.}
+    \label{fig:some_cograph}
+\end{figure}
+
+A graph $G$ is \tdef{distance-hereditary} if and only if for every $u,v$ and in every induced subgraph $H$ that preserves the connectivity between $u$ and $v$, $\dist_H(u,v) = \dist_G(u,v)$~\citep{distance_hereditary}.
+A graph is \tdef{ptolemaic} if, for any $u,v,w,x$, $\dist(u,v) \dist(w,x) \leq \dist(u,w) \dist(v,x) + \dist(u,x) \dist(v,w)$~\citep{ptolemaic}.
+Cographs and ptolemaic graphs are special cases of distance-hereditary graphs. In particular, ptolemaic graphs are exactly the graphs that are chordal and distance-hereditary.
+
+\section{Coloring Problems}
+
+A \tdef{k-coloring} of a graph $G$ is a $k$-partition $\varphi = \{\varphi_1, \dots,\varphi_k\}$ of $V(G)$.
+Each $\varphi_i$ is a \tdef{color class} and $v \in V(G)$ is \tdef{colored} with color $i$ if and only if $v \in \varphi_i$.
+In a slight abuse of notation, we use $\varphi(v)$ to denote the color of $v$ and, for $X \subseteq V(G)$, $\varphi(X) = \bigcup_{v \in X} \{\varphi(v)\}$.
+
+\subsection{Proper Coloring}
+
+A \tdef{proper k-coloring} of $G$ is a $k$-coloring such that each $\varphi_i$ is an independent set.
+In the literature, proper coloring is usually referenced to as \tdef{vertex coloring}, a convention we also adopt.
+If $G$ has a proper $k$-coloring we say that $G$ is \tdef{k-colorable}.
+The smallest integer $k$ such that $G$ is $k$-colorable is called the \tdef{chromatic number} $\chi(G)$ of $G$.
+The natural decision problem associated with vertex coloring simply asks whether or not a given graph is $k$-colorable.
+
+\problem{vertex coloring}{A graph $G$ and a positive integer $k$.}{Is $G$ $k$-colorable?}
+
+
+\begin{figure}[!htb]
+    \centering
+    \begin{tikzpicture}[rotate=90,scale=0.6]
+            %\draw[help lines] (-5,-5) grid (5,5);
+            \GraphInit[vstyle=Simple]
+            \SetVertexSimple[Shape=circle, FillColor=black, MinSize=2pt]
+            \tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+            \SetUpVertex[Ldist=3pt]
+            \grWheel[prefix=a]{6}
+            \AssignVertexLabel{a}{1,2,1,2,3,4}
+        \end{tikzpicture}
+    \caption{An optimal proper coloring.}
+    \label{fig:prop_color}
+\end{figure}
+
+Determining if a given instance of \textsc{vertex coloring} is a $\YES$ instance is a classic problem in both graph theory and algorithmic complexity, being a known $\NPc$ problem.
+Some particular cases of \textsc{vertex coloring} are still $\NPc$.
+For instance, even if we fix $k=3$ or restrict the input to $K_3$-free graphs the problem does not get any easier.
+
+It is worth to point out the subtle difference between the parameter $k$ being part of the input or being \tdef{fixed}.
+Informally, when $k$ is fixed, we are willing to pay exponential time only on $k$ to solve our problem, whereas when $k$ is part of the input, we are not.
+Note that when we fix $k$ and find an $f(k)n^{\bigO{1}}$ time algorithm, we show that the problem is in $\FPT$ when parameterized by $k$.
+The fact that $3$-coloring is $\NPc$ is evidence that \textsc{vertex coloring} parameterized by the number of colors is not in $\FPT$, otherwise we would have an $f(3)n^{\bigO{1}}$ algorithm, which would imply that $\P = \NP$. 
+For the remainder of this work, when dealing with fixed $k$, we will include the fixed parameter in the name of the problem, such as in \textsc{vertex $k$-coloring} or \textsc{weighted circuit satisfability of weft $t$ and depth $d$}.
+
+For an unconstrained input, \textsc{vertex coloring} is hard to approximate to a factor of $n^{1-\epsilon}$, for any $\epsilon > 0$, unless some complexity hypothesis fail (see~\citep{color_zpp} for more on the topic).
+On a brighter note, a celebrated theorem due to Brooks in~\citep{brooks_theorem} gives a nice upper bound for general graphs, and gives a natural direction for research on tighter upper bounds on graph classes.
+
+\begin{theorem*}[Brooks' Theorem]
+    For every connected graph $G$ which is neither complete nor an odd-cycle $\chi(G) \leq \Delta(G)$.
+\end{theorem*}
+
+These results motivated much of the research about \textsc{vertex coloring}.
+There are polynomial time algorithms for a myriad of different classes, including chordal, bipartite and cographs.
+More generally, there are known polynomial time algorithms for \tdef{perfect graphs}~\citep{perfect_polynomial}, which is a superclass of the aforementioned ones.
+$G$ is perfect if for every induced subgraph $G'$ of $G$, $\chi(G') = \omega(G')$.
+
+More particular cases for \textsc{vertex coloring} have also been analyzed. For instance, \citep{coloring_art} presents some results for graph classes that have two connected five-vertex forbidden induced subgraphs. There are some surveys on the subject, as such we point to~\citep{coloring_survey} and \citep{coloring_survey2} for more on the classic \textsc{vertex coloring} problem, since it is not the focus of this thesis proposal.
+
+\subsection{Clique Coloring}
+A \tdef{k-clique-coloring} of $G$ is a $k$-coloring of $G$ such that no maximal clique of $G$ is entirely contained in a single color class.
+We say that $G$ is \tdef{k-clique-colorable} if $G$ admits a $k$-clique-coloring.
+The smallest integer $k$ such that $G$ is $k$-clique-colorable is called the \tdef{clique chromatic number} $\CN{C}(G)$ of $G$.
+Much like \textsc{vertex coloring}, there is a natural decision problem associated with this coloring variant, which we refer to as \textsc{clique coloring}.
+
+
+\problem{clique coloring}{A graph $G$ and a positive integer $k$.}{Is $G$ $k$-clique-colorable?}
+
+
+\begin{figure}[!htb]
+    \centering
+    \begin{tikzpicture}[rotate=90,scale=0.6]
+            %\draw[help lines] (-5,-5) grid (5,5);
+            \GraphInit[vstyle=Simple]
+            \SetVertexSimple[Shape=circle, FillColor=black, MinSize=2pt]
+            \tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+            \SetUpVertex[Ldist=3pt]
+            \grWheel[prefix=a]{6}
+            \AssignVertexLabel{a}{1,1,1,1,1,2}
+        \end{tikzpicture}
+    \caption{An optimal clique coloring.}
+    \label{fig:clique_color}
+\end{figure}
+
+Research on the topic is much more recent than what was done for \textsc{vertex coloring}, with the first papers appearing in the early 1990s~\citep{first_clique_color} and interest on the subject rising in the early 2000s.
+Even when $k$ is fixed, \textsc{clique $k$-coloring} is known to be $\SiP{2}\text{-}\Complete$, as shown by~\citep{clique_coloring_complexity}, with an $\bigOs{2^n}$ algorithm being proposed by~\citep{clique_color_algorithm}.
+
+As with \textsc{vertex coloring}, \textsc{clique $k$-coloring} has been studied when restricting the input graph to certain graph classes.
+\citep{weakly_clique_color} investigated 2-clique-coloring in terms of \tdef{weakly chordal graphs} (graphs free of any hole or anti-hole with more than 4 vertices), giving a series of results for the general case ($\SiP{2}\text{-}\Complete$) and showing that, for some nested subclasses, there are $\NPc$ and $\P$ instances of the problem.
+When dealing with \tdef{unichord-free} graphs (graphs that contain no induced cycle with a unique chord), the problem is solvable in polynomial time (\cite{unichord_coloring}).
+
+\tdef{Circular-arc} graphs (intersection graphs of a set of arcs of a circle) are always 3-clique-colorable, with a polynomial time algorithm to determine if the input is 2-clique-colorable \citep{clique_circular_arc}.
+When the given graph is \tdef{odd-hole-free}, it is $\SiP{2}\text{-}\Complete$ to decide whether it is 2-clique-colorable or not~\citep{clique_oddhole}.
+\citep{clique_coloring_few_p4} give a series of bounds on graphs that, in some sense, contain few $P_4$'s, showing that most them are either 2 or 3-clique-colorable.
+
+For \tdef{planar graphs} (graphs that can be drawn on a plane with no crossing edges), \citep{clique_coloring_planar} show that they are 3-clique-colorable, and \citep{clique_color_perfect_np_complete} present a polynomial time algorithm to decide whether a planar graph is 2-clique-colorable or not.
+
+Some of these classes are subclasses of perfect graphs, and a conjecture suggests that every perfect graph is 3-clique-colorable~\citep{maximal_clique_coloring}.
+Also in terms of perfect graphs, it is $\NPc$ to decide whether a perfect graph is 2-clique-colorable (\cite{clique_color_perfect_np_complete}).
+\citep{clique_oddhole} also give the observation that every \tdef{strongly perfect graph} (see~\citep{strongly_perfect}) is 2-clique-colorable, a superclass of both chordal graphs and cographs.
+For a summary of the mentioned results, please refer to Table~\ref{tab:clique_color_complexity}.
+
+\begin{table}[!htb]
+    \centering
+    \begin{tabular}{c|c|c}
+        \hline
+        \hline
+        Class            & $\CN{C}$             & Complexity \\
+        \hline
+        Cograph          & $= 2$                & $\P$\\
+        Chordal          & $= 2$                & $\P$\\
+        Weakly Chordal   & $\leq 3^*$           & $\SiP{2}\text{-}\Complete^\dag$\\
+        Unichord-free    & $\leq 3 $            & $\P$ \\
+        Circular-arc     & $\leq 3$             & $\P^\dag$ \\
+        Odd-hole-free    & $\leq 3^*$           & $\SiP{2}\text{-}\Complete^\dag$\\
+        Few $P_4$'s      & $\leq 2$ or $\leq 3$ & $\P$\\
+        Planar           & $\leq 3$             & $\P^\dag$\\
+        Perfect          & $\leq 3^*$           & $\NPc^\dag$\\ 
+        Strongly Perfect & $= 2$                & $\P$\\
+        General case     & Unbounded            & $\SiP{2}\text{-}\Complete$\\
+        \hline
+        \hline
+    \end{tabular}
+    \caption{Complexity and bounds for \textsc{clique coloring}. Entries marked with a $*$ are conjectures. $\dag$ indicates results for 2-clique-colorability.}
+    \label{tab:clique_color_complexity}
+\end{table}
+
+\subsection{Biclique Coloring}
+A \tdef{k-biclique-coloring} of $G$ is a $k$-coloring of $G$ such that no maximal biclique of $G$ is entirely contained in a single color class.
+We say that $G$ is \tdef{k-biclique-colorable} if $G$ admits a $k$-biclique-coloring.
+The smallest integer $k$ such that $G$ is $k$-biclique-colorable is called the \tdef{biclique chromatic number} $\CN{B}(G)$ of $G$.
+Much like \textsc{clique coloring}, there is a natural decision problem associated with this coloring variant, which we refer to as \textsc{biclique coloring}.
+
+\problem{biclique coloring}{A graph $G$ and a positive integer $k$.}{Is $G$ $k$-biclique-colorable?}
+
+
+\begin{figure}[!htb]
+    \centering
+    \begin{tikzpicture}[rotate=90,scale=0.6]
+            %\draw[help lines] (-5,-5) grid (5,5);
+            \GraphInit[vstyle=Simple]
+            \SetVertexSimple[Shape=circle, FillColor=black, MinSize=2pt]
+            \tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+            \SetUpVertex[Ldist=3pt]
+            \grWheel[prefix=a]{6}
+            \AssignVertexLabel{a}{1,2,1,2,3,3}
+        \end{tikzpicture}
+    \caption{An optimal biclique coloring.}
+    \label{fig:biclique_color}
+\end{figure}
+
+
+\textsc{biclique coloring} is an even more recent research topic than \textsc{clique coloring}, with the first results being a $\SiP{2}\text{-}\Cness$ proof due to~\citep{biclique_coloring_complexity} and the confirmation that verifying a solution to the problem is a $\coNP\text{-}\Complete$ task (\cite{biclique_coloring_verification}).
+
+In terms of complexity results, very little is known about \textsc{biclique coloring}.
+For unichord-free graphs, \citep{unichord_coloring} give a polynomial time algorithm to compute $\CN{B}$ and show that the biclique chromatic number of unichord-free graphs is either equal to or one greater than the size of the largest true twin class.
+\citep{biclique_coloring_verification} present a polynomial time algorithm for powers of cycles and powers of paths.
+Finally, \citep{biclique_coloring_complexity} give complexity results for $H$-free graphs, for every $H$ on three vertices, being polynomial for $H \in \{K_3, P_3, \overline{P_3}\}$ and $\NPc$ for $\overline{K_3}$-free graphs;
+moreover they show that the problem is $\NPc$ for diamond ($C_4$ plus one chord) free graphs and split graphs, and polynomial for \tdef{threshold graphs} (\{$2K_2,P_4,C_4$\}-free).
+We summarize the presented results in Table~\ref{tab:biclique_color_complexity}.
+
+\begin{table}[!htb]
+    \centering
+    \begin{tabular}{c|c|c}
+        \hline
+        \hline
+        Class            & $\CN{B}$             & Complexity \\
+        \hline
+        Split            & Unbounded            & $\NPc$\\
+        Threshold        & Unbounded            & $\P$\\
+        Diamond-free     & Unbounded            & $\NPc$\\
+        $C_n^r$          & $\leq 3$             & $\P$\\
+        $P_n^r$          & $= 2$                & $\P$\\
+        Unichord-free    & Bounded              & $\P$\\
+        General case     & Unbounded            & $\SiP{2}\text{-}\Complete$\\
+        \hline
+        \hline
+    \end{tabular}
+    \caption{Complexity and bounds for \textsc{biclique coloring}.}
+    \label{tab:biclique_color_complexity}
+\end{table}
+
+Both \textsc{clique coloring} and \textsc{biclique coloring} are, actually, colorings of the hypergraphs arising from an underlying graph (a coloring of its vertices such that no hyperedge is monochromatic), which is also an $\NPc$ task.
+However, in classical hypergraph coloring problems, the hyperedge family is part of the input of the problem and, as such, naively verifying a solution is polynomial on the size of the input.
+
+\subsection{Equitable Coloring}
+A $k$-coloring of an $n$ vertex graph is said to be \tdef{equitable} if for every color class $\varphi_i$, $\floor{\frac{n}{k}} \leq |\varphi_i| \leq \ceil{\frac{n}{k}}$ or, equivalently, if for, any two color class $\varphi_i$ and $\varphi_j$, $||\varphi_i| - |\varphi_j|| \leq 1$.
+If $G$ admits a proper equitable $k$-coloring, we say that $G$ is \tdef{equitably k-colorable}.
+Unlike other coloring variants previously discussed, an equitably $k$-colorable graph is not necessarily equitably $(k+1)$-colorable.
+
+As such, two different parameters are defined: the smallest integer $k$ such that $G$ is equitably $k$-colorable is called the \tdef{equitable chromatic number} $\CN{=}(G)$; the smallest integer $k'$ such that $G$ is equitably $k$-colorable for every $k \geq k'$ is the \textit{equitable chromatic threshold} $\CN{=}^*(G)$ of $G$.
+
+As with the previous coloring problems, we define the \textsc{equitable coloring} decision problem.
+
+\problem{equitable coloring}{A graph $G$ and a positive integer $k$.}{Is $G$ equitably $k$-colorable?}
+
+
+\begin{figure}[!htb]
+    \centering
+    \begin{tikzpicture}
+        \begin{scope}[rotate=90,scale=0.6]
+            %\draw[help lines] (-5,-5) grid (5,5);
+            \GraphInit[vstyle=Normal]
+            \SetVertexNormal[Shape=circle]
+            \tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+            \SetVertexNoLabel
+            \grStar[prefix=a]{6}
+            \AssignVertexLabel{a}{2,2,2,2,2,1}
+        \end{scope}
+    \end{tikzpicture}
+    \hfill
+    \begin{tikzpicture}
+        \begin{scope}[rotate=90,scale=0.6]
+            %\draw[help lines] (-5,-5) grid (5,5);
+            \GraphInit[vstyle=Normal]
+            \SetVertexNormal[Shape=circle]
+            \tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+            \SetVertexNoLabel
+            \grStar[prefix=b]{6}
+            \AssignVertexLabel{b}{3,3,4,2,2,1}
+        \end{scope}
+    \end{tikzpicture}
+    \hfill
+    
+    \caption{A proper non-equitable coloring (left) and an equitable coloring (right).}
+    \label{fig:eq_color}
+\end{figure}
+
+
+\textsc{equitable coloring} was first discussed by~\citep{first_equitable}, with an intended application for municipal garbage collection, and later in processor task scheduling~\citep{mutual_exclusion_scheduling} and server load balancing~\citep{domain_decomposition}.
+
+Much of the work done over \textsc{equitable coloring} aims to prove an analogue of Brooks' theorem, known as the \tdef{Equitable coloring conjecture} (ECC).
+In terms of the equitable chromatic threshold, however, we have the \tdef{Hajnal-Szemerédi theorem}~\citep{hajnal_szmeredi_theorem}.
+
+\begin{conjecture*}[ECC]
+    For every connected graph $G$ which is neither a complete graph nor an odd-hole, $\CN{=}(G) \leq \Delta(G)$.
+\end{conjecture*}
+
+\begin{theorem*}[Hajnal-Szmerédi Theorem]
+    Any graph $G$ is equitably $k$-colorable if $k \geq \Delta(G) + 1$. Equivalently, $\CN{=}^*(G) \leq \Delta(G) + 1$.
+\end{theorem*}
+
+\citep{e_delta_cc} suggest that a stronger result than the Hajnal-Szmerédi theorem may be achievable, presenting some classes where the \tdef{Equitable $\Delta$-coloring conjecture} (E$\Delta$CC) holds.
+Moreover, they prove that if E$\Delta$CC holds for every regular graph, then it holds for every graph.
+
+\begin{conjecture*}[E$\Delta$CC]
+    For every connected graph $G$ which is not a complete graph, an odd-hole nor $K_{2n+1, 2n+1}$, for any $n \geq 1$, $\CN{=}^*(G) \leq \Delta(G)$ holds.
+\end{conjecture*}
+
+Quite a lot of effort was put into finding classes where E$\Delta$CC holds, even with the knowledge that only proofs for regular graphs are required.
+A result given by~\citep{claw_free_de_werra}, combined with Brooks' Theorem, implies that every claw-free graph is equitably $k$-colorable for every $k \geq \chi(G)$.
+Unfortunately, we were unable to verify whether this result is algorithmic and, in the affirmative, the algorithm's complexity.
+However, due to the broadness of the class, we believe that, even if it exists, the algorithm has a higher complexity than the ones we describe.
+
+A very extensive survey on the subject was conducted by~\citep{equitable_survey}, where many of the results of the past 50 years were assembled.
+Among the many reported results, the E$\Delta$CC is known to hold for:
+bipartite graphs (with the obvious exceptions, where the ECC holds),
+trees,
+split graphs,
+planar graphs,
+\tdef{outerplanar graphs} (planar graphs with a drawing such that no vertex is within a polygon formed by other vertices),
+\tdef{low degeneracy graphs} (graphs such that every subgraph has a vertex with a small degree),
+\tdef{Kneser graphs} (complement of the intersection graph of $F \subset 2^{[n]}$, with every set of $F$ containing exactly $k$ elements),
+interval graphs,
+random graphs and
+some forms of graph products.
+For the exact results please refer to the survey.
+
+Almost all complexity results for \textsc{equitable coloring} arise from a related problem, known as \textsc{bounded coloring}, an observation given by~\citep{equitable_treewidth}.
+A $k$-coloring is said to be \tdef{$l$-bounded} if for every color class $\varphi_i$, $|\varphi_i| \leq l$.
+$G$ is \tdef{l-bounded k-colorable} if it admits an $l$-bounded $k$-coloring.
+
+\problem{bounded coloring}{A graph $G$ and two positive integers $l$ and $k$.}{Is $G$ $l$-bounded $k$-colorable?}
+
+\begin{observation*}
+    A Graph $G$ with $n$ vertices is $l$-bounded $k$-colorable if and only if $G' = G \cup \overline{K_{lk - n}}$ is equitably $k$-colorable.
+\end{observation*}
+
+
+In terms of computational complexity, however, neither problem was nearly as explored as \textsc{vertex coloring}.
+Among the complexity results for \textsc{bounded coloring} and, consequently, \textsc{equitable coloring}, we have polynomial time solvability for split graphs~\citep{equitable_split}, complement of interval graphs~\citep{graph_partitioning1}, forests~\citep{mutual_exclusion_scheduling}, trees~\citep{equitable_trees} and complements of bipartite graphs~\citep{graph_partitioning1}.
+
+For cographs, we have a polynomial time algorithm when $k$ is fixed, otherwise the problem is $\NPc$~\citep{graph_partitioning1}, a situation similar to that of bipartite and interval graphs~\citep{graph_partitioning1}.
+A consequence of the hardness result for cographs is that \textsc{equitable coloring} is $\NPc$ for graphs of bounded cliquewidth.
+
+On complements of \tdef{comparability graphs} (graphs representing a valid partial ordering) however, even if we fix $l$, \textsc{bounded coloring} is still $\NPc$~\citep{chain_antichain}.
+\citep{colorful_treewidth} show that, when parameterized by treewidth, \textsc{equitable coloring} is $\W[1]\text{-}\Hard$.
+Also in terms of treewidth, \citep{equitable_treewidth} give a polynomial time algorithm for graphs of bounded treewidth.
+Note that for all of the mentioned classes, \textsc{vertex coloring} is polynomially solvable.
+
+A summary of the known complexities is available in Table~\ref{tab:equitable_complexity}.
+
+
+\begin{table}[!htb]
+    \centering
+    \begin{tabular}{l|l|l}
+       \hline
+       \hline
+       Class               &  fixed $k$         & input $k$             \\
+       \hline
+       Trees                &  $\P$             & $\P$                  \\
+       Forests              &  $\P$             & $\P$                  \\
+       Bipartite            &  $\NPc$           & $\NPc$                \\
+       Co-bipartite         &  $\P$             & $\P$                  \\
+       Cographs             &  $\P$             & $\NPc$                \\
+       Bounded Cliquewidth  &  ?                & $\NPc$                \\
+       Bounded Treewidth    &  $\P$             & $\P$                  \\
+       Chordal              &  $\P^*$           & $\NPc$                \\
+       Block                &  $\P^*$           & $\NPc^*$              \\
+       Split                &  $\P$             & $\P$                  \\
+       Interval             &  $\P$             & $\NPc$                \\
+       Co-interval          &  $\P$             & $\P$                  \\
+       General case         &  $\NPc$           & $\NPc$                \\
+       \hline
+       \hline
+    \end{tabular}
+    \caption{Complexity results for \textsc{equitable coloring}. Entries marked with a * are results established in this work.}
+    \label{tab:equitable_complexity}
+\end{table}

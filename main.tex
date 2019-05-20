@@ -1,0 +1,326 @@
+\documentclass[proposal]{ppgccufmg}
+
+\usepackage[english]{babel}    
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subfig}
+\usepackage{type1ec}
+\usepackage[T1]{fontenc}
+\usepackage{bbm}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage[square]{natbib}    
+\usepackage{pifont}
+\usepackage{url}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{fancybox}
+\usepackage{colortbl}
+\usepackage{soul}
+\usepackage{color}
+\usepackage{tikz}
+\usepackage{tkz-berge}
+\usepackage{rotating}
+\usepackage{pdflscape}
+\usepackage{afterpage}
+\usepackage{capt-of}
+\usepackage{comment}
+\usepackage{etoolbox}
+\usepackage{environ}
+\usepackage{dirtytalk}
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+
+
+\usetikzlibrary{decorations,arrows,shapes}
+
+\usepackage[
+  english,
+  bookmarks=true,
+  bookmarksnumbered=true,
+  linktocpage,
+  colorlinks,
+  citecolor=black,
+  urlcolor=black,
+  linkcolor=black,
+  filecolor=black,
+  ]{hyperref}
+  
+  
+  
+
+\usepackage{complexity}
+
+\newtheoremstyle{named}{}{}{\itshape}{}{\bfseries}{}{.2em}{\thmnote{#3} #1}
+\theoremstyle{named}
+\newtheorem{class_definition*}{}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[chapter]
+
+\theoremstyle{plain}
+\newtheorem{lemma}{Lemma}[chapter]
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem*{theorem*}{Theorem}
+\newtheorem{corollary}{Corollary}[chapter]
+\newtheorem{observation}{Observation}[chapter]
+\newtheorem*{observation*}{Observation}
+\newtheorem{conjecture}{Conjecture}[chapter]
+\newtheorem*{conjecture*}{Conjecture}
+
+\newcommand{\mc}[1]{\mathcal{#1}}
+
+\newcommand{\hypergraph}{\mathcal{H}}
+
+\newcommand{\rank}{\text{rank}}
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+
+\newcommand{\biq}{\mathcal{B}}
+\newcommand{\clq}{\mathcal{C}}
+\newcommand{\str}{\mathcal{S}}
+\newcommand{\trans}[1]{\mathbb{T}_{#1}}
+\newcommand{\transs}[1]{\mathbb{T}^*_{#1}}
+\newcommand{\oblq}[1]{\mathbb{O}_{#1}}
+
+\newcommand{\Hyper}[1]{\hypergraph_{\mc{#1}}}
+\newcommand{\Oblq}[1]{\oblq_{\mc{#1}}}
+\newcommand{\Trans}[1]{\trans_{\mc{#1}}}
+
+\newcommand{\bigO}[1]{\mathcal{O}\left(#1\right)}
+\newcommand{\bigOs}[1]{\mathcal{O}^*\left(#1\right)}
+
+\newcommand{\tsc}[1]{\textsc{#1}}
+
+\newcommand{\pname}[1]{\textsc{#1}}
+\newcommand{\problem}[3]{
+  \begin{flushleft}
+    \fbox{
+      \begin{minipage}{13.5cm}
+        \noindent \pname{#1}\\
+        \textbf{Instance:} #2\\
+        \textbf{Question:} #3
+      \end{minipage}}
+    \medskip
+  \end{flushleft}
+}
+
+\newcommand{\paraprobl}[5]
+{
+  \begin{flushleft}
+    \fbox{
+      \begin{minipage}{#5cm}
+        \noindent \pname{#1}\\
+        \textbf{Instance:} #2\\
+        \textbf{Parameter:} #3\\
+        \textbf{Question:} #4
+      \end{minipage}
+    }
+  \end{flushleft}
+}
+
+%\newcommand{\paraprobl}[4]
+%{
+%  \begin{flushleft}
+%    \fbox{
+%      \begin{minipage}{14cm}
+%        \noindent {\textsc {#1}}\\
+%        {\bf Input:} #2\\
+%        {\bf Parameter:} #4\\
+%        {\bf Output:} #3
+%      \end{minipage}
+%    }
+%  \end{flushleft}
+%}
+
+\newcommand{\pproblem}[4]
+{
+  \begin{flushleft}
+    \fbox{
+      \begin{minipage}{.95\textwidth}
+        \noindent \pname{#1}\\
+        \textbf{Instance:} #2\\
+        \textbf{Parameter:} #3\\
+        \textbf{Question:} #4\\
+      \end{minipage}
+    }
+  \end{flushleft}
+}
+
+
+%tikz stuff
+\newcommand{\inners}{1.2pt}
+\newcommand{\outers}{1pt}
+
+\newcommand{\tdef}[1]{\textit{\textbf{#1}}}
+
+%complexity
+\newcommand{\SiP}[1]{\Sigma^{\P}_{#1}}
+\newclass{\Hard}{Hard}
+\newclass{\Hness}{Hardness}
+\newcommand{\NPH}{\NP\text{-}\Hard}
+\newclass{\Complete}{Complete}
+\newclass{\Ctude}{Completude}
+\newclass{\Cness}{Completeness}
+\newcommand{\NPc}{\NP\text{-}\Complete}
+\newcommand{\NPct}{\NP\text{-}\Ctude}
+\newcommand{\NPcness}{\NP\text{-}\Cness}
+\newfunc{\dist}{dist}
+\newfunc{\girth}{girth}
+\newfunc{\nd}{nd}
+\newfunc{\YES}{YES}
+\newfunc{\NOi}{NO}
+\newfunc{\projax}{Proj}
+\newfunc{\liftax}{Lift}
+\newfunc{\ff}{ff}
+\newfunc{\cf}{cf}
+\newfunc{\TRUEt}{TRUE}
+
+\newcommand{\Proj}[1]{\projax_{#1}}
+\newcommand{\Lift}[1]{\liftax_{#1}}
+
+\renewcommand{\K}[1]{K_{\mathcal{#1}}}
+
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+
+
+\newcommand{\CN}[1]{\chi_{\mathcal{#1}}}
+
+\newtoggle{proof_toggle}
+\toggletrue{proof_toggle}
+%\togglefalse{proof_toggle}
+
+\NewEnviron{tproof} {
+    \iftoggle{proof_toggle} {%
+        \begin{proof}\BODY\end{proof}}
+    {%
+    }
+}
+
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+
+%\font\ninerm=cmr10
+%\textwidth  17 cm 
+%\topmargin  -2 cm 
+%\textheight 25.5 cm 
+%\evensidemargin  0.3 cm 
+%\headsep .9 cm 
+%\oddsidemargin  0 cm 
+%\input tcilatex 
+%\setstretch{1.11}   
+\thispagestyle{empty}
+
+%\usepackage[brazil]{babel}
+%\usepackage[utf8]{inputenc}
+%\usepackage[T1]{fontenc}
+
+\begin{document}
+	
+
+% O comando a seguir, \ppgccufmg, prov todas as informaes relevantes para a
+% classe ppgccufmg. Por favor, consulte a documentao para a descrio de
+% cada chave.
+
+% Um exemplo para documentos em portugus  apresentado a seguir:
+
+\ppgccufmg{
+  title={Cliques, Bicliques and Colorings},
+  authorrev={Gomes, Guilherme de Castro Mendes},
+  cutter={C667h},
+  cdu={123},
+  university={Universidade Federal de Minas Gerais},
+  course={Ciência da Computação},
+  portuguesetitle={Cliques, Bicliques e Colorações},
+%  portugueseuniversity={Universidade Federal de Minas Gerais},
+%  portuguesecourse={Cincia da Computao},
+  address={Belo Horizonte},
+  date={2017-10},
+  keywords={Vertex Coloring, Equitable Coloring, Clique Coloring, Biclique Coloring, Block Graphs, Biclique Graph, Star Graph, Exact Algorithms, Parameterized Algorithms},
+  advisor={Vinícius Fernandes dos Santos},
+  %coadvisor={Carlos Vinícius Gomes Costa Lima},
+  %approval={},
+  abstract=[brazil]{Resumo}{resumos/resumo},
+  abstract={Abstract}{resumos/abstract},
+  %abstract={Resumo Estendido}{resumoest},
+  dedication={firula/dedicatoria},
+  %ack=[Acknowledgments]{},
+  ack=[Acknowledgments]{firula/agradecimentos},
+  epigraphtext={Dadaaaaaaaaaaaaaaa!}{The Minions},
+}
+
+% Um exemplo para documentos em ingls  apresentado a seguir (lembre-se de
+% usar \usepackage[english]{babel}):
+%\ppgccufmg{
+%  title={Protocol for Error-Verification inside\\Totally Error-Free
+%    Networks},
+%  authorrev={da Camara Neto, Vilar Fiuza},
+%  cutter={D1234p},
+%  cdu={519.6*82.10},
+%  university={Federal University of Minas Gerais},
+%  course={Computer Science},
+%  portuguesetitle={Protocolo para Verificao de Erros\\em Redes Totalmente
+%    Confiveis},
+%  portugueseuniversity={Universidade Federal de Minas Gerais},
+%  portuguesecourse={Cincia da Computao},
+%  address={Belo Horizonte},
+%  date={2008-03},
+%  advisor={Adamastor Pompeu Setbal},
+%  approval={img/approvalsheet.eps},
+%  abstract=[brazil]{Resumo}{resumo},
+%  abstract={Abstract}{abstract},
+%  dedication={dedicatoria},
+%  ack={agradecimentos},
+%  epigraphtext={Truth and lie are opposite things.}{Unknown},
+%}
+
+\input{capitulos/introducao}
+
+\input{capitulos/preliminares}
+
+\input{capitulos/equitable}
+
+\input{capitulos/clique_biclique}
+
+\input{capitulos/dcut}
+
+\input{capitulos/star}
+
+\input{capitulos/conclusao}
+
+%\input{relatedworks}
+
+%\input{formulations}
+
+%\input{approaches}
+
+%\input{experiments}
+
+%\input{conclusions}
+
+%\begin{appendix}
+	
+%	\input{frenchabstract_v2}
+	
+%\end{appendix}	
+
+%\begin{appendix}
+
+%	\input{tabelasresumidas}
+	
+%\end{appendix}	
+
+% Aqui vem a parte da bibliografia: use o comando \ufmgbibliography indicando
+% apenas o nome do arquivo .bib (sem a extenso).
+%\ppgccbibliography{referencias}
+\ppgccbibliography{referencias,refs_extras}
+
+\end{document}

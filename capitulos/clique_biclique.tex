@@ -1,0 +1,582 @@
+\chapter{Clique and Biclique Coloring}
+\label{ch:cb_coloring}
+
+Both \textsc{clique coloring} and \textsc{biclique coloring} are relaxations of the classical \textsc{vertex coloring} problem, in the sense that monochromatic edges are allowed.
+However, this freedom comes at the cost of validating a solution, which becomes a $\coNP\text{-}\Complete$ task in both cases.
+One may think of \textsc{vertex coloring} as the task of covering a graph's vertices using a given number of independent sets.
+That is, there cannot be a color class with an edge inside it.
+For \textsc{clique coloring} and \textsc{biclique coloring}, the idea is quite similar.
+We want to forbid not edges, but maximal clique or bicliques, respectively, inside our color classes.
+All of the following results establish families of sets that may safely be used to cover the given graph and describe how to compute them.
+
+Much of the discussion will deal with the clique and biclique hypergraphs $\Hyper{C}(G)$ and $\Hyper{B}(G)$.
+As such, we define by $\trans{C}(G)$ ($\trans{B}(G)$) the \tdef{family of all transversals} of the clique (biclique) hypergraph of $G$ and by $\transs{C}(G)$ ($\transs{B}(G)$) the \tdef{family of complements of transversals}.
+Also, denote by $\oblq{C}(G)$ ($\oblq{B}(G)$) the \tdef{family of all obliques} of the clique (biclique) hypergraph of $G$.
+Finally, $\clq(G)$ ($\biq(G)$) is the family of \tdef{maximal cliques} (bicliques) of $G$.
+
+In this chapter, we present algorithms that make heavy use of the algorithm described by~\citep{inclusion_exclusion}, which applies the inclusion-exclusion principle to solve a variety of problems in $2^nn^{\bigO{1}}$ time, including \textsc{vertex coloring}.
+We denote complexities of the form $f(n)n^{\bigO{1}}$, where $f(n)$ is an exponential function on $n$, by $\bigOs{f(n)}$.
+
+Our main results are an $\bigOs{2^n}$ algorithm for \textsc{biclique coloring}, an $\FPT$ algorithm for \textsc{clique coloring} parameterized by neighbourhood diversity and an $\FPT$ algorithm for \textsc{biclique coloring} parameterized by the number of colors and neighbourhood diversity.
+To achieve them, we will rely on the following problems and results of the literature.
+
+\begin{lemma}[\cite{clique_color_algorithm}]
+    \label{lem:down_closure}
+    For any family $\mathcal{F}$, its down closure $\mathcal{F}_{\downarrow} = \left\{X \subseteq V \mid \exists Y \in \mathcal{F},\ X \subseteq Y\right\}$ can be enumerated in $O^*(|\mc{F}_{\downarrow}|)$ time.
+\end{lemma}
+
+\begin{lemma}[\cite{clique_color_algorithm}]
+    \label{lem:clique_transversal_colorings}
+    A $k$-partition $\varphi = \{\varphi_1, \dots, \varphi_k\}$ is a $k$-clique-coloring of $G$ if and only if for every $i$, $\overline{\varphi_i} \in \trans{C}(G)$.
+\end{lemma}
+
+\problem{exact cover}{A set $A = \{a_1, \dots, a_n\}$, a covering family $\mathcal{F} \subseteq 2^A$ and an integer $k$.}{Is it possible to $k$-partition  $A$ into $\varphi$ such that $\varphi \subseteq \mathcal{F}$?}
+
+\begin{theorem}[\cite{inclusion_exclusion}]
+    \label{thm:inc_exc}
+    There is a $\bigOs{2^n}$ time algorithm to solve \textsc{exact cover}.
+\end{theorem}
+
+\begin{theorem}[\cite{clique_color_algorithm}]
+    \label{thm:clique_color_algorithm}
+    There is an $\bigOs{2^n}$ time algorithm for \textsc{clique coloring}.
+\end{theorem}
+
+
+\problem{set multicover}{A set $A = \{a_1, \dots, a_n\}$, a covering family $\mathcal{F} \subseteq 2^A$, an integer $k$ and a coverage demand $c: A \mapsto \mathbb{N}$.}{Is it possible to $k$-cover $A$ with $\varphi \subseteq \mathcal{F}$ and $\forall a_j, |\{i \mid a_j \in \varphi_i\}| \geq c(a_j)$?}
+
+\begin{theorem}[\cite{set_multicover}]
+    \label{thm:set_multicover}
+    Set multicover can be solved in $O^*((b+2)^n)$, with $b$ the maximum coverage requirement.
+\end{theorem}
+
+\section{Exact algorithm for \textsc{biclique coloring}}
+\label{sec:biclique_exact}
+
+\begin{figure}[!htb]
+    \centering
+    \begin{tikzpicture}[scale=1]
+        \begin{scope}
+         %\draw[help lines] (-5,-5) grid (5,5);
+            \GraphInit[unit=3,vstyle=Normal]
+            \SetVertexNormal[Shape=circle, FillColor=black, MinSize=2pt]
+            \tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+            \SetVertexNoLabel
+            \Vertex[x=-1,y=-1]{x-1-1}
+            \Vertex[x=-1,y=0]{x-10}
+            \Vertex[x=-1,y=1]{x-11}
+            \Vertex[x=0,y=-1]{x0-1}
+            \Vertex[x=0,y=0]{x00}
+            \Vertex[x=0,y=1]{x01}
+            \Vertex[x=1,y=-1]{x1-1}
+            \Vertex[x=1,y=0]{x10}
+            \Vertex[x=1,y=1]{x11}
+
+            
+            \Edge(x-1-1)(x-10)
+            \Edge(x-1-1)(x0-1)
+            \Edge(x0-1)(x00)
+            \Edge(x0-1)(x1-1)
+            
+            \Edge(x-10)(x-11)
+            \Edge(x-10)(x00)
+            \Edge(x00)(x01)
+            \Edge(x00)(x10)
+            
+            \Edge(x-11)(x01)
+            \Edge(x01)(x11)
+            
+            \Edge(x10)(x11)
+            \Edge(x10)(x1-1)
+        \end{scope}
+    \end{tikzpicture}
+    \hfill
+    \begin{tikzpicture}[scale=1]
+        \begin{scope}
+            %\draw[help lines] (-5,-5) grid (5,5);
+            \GraphInit[unit=3,vstyle=Normal]
+            \SetVertexNormal[Shape=circle, FillColor=white, MinSize=1pt]
+            \tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+            \SetVertexNoLabel
+            \Vertex[x=-1,y=-1]{x-1-1}
+            \Vertex[x=-1,y=1]{x-11}
+            \Vertex[x=1,y=-1]{x1-1}
+            \Vertex[x=1,y=1]{x11}
+            
+            \SetVertexNormal[Shape=circle, FillColor=black, MinSize=1pt]
+            \SetVertexNoLabel
+            \Vertex[x=0,y=-1]{x0-1}
+            \Vertex[x=-1,y=0]{x-10}
+            \Vertex[x=1,y=0]{x10}
+            \Vertex[x=0,y=0]{x00}
+            \Vertex[x=0,y=1]{x01}
+
+            
+            \Edge(x-1-1)(x-10)
+            \Edge(x-1-1)(x0-1)
+            \Edge(x0-1)(x00)
+            \Edge(x0-1)(x1-1)
+            
+            \Edge(x-10)(x-11)
+            \Edge(x-10)(x00)
+            \Edge(x00)(x01)
+            \Edge(x00)(x10)
+            
+            \Edge(x-11)(x01)
+            \Edge(x01)(x11)
+            
+            \Edge(x10)(x11)
+            \Edge(x10)(x1-1)
+        \end{scope}
+    \end{tikzpicture}
+    \hfill
+    \begin{tikzpicture}[scale=1]
+        \begin{scope}
+            %\draw[help lines] (-5,-5) grid (5,5);
+            \GraphInit[unit=3,vstyle=Normal]
+            \SetVertexNormal[Shape=circle, FillColor=white, MinSize=1pt]
+            \tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+            \SetVertexNoLabel
+            \Vertex[x=-1,y=-1]{x-1-1}
+            \Vertex[x=-1,y=1]{x-11}
+            \Vertex[x=1,y=-1]{x1-1}
+            \Vertex[x=1,y=1]{x11}
+            \Vertex[x=0,y=0]{x00}
+            
+            \SetVertexNormal[Shape=circle, FillColor=black, MinSize=1pt]
+            \SetVertexNoLabel
+            \Vertex[x=0,y=-1]{x0-1}
+            \Vertex[x=-1,y=0]{x-10}
+            \Vertex[x=1,y=0]{x10}
+            \Vertex[x=0,y=1]{x01}
+
+            
+            \Edge(x-1-1)(x-10)
+            \Edge(x-1-1)(x0-1)
+            \Edge(x0-1)(x00)
+            \Edge(x0-1)(x1-1)
+            
+            \Edge(x-10)(x-11)
+            \Edge(x-10)(x00)
+            \Edge(x00)(x01)
+            \Edge(x00)(x10)
+            
+            \Edge(x-11)(x01)
+            \Edge(x01)(x11)
+            
+            \Edge(x10)(x11)
+            \Edge(x10)(x1-1)
+        \end{scope}
+    \end{tikzpicture}
+    \hfill
+    
+    
+    \caption{A graph (left), one of its maximal bicliques in black (center), and a transversal in black (right).}
+    \label{fig:transversals}
+\end{figure}
+
+
+Our first task is to establish a family of sets that can be safely used to cover $V(G)$, which we accomplish as follows.
+
+
+\begin{lemma}
+    \label{lem:transversal_colorings}
+    A $k$-partition $\varphi = \{\varphi_1, \dots, \varphi_k\}$ is a $k$-biclique-coloring of $G$ if and only if for every $i$, $\overline{\varphi_i} \in \trans{B}(G)$.
+\end{lemma}
+
+\begin{tproof}
+$(\Rightarrow)$ Suppose that there exists some $\varphi_i$ such that $\overline{\varphi_i} \notin \trans{B}(G)$.
+This implies that there exists some $B \in \biq(G)$ such that $B \cap \overline{\varphi_i} = \emptyset$ and that $B \subseteq \varphi_i$; that is, $|\varphi(B)| = 1$, which is a contradiction, since $\varphi$ is a $k$-biclique-coloring.
+
+$(\Leftarrow)$ Let $\varphi$ be a $k$-partition of $G$ with $\overline{\varphi_i} \in \trans{B}(G)$, but suppose that $\varphi_k$ is not a $k$-biclique-coloring.
+That is, there exists some maximal biclique $B \in \biq(G)$ such that $B \subseteq \varphi_i$ for some $i$.
+This implies that $B \cap \overline{\varphi_i} = \emptyset$, and, therefore, $\overline{\varphi_i} \notin \trans{B}(G)$, which contradicts the hypothesis.
+\end{tproof}
+
+Simply testing for each $X \in 2^{V(G)}$ if $X \in \transs{B}(G)$ is a costly task.
+A naive algorithm would check, for each $B \in \biq(G)$, if $\overline{X} \cap B \neq \emptyset$.
+With $|\biq(G)| \in \bigO{n3^{\frac{n}{3}}}$ (see~\citep{gaspers} for the proof), such algorithm would take $\bigO{n2^n3^{\frac{n}{3}}}$ time.
+
+The next Lemma, along with Lemma~\ref{lem:down_closure}, considerably reduce the complexity of enumerating $\trans{B}(G)$.
+Effectively, we will enumerate $\oblq{B}(G)$ by first generating its maximal elements and then use the fact that $\oblq{B}(G)$ is closed under the subset operation, which takes $\bigOs{2^n}$ time.
+
+\begin{lemma}
+    \label{lem:complementary_obliques}
+    The maximal obliques of $\Hyper{B}(G)$ are exactly the complements of the maximal bicliques of $G$.
+\end{lemma}
+
+\begin{tproof}
+    $(\Rightarrow)$ Let $X \in \oblq{B}$ be a maximal oblique. By definition, there exists some $B \in \biq(G)$ such that $X \cap B = \emptyset$, which implies that $X \subseteq \overline{B}$.
+    Note that, if $X \subset \overline{B}$, there is some $v \in \overline{B} \setminus X$, which implies that $(X \cup \{v\}) \cap B = \emptyset$ and that $X$ is not a maximal oblique.
+    
+    $(\Leftarrow)$ Let $B \in \biq(G)$. By definition, $\overline{B} \in \oblq{B}$ and must be maximal because $\{B, \overline{B}\}$ is a partition of $V(G)$.
+\end{tproof}
+
+\begin{corollary}
+    \label{col:is_maximal_oblique}
+    Given a graph $G = (V, E)$ and a subset $X \subseteq V(G)$, there exists an $O(n(n - |X|))$-time algorithm to determine if $X$ is a maximal oblique.
+\end{corollary}
+
+\begin{theorem}
+    There is an $\bigOs{2^n}$ time algorithm for \textsc{biclique coloring}.
+\end{theorem}
+
+\begin{tproof}
+    Our goal is to make use of Theorem~\ref{thm:inc_exc} to solve an instance of \textsc{exact cover}, with $A = V(G)$, $\mathcal{F} = \transs{B}(G)$ and $k$ the partition size.
+    Lemma~\ref{lem:transversal_colorings} guarantees that there is an answer to our instance of \textsc{biclique coloring} if and only if there is an answer to the corresponding \textsc{exact cover} instance.
+    
+    To compute $\transs{B}(G)$, for each $X \in 2^{V(G)}$, we use Lemma~\ref{lem:complementary_obliques} and Corollary~\ref{col:is_maximal_oblique} to say whether or not $X$ is a maximal oblique of $\Hyper{B}(G)$.
+    
+    Afterwards, we compute $\oblq{B}(G)$ from its maximal elements using Lemma~\ref{lem:down_closure}, and use the fact that $\trans{B}(G) = 2^{V(G)} \setminus \oblq{B}(G)$ and complement each transversal to obtain $\transs{B}(G)$.
+    Clearly, this procedure takes $\bigOs{2^n}$ to construct $\transs{B}(G)$ and an additional $\bigOs{2^n}$ to use Theorem~\ref{thm:inc_exc}.
+\end{tproof}
+
+\section{Algorithms Parameterized by Neighbourhood Diversity}
+
+\begin{definition}[Neighbourhood Diversity]
+    A graph $G = (V,E)$ has neighbourhood diversity $\nd(G) = d$ if it can be $d$-partitioned in $\{D_1, \dots, D_d\}$, with each $D_i$ being a type class of $G$.
+\end{definition}
+
+As previously discussed, a type is a maximal set of vertices that are either true or false twins to each other.
+If $D_i$ is composed of true twins, we say that it is a \tdef{true twin class} $T_i$ and, clearly, $G[D_i]$ is clique.
+Similarly, if $D_i$ is composed of false twins, it is a \tdef{false twin class} $F_i$ and $G[D_i]$ is an independent set.
+When $|D_i| = 1$, we treat the class differently depending on the problem.
+
+\subsection{Biclique Coloring}
+
+For \textsc{biclique coloring}, if there is some $D_i$ with a single vertex, we shall treat it as a true twin class.
+
+\begin{observation}
+    \label{obs:biclique_true_twins}
+    Given $G$ and a true twin class $T_i$ of $G$, any $k$-biclique-coloring $\varphi$ of $G$ has $|\varphi(T_i)| = |T_i|$.
+\end{observation}
+
+\begin{lemma}
+    \label{lem:biclique_false_twins}
+    Given $G$ and a false twin class $F \subset V(G)$, any  $k$-biclique-coloring $\varphi'$ of $G$ can be changed into a $k$-biclique-coloring $\varphi$ of $G$ such that $|\varphi(F)| \leq 2$.
+\end{lemma}
+
+\begin{tproof}
+    If $|\varphi'(F)| \leq 2$, $\varphi = \varphi'$.
+    Otherwise, there exists $f_1, f_2, f_3 \in F$ with three different colors. 
+    Since every maximal biclique $B$ of $G$ with at least one element of $F$ has that $F \subset B$ and thus $|\varphi'(B)| \geq 3$.
+    By making $\varphi(f_1) = \varphi'(f_1)$ and $\varphi(f_3) = \varphi(f_2) = \varphi'(f_2)$, we obtain $|\varphi(B)| \geq |\varphi(F)| \geq 2$.
+    Repeating this process until $|\varphi(F)| = 2$ does not make any biclique monochromatic and completes the proof.
+\end{tproof}
+
+The central idea of our parameterized algorithm is to build an induced subgraph $H$ of $G$ and, afterward, use the results established here and in Section~\ref{sec:biclique_exact} to show that the solution to a particular instance of \textsc{set multicover} derived from $H$ can be transformed in a solution to \textsc{biclique coloring} of $G$.
+
+
+\begin{definition}[B-Projection and B-Lifting]
+    Let $T_i$ and $F_j$ be as previously discussed.
+    We define the following projection rules:
+    $\forall t_i^q \in T_i,\ \Proj{B}(t_i^q) = \{t'_i\}$;
+    for $f_j^1\in F_j,\ \Proj{B}(f_j^1) = \{f'{_j^1}\}$;
+    $\forall f_j^r \in F_j \setminus \{f_j^1\}$, $\Proj{B}(f_j^r) = \{f'{_j^2}\}$
+    and $\Proj{B}(X) = \bigcup_{u \in X} \Proj{B}(u)$.
+    
+    Lifting rules are defined as $\Lift{B}(t'_i) = \{t_i\}$; $\Lift{B}(f'{_j^1}) = \{f_j^1\}$; $\Lift{B}(f'{_j^2}) = F_j \setminus \{f_j^1\}$ and $\Lift{B}(Y) = \bigcup_{u \in Y} \Lift{B}(u)$. Note that $\Proj{B}(\Lift{B}(X)) = X$, for any $X$.
+\end{definition}
+
+
+\begin{definition}[B-Projected Graph]
+    The B-projected graph $H$ of $G$ is defined as $V(H) = \Proj{B}(V(G))$ and $v'_iv'_j \in E(H)$ if and only if there exist $v_i \in \Lift{B}(v'_i)$ and $v_j \in \Lift{B}(v'_j)$ such that $v_iv_j \in E(G)$. $H$ is an induced subgraph of $G$.
+\end{definition}
+
+\begin{figure}[!htb]
+    \centering
+        \begin{tikzpicture}[scale=1]
+            \GraphInit[unit=3,vstyle=Normal]
+            \SetVertexNormal[Shape=circle, FillColor=black, MinSize=2pt]
+            \tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+            \SetVertexNoLabel
+            \Vertex[x=0,y=0]{a}
+            \Vertex[x=-1,y=0]{b}
+            \Vertex[x=0,y=-1]{c}
+            
+            
+            
+            \Vertex[x=1,y=0]{h}
+            \Vertex[x=0,y=1]{i}
+            \Vertex[a=45, d=1]{j}
+            
+            \Edge(a)(b)
+            \Edge(a)(c)
+            
+            \Edge(a)(h)
+            \Edge(a)(i)
+            \Edge(a)(j)
+            \begin{scope}[shift={(-1.65cm, 0cm)}]
+                \grComplete[RA=0.65]{3}
+            \end{scope}
+            \begin{scope}[shift={(0cm, -1.65cm)}]
+                \grComplete[RA=0.65]{4}
+            \end{scope}
+        \end{tikzpicture}
+    \hfill
+        \begin{tikzpicture}[scale=1]
+            \GraphInit[unit=3,vstyle=Normal]
+            \SetVertexNormal[Shape=circle, FillColor=black, MinSize=2pt]
+            \tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+            \SetVertexNoLabel
+            \Vertex[x=0,y=0]{a}
+            \Vertex[x=-1,y=0]{b}
+            \Vertex[x=0,y=-1]{c}
+            \Vertex[x=0,y=-1.65]{d}
+            \Vertex[x=-1.65,y=0]{e}
+            
+            
+            
+            \Vertex[x=1,y=0]{h}
+            \Vertex[x=0,y=1]{i}
+            
+            \Edge(a)(b)
+            \Edge(a)(c)
+            
+            \Edge(a)(h)
+            \Edge(a)(i)
+            \Edge(b)(e)
+            \Edge(c)(d)
+        \end{tikzpicture}
+    \hfill
+    
+    
+    \caption{A graph (left), and its B-projected graph (right).}
+    \label{fig:b-projected}
+\end{figure}
+
+
+For the remainder of this section, $G$ will be the input graph to \textsc{biclique coloring} and $H$ the B-Projected graph of $G$.
+Our \textsc{set multicover} instance consists of $V(H)$ as the ground set, $\transs{B}(H)$ as the covering family, the size $k$ of the cover the same as the coloring of $G$ and $c(t_i') = |T_i|$ for every true twin class $T_i$ and $c(f'{_j^1}) = c(f'{_j^2}) = 1$ for each false twin class $F_j$.
+
+The next observation follows directly from the fact that $\transs{B}(H)$ is closed under the subset operation, while the subsequent results allow us to move freely between $\transs{B}(G)$ and $\transs{B}(H)$.
+
+\begin{observation}
+    \label{obs:fatless_multicover}
+    If there is a minimum $k$-multicover $\psi$ of $V(H)$ by $\transs{B}(H)$, then there exists a minimum $k$-multicover $\psi' = \{\psi_1, \dots, \psi_k\}$ such that $\left|\left\{j \mid u \in \psi_j\right\}\right| = c(u)$ for every $u \in V(H)$.
+\end{observation}
+
+\begin{lemma}
+    \label{lem:lift_proj_biclique}
+    If $B' \in \biq(H)$ then $B = \Lift{B}(B') \in \biq(G)$. Conversely, if $B \in \biq(G)$ and $B$ is not contained in any true twin class, then $B' = \Proj{B}(B) \in \biq(H)$.
+\end{lemma}
+
+\begin{tproof}
+    ($\Rightarrow$) Note that $B$ is a biclique by the definition of $\Lift{B}$ and the fact that $B'$ is a biclique. By the contrapositive, suppose that $B \notin \biq(G)$ and that $u \in V(G)$ is such that $B \cup \{u\}$ is a (not necessarily maximal) biclique of $G$. Note that either:
+    (i) if $u \in F_j$ then $F_j \nsubseteq B$ and $\Proj{B}(u) \notin B'$, because $u \notin \Lift{B}(f'{_j^1})$ or $u \notin \Lift{B}(f'{_j^2})$;
+    or (ii) if $u \in T_i$ then $T_i \cap B = \emptyset$, which implies that $\Proj{B}(u) \notin B'$.
+    %Since $H$ is an induced subgraph of $G$, no new bicliques can be created in $H$ that were not present in $G$.
+    Since $B \cup \{u\}$ is a biclique, $\Proj{B}(u)$ is adjacent to only one partition of $B'$.
+    The fact that $\Proj{B}(u) \notin B'$ implies that $\Proj{B}(B \cup \{u\}) = \Proj{B}(B) \cup \Proj{B}(u) = B' \cup \Proj{B}(u)$ is a biclique of $H$ and $B'$ is not maximal.
+    
+    ($\Leftarrow$) By the definition of $\Proj{B}$, $B' = (X, Y)$ must be a biclique of $H$. By the contrapositive, there is $u' \in V(H)$ such that $B' \cup \{u'\}$ is a (not necessarily maximal) biclique of $H$, and let $u \in \Lift{B}(u')$. By the definition of $\Lift{B}$, it follows that $u$ can only be adjacent to one of partition of $B$, say $\Lift{B}(X)$. Therefore, $u' \in Y$ and, for each $v \in \Lift{B}(Y)$, $uv \notin E(G)$, otherwise there would be $v' \in \Proj{B}(v)$ with $u'v' \in E(H)$. Therefore, $B \cup \{u\}$ is a biclique of $G$ and $B$ is not maximal.
+\end{tproof}
+
+
+\begin{theorem}
+    \label{thm:lifted_transversal}
+    $X \subseteq V(H)$ is in $\transs{B}(H)$ if and only if $\Lift{B}(X) \in \transs{B}(G)$.
+\end{theorem}
+
+\begin{tproof}
+    ($\Rightarrow$) Recall that $X \in \transs{B}(H)$ if and only if no maximal biclique of $H$ is contained in $X$.
+    It is clear that, for every $B' \in \biq(H)$, $B' \nsubseteq X$ implies that $\Lift{B}(B') \nsubseteq \Lift{B}(X)$, since no two vertices of $H$ are lifted to the same vertex of $G$, and $\Lift{B}(B') \in \biq(G)$ due to Lemma~\ref{lem:lift_proj_biclique}.
+    Moreover, no biclique of $G$ entirely contained in a true twin class can be a subset of $\Lift{B}(X)$. As such, $\Lift{B}(X)$ contains a maximal biclique $B$ only if $\Proj{B}(B) \subseteq X$ and $\Proj{B}(B) \notin \biq(H)$, which is impossible due to Lemma~\ref{lem:lift_proj_biclique} and the assumption that $B$ is maximal.
+    
+    ($\Leftarrow$) Taking the contrapositive, $X \notin \transs{B}(H)$ implies that there is some maximal biclique $B'$ of $H$ such that $B' \subseteq X$. This implies that $\Lift{B}(B') \subseteq \Lift{B}(X)$, and, since $\Lift{B}(B')$ is a maximal biclique of $G$ due to Lemma~\ref{lem:lift_proj_biclique}, it holds that $\Lift{B}(X)$ is not a complement of transversal of $G$.
+\end{tproof}
+
+
+\begin{theorem}
+    \label{thm:lifted_multicover}
+    $\psi$ is a $k$-multicover of $H$ if and only if $G$ is $k$-biclique-colorable.
+\end{theorem}
+
+\begin{tproof}
+    Recall that a $k$-partition is a $k$-biclique-coloring if and only if all elements of the partition belong to $\transs{B}(G)$. By the construction of our set multicover instance, we have that, for each $\psi_i$, $\psi_i \in \transs{B}(H)$. By making $\varphi = \left\{\Lift{B}(\psi_1), \dots, \Lift{B}(\psi_k)\right\}$, and recalling Observation~\ref{obs:fatless_multicover}, we have that each vertex $u \in V(H)$ is covered exactly $c(u)$ times; moreover, since true twins appear multiple times and types are equivalence relations, we can attribute to each $t_i^q$ any of the $|T_i|$ colors available, as long as no two receive the same color.
+    Therefore, $\varphi$, after properly allocating the true twin classes, is a $k$-partition of $V(G)$.
+    Due to Theorem~\ref{thm:lifted_transversal}, every $\Lift{B}(\psi_i)$ is a complement of transversal and therefore $\varphi$ is a valid $k$-biclique-coloring of $G$.
+    
+    For the converse, we first make use of Lemma~\ref{lem:biclique_false_twins} to guarantee that every false twin class is in at most two color classes. In particular, if two colors are required we force $f_j^1$ to have the smallest color and $F_j \setminus \{f_j^1\}$ to have the other one.
+    Afterwards, for every color class $\varphi_i$, we take $\psi_i = \Proj{B}(\varphi_i)$.
+    Note that, each color class has at most one element of each $T_i$. Also, for each $F_j$ and any two distinct color classes $\varphi_l, \varphi_r$, $\Proj{B}(\varphi_l) \cap \Proj{B}(\varphi_r) \cap \Proj{B}(F_j) = \emptyset$, since $f_j^1$ has a different color from $F_j \setminus \{f_j^1\}$.
+    These observations guarantee that $\Lift{B}(\psi_i) = \varphi_i$ and, because of Theorem~\ref{thm:lifted_transversal}, $\psi_i \in \transs{B}(H)$.
+    Finally, $\psi = \{\psi_1, \dots, \psi_k\}$ will be a valid $k$-multicover of $H$ because every vertex of $V(H)$ will be covered the required amount of times.
+\end{tproof}
+
+Note that the size of the largest true twin class is exactly the largest coverage requirement $b$ of our \textsc{set multicover} instance. Moreover, since we need at least $b$ colors to biclique color $G$, it holds that $b \leq k$.
+
+\begin{theorem}
+    \label{thm:fpt_biclique}
+    There exists an $\bigOs{(k+2)^{2\nd(G)}}$ time algorithm to verify if $G$ is $k$-biclique-colorable.
+\end{theorem}
+
+\begin{tproof}
+        Start by computing the type partition of $G$ in $\bigO{n^3}$ time and building $H$ in $O(n + m)$.
+        Afterwards, solve the corresponding \textsc{set multicover} instance in $\bigOs{(k+2)^{2d}}$ time using Theorem~\ref{thm:set_multicover} and lift the multicover using the construction described in the proof of Theorem~\ref{thm:lifted_multicover} in $\bigO{n}$.
+\end{tproof}
+
+\subsection{Clique Coloring}
+
+For \textsc{clique coloring}, a type class with a single vertex is treated as a false twin class.
+Unlike \textsc{biclique coloring}, both true and false twin classes are well behaved, one of the reasons we get a much better algorithm for this problem.
+
+
+\begin{lemma}
+    \label{lem:clique_false_twins}
+    Given $G$ and a false twin class $F \subset V(G)$, any  $k$-clique-coloring $\varphi'$ can be changed into a $k$-clique-coloring $\varphi$ such that $|\varphi(F)| = 1$.
+\end{lemma}
+
+    \begin{tproof}
+    If $|\varphi'(F)| = 1$, we are done.
+    Otherwise, there exists $f_1, f_2 \in F$ such that $\varphi'(f_1) \neq \varphi'(f_2)$.
+    For every maximal clique $C_1$ where $f_1 \in C_1$, define $C' = C \setminus \{f_1\}$ and note that $C_2 = C' \cup \{f_2\}$ is also a maximal clique.
+    Since $\varphi'$ is an  coloring $|\varphi'(C') \cup \{\varphi'(f_1)\}| \geq 2$.
+    Therefore, making $\varphi(f_2) = \varphi(f_1) = \varphi'(f_1)$ does not make $|\varphi(C_2)| = 1$. 
+    Repeating this until $|\varphi(F)| = 1$ does not make any clique that intercepts $F$ monochromatic and completes the proof.
+    \end{tproof}
+    
+\begin{lemma}
+    \label{lem:clique_true_twins}
+    Given $G$ and  a true twin class $T \subseteq V(G)$, any  $k$-clique-coloring $\varphi'$ can be changed into a $k$-clique-coloring $\varphi$ such that $|\varphi(T)| \leq 2$.
+\end{lemma}
+
+\begin{tproof}
+    If $|\varphi'(T)| \leq 2$, we are done.
+    Otherwise, there exists $t_1, t_2, t_3 \in T$ with different colors.
+    Note that, for every maximal clique $C$ that intercepts $T$, $C \subseteq T$.
+    Therefore, $|\varphi'(C)| \geq |\varphi'(T)| \geq 3$.
+    By making $\varphi(t_1) = \varphi'(t_1)$ and $\varphi(t_3) = \varphi(t_2) = \varphi'(t_2)$ we have $|\varphi(C)| \geq |\varphi(T)| \geq 2$.
+    Repeating this process until $|\varphi(T)| \leq 2$ does not make any clique that intercepts $T$ monochromatic and completes the proof.
+\end{tproof}
+
+We use sightly different projection and lifting rules for this problem.
+However, they still rely on the fact that a type has a constant bound on the number of colors.
+
+\begin{definition}[C-Projection and C-Lifting]
+    Let $T_i$ be any true twin class and $F_j$ be any false twin class.
+    We define the following projection rules:
+    for $t_i^1 \in T_i,\ \Proj{C}(t_i^1) = \{t'{_i^1}\}$,
+    $\forall t_i^q \in T_i \setminus \{t_i^1\}$, $\Proj{C}(t_i^q) = \{t'{_i^2}\}$,
+    $\forall f_j^r \in F_j$, $\Proj{C}(f_j^r) = \{f'_j\}$
+    and $\Proj{C}(X) = \bigcup_{u \in X} \Proj{C}(u)$.
+    
+    Lifting rules are defined as $\Lift{C}(t'{_i^1}) = \{t_i^1\}$,
+    $\Lift{C}(t'{_i^2}) = T_i \setminus \{t_i^1\}$,
+    $\Lift{C}(f'_j) = \{f_j^1\}$ and $\Lift{C}(Y) = \bigcup_{u' \in Y} \Lift{C}(u')$. Note that $\Proj{C}(\Lift{C}(X)) = X$, for any $X$.
+\end{definition}
+
+\begin{definition}[C-Projected Graph]
+    The C-projected graph $H$ of $G$ is defined as $V(H) = \Proj{C}(V(G))$ and $v'_iv'_j \in E(H)$ if and only if $\Lift{C}(v'_i)$ and $\Lift{C}(v'_j)$ are neighbours in $G$. Moreover, $H$ is an induced subgraph of $G$.
+\end{definition}
+
+\begin{figure}[!htb]
+    \centering
+        \begin{tikzpicture}[scale=1]
+            \GraphInit[unit=3,vstyle=Normal]
+            \SetVertexNormal[Shape=circle, FillColor=black, MinSize=2pt]
+            \tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+            \SetVertexNoLabel
+            \Vertex[x=0,y=0]{a}
+            \Vertex[x=-1,y=0]{b}
+            \Vertex[x=0,y=-1]{c}
+            
+            
+            
+            \Vertex[x=1,y=0]{h}
+            \Vertex[x=0,y=1]{i}
+            \Vertex[a=45, d=1]{j}
+            
+            \Edge(a)(b)
+            \Edge(a)(c)
+            
+            \Edge(a)(h)
+            \Edge(a)(i)
+            \Edge(a)(j)
+            \begin{scope}[shift={(-1.65cm, 0cm)}]
+                \grComplete[RA=0.65]{3}
+            \end{scope}
+            \begin{scope}[shift={(0cm, -1.65cm)}]
+                \grComplete[RA=0.65]{4}
+            \end{scope}
+        \end{tikzpicture}
+    \hfill
+        \begin{tikzpicture}[scale=1]
+            \GraphInit[unit=3,vstyle=Normal]
+            \SetVertexNormal[Shape=circle, FillColor=black, MinSize=2pt]
+            \tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+            \SetVertexNoLabel
+            \Vertex[x=0,y=0]{a}
+            \Vertex[x=-1,y=0]{b}
+            \Vertex[x=0,y=-1]{c}
+            
+            
+            
+            \Vertex[a=45, d=1]{j}
+            
+            \Edge(a)(b)
+            \Edge(a)(c)
+            
+            \Edge(a)(j)
+            \begin{scope}[shift={(-1.65cm, 0cm)}]
+                \grComplete[RA=0.65]{3}
+            \end{scope}
+            \begin{scope}[rotate=90,shift={(-1.65cm, 0cm)}]
+                \grComplete[RA=0.65]{3}
+            \end{scope}
+        \end{tikzpicture}
+    \hfill
+    
+    
+    \caption{A graph (left), and its C-projected graph (right).}
+    \label{fig:c-projected}
+\end{figure}
+
+
+For the remainder of this section, $G$ will be the input graph to \textsc{clique coloring} and $H$ the C-Projected graph of $G$.
+
+
+\begin{lemma}
+    \label{lem:lift_proj_clique}
+    If $C' \in \clq(H)$ then $\Lift{C}(C') \in \clq(G)$. Conversely, if $C \in \clq(G)$ then $\Proj{C}(C) \in \clq(H)$.
+\end{lemma}
+
+\begin{tproof}
+    ($\Rightarrow$) Note that $C = \Lift{C}(C')$ is a clique due to the definition of $\Lift{C}$ and the fact that $C'$ is a clique.
+    By the contrapositive, suppose that $C$ is not a maximal clique.
+    In this case, there is some vertex $u \in V(G)$ such that $C \cup \{u\}$ is a (not necessarily maximal) clique of $G$. Note that either:
+    (i) if $u \in T_i$, $T_i \nsubseteq C$ and $u \notin \Lift{C}(t'{_i^1})$ or $u \notin \Lift{C}(t'{_i^2})$, thus $\Proj{C}(u) \notin C'$;
+    (ii) if $u \in F_j$, $F_j \cap C = \emptyset$ and $\Proj{C}(u) \notin C'$.
+    Since no two vertices of $H$ are lifted to the same vertex of $G$ and $\Proj{C}(u) \notin C'$, it follows that  $\Proj{C}(C \cup \{u\}) = \Proj{C}(C) \cup \Proj{C}(u) = C' \cup \Proj{C}(u)$ is a clique by the definition of $\Proj{C}$.
+    
+    ($\Leftarrow$) Clearly, $C' = \Proj{C}(C)$ is a clique of $H$, due to the definition of $\Proj{C}$.
+    Suppose, however, that $C' \notin \clq(H)$, which implies that there is some $u' \in V(H)$ such that $C' \cup \{u'\}$ is a clique of $H$ and let $u \in \Lift{C}(u')$.
+    By the definition of $\Lift{C}$, $C \subseteq N(u)$ if and only if $\Proj{C}(C) \subseteq N(u')$, which implies that $C'$ is not maximal only if $C$ is not maximal.
+    A contradiction that completes the proof.
+\end{tproof}
+
+\begin{theorem}
+    \label{thm:projected_clique_coloring}
+     $G$ is $k$-clique-colorable if and only if $H$ is $k$-clique-colorable.
+\end{theorem}
+
+\begin{tproof}
+    Let $\varphi_G$ be a $k$-clique-coloring of $G$ that complies with Lemmas~\ref{lem:clique_false_twins} and~\ref{lem:clique_true_twins}.
+    Without loss of generality, for every $T_i$, we color $t_i^1$ with one color and $T_i \setminus \{t_i^1\}$ with the other, if it exists, otherwise color every vertex of $T_i$ with the same color.
+    We define the $k$-clique-coloring of $H$ as $\varphi_H(u') = \varphi_G(u \in \Lift{C}(u'))$, for every $u' \in V(H)$.
+    Suppose now that there exists some $C' \in \clq(H)$ such that $|\varphi_H(C')| = 1$.
+    By Lemma~\ref{lem:lift_proj_clique}, $\Lift{C}(C')$ is a maximal clique of $G$ and, since $|\varphi_G\left(\Lift{C}(C')\right)| = 1$, it holds that $\Lift{C}(C')$ is a monochromatic maximal clique of $G$ and $\varphi_G$ is not a valid $k$-clique-coloring, which contradicts the hypothesis.
+        
+    Now, let $\varphi_H$ be a $k$-clique-coloring of $H$, and define $\varphi_G(u) = \varphi_H(u' \in \Proj{C}(u))$.
+    By assuming that there exists some $C \in \clq(G)$ such that $\left|\varphi_G(C)\right| = 1$ and using Lemma~\ref{lem:lift_proj_clique}, it is clear that $\left|\varphi_H(\Proj{C}(C))\right| = 1$ which is impossible, since $\varphi_H$ is a valid $k$-clique-coloring of $H$.
+\end{tproof}
+
+\begin{theorem}
+    \label{thm:fpt_clique}
+    There exists an $\bigOs{2^{2\nd(G)}}$ time algorithm for \textsc{clique coloring}
+\end{theorem}
+
+\begin{tproof}
+    Start by computing the optimal type partition of $G$ in $\bigO{n^3}$ time and building $H$ in $\bigO{n + m}$.
+    Afterwards, color $H$ in $\bigOs{2^{2d}}$ time using Theorem~\ref{thm:clique_color_algorithm} and lift the coloring using the construction described in the proof of Theorem~\ref{thm:projected_clique_coloring} in $\bigO{n}$.
+\end{tproof}

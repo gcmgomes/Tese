@@ -1,0 +1,52 @@
+\chapter{Introduction}
+\label{ch:intro}
+
+Graphs are a mathematical tool mainly used to model situations where objects have some sort of interaction with each other.
+As such, they naturally arise on a plethora of problems from the most varied domains, ranging from geographical data to computer science, physics, chemistry and biology.
+Computer science, in particular, is heavily reliant on graphs and their many properties, being a core component of many database, network and artificial intelligence algorithms.
+
+Some applications for graphs usually seek a partition of the graph's vertices and edges such that each member of the partition satisfies some key properties for the problem.
+Such is the case for vertex coloring, where we want to partition the graph's vertices such that, at each member of the partition, no two are adjacent.
+We may further desire that the size of each partition member be as close as possible to each other; this added constraint generates the equitable coloring problem, which appears to be much harder to solve even for cases where classical vertex coloring is efficiently solvable.
+
+Such problems arise in different scenarios, such as communication systems (\cite{traffic_scheduling}), timetable construction (\cite{timetable}), scheduling (\cite{mutual_exclusion_scheduling}, load balancing (\cite{domain_decomposition}) and register allocation (\cite{fernando_chordal}).
+
+Recently, partitioning problems of graphs have changed the constraint that two adjacent vertices must have a different color.
+In its place, it may be required that no maximal clique or biclique (complete bipartite graph) of the given graph may be monochromatic.
+These problems are called clique coloring and biclique coloring, respectively.
+They are defined and explored purely from a theoretical point of view, but their underlying motivation, especially for clique coloring, is the centrality that these maximal structures play across many of the results and definitions of graph theory.
+
+One may also wonder about the relationship between these different structures, their intersections and other characteristics that may aid in the design of efficient algorithms or proofs that one is not expected to exist.
+The intersection graphs of these maximal structures are usually hard to characterize and provide few insights on the topology of the underlying graph.
+Nevertheless, their understanding was crucial to the development of a consistent theory that is used to describe important classes, such as chordal graphs and cographs.
+
+In this thesis proposal, three coloring problems were investigated, either in the general case or for some particular graph class, namely: equitable coloring, clique coloring and biclique coloring.
+For intersection graphs of maximal structures, we introduce and investigate star graphs (intersection graph of maximal stars of a graph), in the hopes that they may aid in the understanding of an, apparently, more complex class: biclique graphs.
+
+Most of the performed analysis is, mainly, from the complexity point of view.
+As such, our efforts are concentrated towards the discovery of efficient algorithms for each of our problems or, when we are unable to give one, present a hardness reduction, indicating that the so desired algorithm may, in fact, not exist.
+Within complexity theory, we deal with the classical univariate theory, built around $\NPcness$ and the polynomial hierarchy, and the multivariate theory of parameterized complexity, which encompasses $\FPT$ algorithms and the $\W$ hierarchy.
+
+The following is a summary of the topics and results discussed in this thesis proposal.
+
+\begin{itemize}
+    \item Chapter~\ref{ch:prelims} defines most of the notation used throughout this work.
+    Moreover, it also revisits some of the main results and concepts for each problem. 
+    We highlight that the tables present in this chapter consist of, to the best of our knowledge, the state of the art for each of the investigated coloring problems.
+    \item Chapter~\ref{ch:eq_coloring} tackles the equitable coloring problem. In particular, we deal with chordal graphs and one of its subclasses, block graphs.
+    The main results are: a $\bigO{n^{2k+2}}$ time algorithm for chordal graphs;
+    a linear time algorithm for \{net, claw\}-free block graphs;
+    an $\bigO{n^2 + nk}$ time algorithm for claw-free block graphs;
+    an $\bigO{kn^2 + nk}$ time algorithm for claw-free chordal graphs;
+    an $\NPcness$ proof for net-free block graphs which are also cographs;
+    and an $\NPcness$ proof for net-free block graphs which have diameter equal to 4.
+    \item Chapter~\ref{ch:cb_coloring} discusses both clique and biclique colorings.
+    At first, a $\bigOs{2^n}$ time algorithm is given for biclique coloring, exploring ideas previously used in the literature for clique coloring.
+    Afterwards, a $\bigOs{(k+2)^{2d}}$ time algorithm parameterized by neighbourhood diversity and biclique chromatic number is shown for biclique coloring.
+    A similar idea is used to show a $\bigOs{2^{2d}}$ time algorithm parameterized by neighbourhood diversity for clique coloring.
+    \item Chapter~\ref{ch:star_graph} deals with star graphs.
+    It begins by defining the class and presenting a Krausz type characterization for it.
+    After a brief discussion on the complexity of verifying a solution to the star graph recognition problem, it is shown that every edge of a star graph is contained in a triangle.
+    Finally, we show an interesting link between star graphs of triangle-free graphs and squares of graphs, which allows us to conclude that recognizing star graphs of graphs with girth exactly 4 is $\NPc$.
+    \item Chapter~\ref{ch:cfw} presents our conclusions and summarizes the future work described along this proposal.
+\end{itemize}
