@@ -55,7 +55,7 @@ An illustration of a $(2,3)$-spool is shown in Figure~\ref{fig:spool}.
                 }
             }
     \end{tikzpicture}
-    \caption{\centering A $(2,3)$-spool. Circled vertices are exterior vertices.\label{fig:spool}}
+    \caption{A $(2,3)$-spool. Circled vertices are exterior vertices.\label{fig:spool}}
 \end{figure}
 
 \begin{observation}
@@ -87,7 +87,7 @@ Chv\'atal~\cite{chvatal_matching_cut} proved that \textsc{Matching Cut} is \NP-h
 \begin{proof}
     Our reduction is from the \pname{3-Uniform Hypergraph Bicoloring} problem, which is \NP-hard; see~\cite{lovasz_hypergraph}. %\ig{Say that this reduction is strongly inspired by~\cite{chvatal_matching_cut}!}
 
-    \probl{3-Uniform Hypergraph Bicoloring}{A hypergraph $\mathcal{H}$ with exactly three vertices in each hyperedge.}{Can we 2-color $V(\mathcal{H})$ such that no hyperedge is monochromatic?}
+    \problem{3-Uniform Hypergraph Bicoloring}{A hypergraph $\mathcal{H}$ with exactly three vertices in each hyperedge.}{Can we 2-color $V(\mathcal{H})$ such that no hyperedge is monochromatic?}
 
     Throughout this proof, $i$ is an index representing a color, $j$ and $k$ are redundancy indices used to increase the degree of some sets of vertices, and $\ell$ and $r$ are indices used to refer to separations of sets of exterior vertices.
 
@@ -169,7 +169,7 @@ Chv\'atal~\cite{chvatal_matching_cut} proved that \textsc{Matching Cut} is \NP-h
                 }
             \end{scope}
         \end{tikzpicture}
-        \caption{\centering Relationships between exterior vertices of a vertex gadget ($d=3$).\label{fig:vert_relations}}
+        \caption{Relationships between exterior vertices of a vertex gadget ($d=3$).\label{fig:vert_relations}}
     \end{figure}
 
     For each color $i \in [2]$, add a $(d, n + 2m)$-spool to $G$, where $n = |V(\mathcal{H})|$ and $m = |E(\mathcal{H})|$.
@@ -299,11 +299,11 @@ Chv\'atal~\cite{chvatal_matching_cut} proved that \textsc{Matching Cut} is \NP-h
                 }
             \end{scope}
         \end{tikzpicture}
-        \caption{\centering Relationships between exterior vertices of color gadgets ($d=3$).\label{fig:color_relations}}
+        \caption{Relationships between exterior vertices of color gadgets ($d=3$).\label{fig:color_relations}}
     \end{figure}
 
     As a first step to connect color gadgets and vertex gadgets, we add every edge between $s(v^*, i)$ and $C_i(v, i)$, every edge between $S(v^*, i) \setminus \{s(v^*, i)\}$ and $C_i(v, i) \setminus \{c_{i}(v, i)\}$, a perfect matching between $S(v^*, i) \setminus \{s(v^*, i)\}$ and $C_{3-i}(v, i) \setminus \{c_{3-i}(v, i)\}$, and the edge $s(v^*, i)c_i(v, 3-i)$.
-    Note that this last edge is fundamental, not only because it increases the degrees to the desired value, but also because, if both color gadgets belong to the same side of the cut, every $s(v^*, i)$ will have the same color and, since spools are monochromatic, so would be the {\sl entire} graph, as discussed in more detail below.
+    Note that this last edge is fundamental, not only because it increases the degrees to the desired value, but also because, if both color gadgets belong to the same side of the cut, every $s(v^*, i)$ will have the same color and, since spools are monochromatic, so would be the \textit{entire} graph, as discussed in more detail below.
     Also note that, aside from $s(v^*, i)$, no other vertex has more than $d$ neighbors outside of its spool.
     The edges described in this paragraph increase the degree of every $s(v^*, i)$ by $d + 1$, yielding a total degree of $2d+2$, of every vertex in $S(v^*, i) \setminus \{s(v^*, i)\}$ to $(d+2) + (d-1) + 1 = 2d+2$, of every vertex in $C_{i}(v, i) \setminus \{c_i(v, i)\}$ to $(d+2) + d = 2d+2$, of every vertex in $C_{i}(v, 3-i) \setminus \{c_i(v, 3-i)\}$ to $(2d+1) + 1 = 2d+2$, and of every $c_{\ell}(v, i)$ to $(2d+1) + 1 = 2d+2$.
     Figure~\ref{fig:color_vertex_relations} gives an example of these connections.
@@ -413,7 +413,7 @@ Chv\'atal~\cite{chvatal_matching_cut} proved that \textsc{Matching Cut} is \NP-h
                 }
             \end{scope}
         \end{tikzpicture}
-        \caption{\centering Relationships between exterior vertices of color and vertex gadgets ($d=3$).\label{fig:color_vertex_relations}}
+        \caption{Relationships between exterior vertices of color and vertex gadgets ($d=3$).\label{fig:color_vertex_relations}}
     \end{figure}
 
 
@@ -480,7 +480,7 @@ Chv\'atal~\cite{chvatal_matching_cut} proved that \textsc{Matching Cut} is \NP-h
                 \Edge(ep0)(ep1)
             \end{scope}
         \end{tikzpicture}
-        \caption{\centering Hyperedge gadget ($d=3$).\label{fig:hyper_relations}}
+        \caption{Hyperedge gadget ($d=3$).\label{fig:hyper_relations}}
     \end{figure}
 
     Now, suppose we are given a valid bicoloring $\varphi$ of $\mathcal{H}$, and our goal is to construct a $d$-cut $(A, B)$ of $G$. Put the gadget of color 1 in $A$ and the other one in $B$.
@@ -637,7 +637,7 @@ For more on branching algorithms, we refer to~\cite{exact_exponential_algorithms
          B2 & 1.0000 & 1.7320 & 1.9129 & 1.9679 & 1.9873 & 1.9947 & 1.9977 \\
 
     \end{tabular}\smallskip
-    \caption{\centering Branching factors for some values of $d$.}
+    \caption{Branching factors for some values of $d$.}
     \label{tab:exact_values}
 \end{table}
 \end{proof} 

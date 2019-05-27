@@ -19,7 +19,6 @@ In this section we consider as the parameter the maximum number of edges crossin
 \end{theorem}
 
 To be able to apply Theorem~\ref{thm:marx}, we first need to specify a graph class to which, on the line graph, our separators correspond. We must also be careful to guarantee that the removal of a separator in the line graph leaves non-empty components in the input graph. To accomplish that, for each $v \in V(G)$, we add a private clique of size $2d$ adjacent only to it, choose one arbitrary vertex $v'$ in each of them, and our algorithm will ask for the existence of a ``special'' separator of the appropriate size between every pair of chosen vertices of two distinct private cliques. We assume henceforth that these private cliques have been added to the input graph $G$.
-%\ig{what does it mean ``choose one vertex $v'$ in each of them''?}
 
 For each integer $d \geq 1$, we define the graph class $\mathcal{G}_d$ as follows.
 
@@ -40,7 +39,7 @@ Note that $\mathcal{G}_d$ is clearly decidable and hereditary for every integer 
     The fact that $F$ is a separator of $H$ follows directly from the hypothesis that $(A, B)$ is a cut of $G$.
     Now, to show that $H[F] \in \mathcal{G}_d$, suppose for contradiction that $H[F]$ contains a  clique $Q$ with more than $d$ vertices.
     That is, there are at least $d+1$ edges of $G$ that are pairwise intersecting and with one endpoint in $A$ and the other in $B$.
-    Note, however, that for at least one of the parts, say $A$, there is also {\sl at most} one vertex with an edge in $Q \subseteq E(G)$, as otherwise there would be two non-adjacent vertices in the clique $Q \subseteq V(H)$.
+    Note, however, that for at least one of the parts, say $A$, there is also \textit{at most} one vertex with an edge in $Q \subseteq E(G)$, as otherwise there would be two non-adjacent vertices in the clique $Q \subseteq V(H)$.
     As such, $A$ has only one vertex and we conclude that every edge in $Q$ has an endpoint in $A$, but this, on the other hand, implies that $A$ has $d+1$ neighbors in $B$, contradicting the hypothesis that $(A, B)$ is a $d$-cut of $G$.
 
 
@@ -98,7 +97,7 @@ We state here an adapted definition of nice tree decomposition which shall be us
 \end{definition}
 
 
-In the next theorem, note that the assumption that the given tree decomposition is {\sl nice} is not restrictive, as any tree decomposition can be transformed into a nice one of the same width in polynomial time~\cite{Klo94}.
+In the next theorem, note that the assumption that the given tree decomposition is \textit{nice} is not restrictive, as any tree decomposition can be transformed into a nice one of the same width in polynomial time~\cite{Klo94}.
 
 \begin{theorem}\label{thm:treewidth}
     For every integer $d \geq 1$, given a nice tree decomposition of $G$ of width $\tw(G)$, \pname{$d$-Cut} can be solved in time $\bigOs{2^{\tw(G)+1}(d+1)^{2\tw(G) + 2}}$.
@@ -108,7 +107,7 @@ In the next theorem, note that the assumption that the given tree decomposition 
     As expected, we will perform dynamic programming on a nice tree decomposition.
     For this proof, we denote a $d$-cut of $G$ by $(L, R)$ and suppose that we are given a total ordering of the vertices of $G$.
     Let $(T, \mathcal{B})$ be a nice tree decomposition of $G$ rooted at a node $r \in V(T)$.
-    For a given node $x \in T$, an entry of our table is indexed by a triple $(A, \balpha, t)$, where $A \subseteq B_x$, $\balpha \in \left(\{0\} \cup [d]\right)^{\tw(G)+1}$, and $t$ is a binary value. Each coordinate $a_i$ of $\alpha$ indicates how many vertices {\sl outside} of $B_x$ the $i$-th vertex of $B_x$ has in the other side of the partition. More precisely, we denote by $f_x(A, \balpha, t)$ the binary value indicating whether or not $V(G_x)$ has a bipartition $(L_x,R_x)$ such that $L_x \cap B_x = A$, every vertex $v_i \in B_x$ has exactly $a_i$ neighbors in the other side of the partition $(L_x,R_x)$  outside of $B_x$, and both $L_x$ and $R_x$ are non-empty if and only if $t = 1$. Note that $G$ admits a $d$-cut if and only if $f_r(\emptyset, \boldsymbol{0}, 1)=1$.
+    For a given node $x \in T$, an entry of our table is indexed by a triple $(A, \balpha, t)$, where $A \subseteq B_x$, $\balpha \in \left(\{0\} \cup [d]\right)^{\tw(G)+1}$, and $t$ is a binary value. Each coordinate $a_i$ of $\alpha$ indicates how many vertices \textit{outside} of $B_x$ the $i$-th vertex of $B_x$ has in the other side of the partition. More precisely, we denote by $f_x(A, \balpha, t)$ the binary value indicating whether or not $V(G_x)$ has a bipartition $(L_x,R_x)$ such that $L_x \cap B_x = A$, every vertex $v_i \in B_x$ has exactly $a_i$ neighbors in the other side of the partition $(L_x,R_x)$  outside of $B_x$, and both $L_x$ and $R_x$ are non-empty if and only if $t = 1$. Note that $G$ admits a $d$-cut if and only if $f_r(\emptyset, \boldsymbol{0}, 1)=1$.
     Figure~\ref{fig:treewidth} gives an example of an entry in the dynamic programming table and the corresponding solution on the subtree.
 
 
@@ -159,7 +158,7 @@ In the next theorem, note that the assumption that the given tree decomposition 
                 %\AssignVertexLabel{t}{0,1,0}
                 
         \end{tikzpicture}
-        \caption{\centering Example of dynamic programming state and corresponding solution on the subtree. Square vertices belong to $A$, circles to $B$. Numbers indicate the respective value of $\alpha_i$ ($d=3$).\label{fig:treewidth}}
+        \caption{Example of dynamic programming state and corresponding solution on the subtree. Square vertices belong to $A$, circles to $B$. Numbers indicate the respective value of $\alpha_i$ ($d=3$).\label{fig:treewidth}}
     \end{figure}
 
     We say that an entry $(A, \balpha, t)$ for a node $x$ is \tdef{valid} if for every $v_i \in A$, $|N(v_i) \cap (B_x \setminus A)| + a_i \leq d$, for every $v_j \in B_x \setminus A$, $|N(v_i) \cap A| + a_j \leq d$, and if $B_x \setminus A \neq \emptyset$ then $t = 1$; otherwise the entry is \tdef{invalid}. Moreover, note that if $f_x(A, \balpha, t)=1$, the corresponding bipartition $(L_x,R_x)$ of $V(G_x)$ is a $d$-cut if and only if $(A, \balpha, t)$ is valid and $t = 1$.
@@ -507,7 +506,7 @@ Similarly, a cluster is \tdef{unnaturally assigned} if it has an unnaturally ass
 
 Our next lemma limits how many clusters in $\mathcal{C}$ relate in a similar way to $U$; we say that two simple clusters $C_1, C_2$ have the same \tdef{pattern} if they have the same size $s$ and there is a total ordering of $C_1$ and another of $C_2$ such that, for every $i \in [s]$, $v_i^1 \in C_1$ and $v_i^2 \in C_2$ satisfy $U(v_i^1) = U(v_i^2)$.
 Essentially, clusters that have the same pattern have neighbors in exactly the same monochromatic sets of $U$ and the same multiplicity in terms of how many of their vertices are adjacent to a same monochromatic set $U_i$. Note that the actual neighborhoods in the sets $U_i$'s do not matter in order for two clusters to have the same pattern.
-\gcm{Figure~\ref{fig:assignment} gives an example of a maximal set of unnaturally assigned clusters; that is, any other cluster with the same pattern as the one presented must be naturally assigned, otherwise some vertex of $U$ will violate the $d$-cut property.}
+Figure~\ref{fig:assignment} gives an example of a maximal set of unnaturally assigned clusters; that is, any other cluster with the same pattern as the one presented must be naturally assigned, otherwise some vertex of $U$ will violate the $d$-cut property.
 
 \begin{figure}[!htb]
         \centering
@@ -588,7 +587,7 @@ Essentially, clusters that have the same pattern have neighbors in exactly the s
                 \end{scope}
                 
         \end{tikzpicture}
-        \caption{\centering Example of a maximal set of unassigned clusters. Square vertices would be assigned to $A$, circles to $B$ ($d=4$).\label{fig:assignment}}
+        \caption{Example of a maximal set of unassigned clusters. Square vertices would be assigned to $A$, circles to $B$ ($d=4$).\label{fig:assignment}}
     \end{figure}
 
 
@@ -603,12 +602,12 @@ Essentially, clusters that have the same pattern have neighbors in exactly the s
     Since by Rule~\ref{rule:trivial} no subset of a small cluster is alone in a side of a partition and, consequently, $U$ intersects both sides of the partition, if $G$ has a $d$-cut, so does $G'$.
 
     For the converse, let $(A', B')$ be a $d$-cut of $G'$.
-    First, by Corollary~\ref{cor:constrained_unnatural}, we know that at least one of the clusters of $\mathcal{C}^* \setminus \{C\}$, say $C_{{\sf n}}$, is naturally assigned.
-    Since all the clusters in $\mathcal{C^*}$ have the same pattern, this guarantees that {\sl any} of the vertices of a naturally assigned cluster cannot have more than $d$ neighbors in the other side of the partition.
+    First, by Corollary~\ref{cor:constrained_unnatural}, we know that at least one of the clusters of $\mathcal{C}^* \setminus \{C\}$, say $C_{\mathsf{n}}$, is naturally assigned.
+    Since all the clusters in $\mathcal{C^*}$ have the same pattern, this guarantees that \textit{any} of the vertices of a naturally assigned cluster cannot have more than $d$ neighbors in the other side of the partition.
 
     Let $(A,B)$ be the bipartition of $V(G)$ obtained from $(A',B')$ such that $u \in C$ is in $A$ (resp. $B$) if and only if $U(u) \subseteq A$ (resp. $U(u) \subseteq B$); that is, $C$ is naturally assigned.
     Define $C_A = C \cap A$ and $C_B = C \cap B$.
-    Because $|C| = |C_{{\sf n}}|$ and both belong to $\mathcal{C}^*$, we know that for every $u \in C_A$, it holds that $|N(u) \cap C_B| \leq d$; moreover, note that $N(u) \cap (B \setminus C) = \emptyset$. A symmetric analysis applies to every $u \in C_B$.
+    Because $|C| = |C_{\mathsf{n}}|$ and both belong to $\mathcal{C}^*$, we know that for every $u \in C_A$, it holds that $|N(u) \cap C_B| \leq d$; moreover, note that $N(u) \cap (B \setminus C) = \emptyset$. A symmetric analysis applies to every $u \in C_B$.
     This implies that no vertex of $C$ has additional neighbors in the other side of the partition outside of its own cluster and, therefore, $(A, B)$ is a $d$-cut of $G$.
 \end{proof}
 

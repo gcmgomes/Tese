@@ -1,10 +1,10 @@
-\documentclass[proposal]{ppgccufmg}
+\documentclass[thesis]{ppgccufmg}
 
 \usepackage[english]{babel}    
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \usepackage{caption}
-\usepackage{subfig}
+\usepackage{subcaption}
 \usepackage{type1ec}
 \usepackage[T1]{fontenc}
 \usepackage{bbm}
@@ -73,6 +73,7 @@
 \newtheorem*{observation*}{Observation}
 \newtheorem{conjecture}{Conjecture}[chapter]
 \newtheorem*{conjecture*}{Conjecture}
+\newtheorem{rrule}{Reduction Rule}
 
 \newcommand{\mc}[1]{\mathcal{#1}}
 
@@ -182,6 +183,15 @@
 \newfunc{\ff}{ff}
 \newfunc{\cf}{cf}
 \newfunc{\TRUEt}{TRUE}
+\newfunc{\dc}{dc}
+\newfunc{\dcc}{d\overline{c}}
+\newclass{\ETH}{ETH}
+\newclass{\dgr}{deg}
+\newfunc{\tw}{tw}
+
+
+\newcommand{\balpha}{\boldsymbol{\alpha}}
+\newcommand{\bmd}{\boldsymbol{d}}
 
 \newcommand{\Proj}[1]{\projax_{#1}}
 \newcommand{\Lift}[1]{\liftax_{#1}}
@@ -192,11 +202,19 @@
 \renewcommand{\algorithmicensure}{\textbf{Output:}}
 
 
+
+\newcommand{\dcup}{\ \dot\cup\ }
 \newcommand{\CN}[1]{\chi_{\mathcal{#1}}}
 
 \newtoggle{proof_toggle}
 \toggletrue{proof_toggle}
 %\togglefalse{proof_toggle}
+
+
+\NewEnviron{sproof}[1] {
+  \begin{proof}[Proof of safeness of Rule~#1]\BODY\end{proof}
+}
+
 
 \NewEnviron{tproof} {
     \iftoggle{proof_toggle} {%
@@ -233,17 +251,17 @@
 % Um exemplo para documentos em portugus  apresentado a seguir:
 
 \ppgccufmg{
-  title={Cliques, Bicliques and Colorings},
+  title={Algorithms, Parameters and Complexity for Graph Partitioning Problems},
   authorrev={Gomes, Guilherme de Castro Mendes},
   cutter={C667h},
   cdu={123},
   university={Universidade Federal de Minas Gerais},
   course={Ciência da Computação},
-  portuguesetitle={Cliques, Bicliques e Colorações},
+  portuguesetitle={Algoritmos, Parâmetros e Complexidade para Problemas de partição em Grafos},
 %  portugueseuniversity={Universidade Federal de Minas Gerais},
 %  portuguesecourse={Cincia da Computao},
   address={Belo Horizonte},
-  date={2017-10},
+  date={2019-05},
   keywords={Vertex Coloring, Equitable Coloring, Clique Coloring, Biclique Coloring, Block Graphs, Biclique Graph, Star Graph, Exact Algorithms, Parameterized Algorithms},
   advisor={Vinícius Fernandes dos Santos},
   %coadvisor={Carlos Vinícius Gomes Costa Lima},
