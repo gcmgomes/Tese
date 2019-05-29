@@ -1,6 +1,3 @@
-\chapter{Preliminaries and Related Work}
-\label{ch:prelims}
-
 \section{Basic Definitions}
 \label{sec:basic_defs}
 
@@ -19,12 +16,12 @@ A graph $G' = (V', E')$ is a \tdef{subgraph} of $G$ if $V' \subseteq V$ and $E' 
 If $E' = \{uv \in E \mid u,v \in V'\}$ we say that $V'$ \tdef{induces} $G'$, $G' = G[V']$ and that $G'$ is the \tdef{induced subgraph} of $G$ by $V$.
 For simplicity, we denote by $G - v$ the graph $G[V(G) \setminus \{v\}]$ and, similarly, for $S \subseteq V(G)$, $G \setminus S$ is equivalent to $G[V(G) \setminus S]$.
 
-The \tdef{open neighbourhood}, or just \tdef{neighbourhood} of a vertex $v$ in $G$ is given by $N_G(v) = \{u \mid uv \in E(G)\}$, its \tdef{closed neighbourhood} by $N_G[v] = N_G(v) \cup \{v\}$ and its \tdef{degree} by $d_G(v) = |N_G(v)|$.
+The \tdef{open neighbourhood}, or just \tdef{neighbourhood} of a vertex $v$ in $G$ is given by $N_G(v) = \{u \mid uv \in E(G)\}$, its \tdef{closed neighbourhood} by $N_G[v] = N_G(v) \cup \{v\}$ and its \tdef{degree} by $\deg_G(v) = |N_G(v)|$.
 A vertex is \tdef{simplicial} if its neighbours are pairwise adjacent.
-For a set $S \subseteq V$, we denote its open and closed neighbourhood as $N_G(S) = \bigcup_{v \in S} N_G(v) \setminus S$, $N_G[S] = N_G(S) \cup S$ and $d_G(S) = |N_G(S)|$, respectively.
+For a set $S \subseteq V$, we denote its open and closed neighbourhood as $N_G(S) = \bigcup_{v \in S} N_G(v) \setminus S$, $N_G[S] = N_G(S) \cup S$ and $\deg_G(S) = |N_G(S)|$, respectively.
 The \tdef{complement} $\overline{G}$ of $G$ is defined as $V(\overline{G}) = V(G)$ and $E(\overline{G}) = \{uv | uv \notin E\}$.
 Given a graph $G$, we denote its \tdef{maximum degree} by $\Delta(G)$ and \tdef{minimum degree} by $\delta(G)$.
-A graph $G$ is \tdef{$k$-regular} if , for every $u \in V(G)$, $d_G(u) = k$.
+A graph $G$ is \tdef{$k$-regular} if , for every $u \in V(G)$, $\deg_G(u) = k$.
 
 Two vertices $u,v$ are \tdef{false twins} if $N_G(u) = N_G(v)$ and \tdef{true twins} if $N_G[u] = N_G[v]$. $u,v$ are of the same \tdef{type} if they are either true or false twins.
 Being of the same type is an equivalence relation~\citep{neighbourhood_diversity}, and the number of different types on a graph $G$ is called its \tdef{neighbourhood diversity}, $\nd(G)$.
@@ -50,6 +47,8 @@ Given a graph $G$, the \tdef{distance} $\dist_G(u,v)$ between two vertices $u,v$
 If $u,v$ are in different components, we say that $\dist_G(u,v) = \infty$.
 The \tdef{diameter} of a connected graph $G$ is defined as the length of the longest shortest path between any pair of vertices $u,v \in V(G)$.
 The \tdef{$k$-th power} $G^k$ of a graph $G$ is the graph where $V(G^k) = V(G)$ and $E(G^k) = \{uv \mid \dist_G(u,v) \leq k\}$.
+When $k = 2$, $G^2$ is also called the \textit{square} of graph $G$ and $G$ is called the \textit{square root} of $G^2$.
+The class of all graphs that admit a square root is called \textit{square graphs}.
 When the graph in question is clear, we will omit the $G$ subscript.
 
 An \tdef{articulation point}, \tdef{cut point} or \tdef{cut vertex} of a connected graph $G$ is a vertex $v$ such that $G - v$ is disconnected.
@@ -62,17 +61,29 @@ The \tdef{complete} graph $K_n$ of order $n$ is a graph where every pair of vert
 A \tdef{clique} of $G$ with $n$ vertices is an induced subgraph of $G$ isomorphic to $K_n$.
 An \tdef{independent set} of $G$ with $n$ vertices is an induced subgraph of $G$ isomorphic to $\overline{K_n}$.
 We denote by $\omega(G)$ and $\alpha(G)$ the size of the maximum induced clique and maximum independent set of a given $G$.
-Both of these values are examples of \tdef{graph parameters}, that is, a value that describes some property of interest of the underlying graph.
+A \textit{vertex cover} of $G$ is a subset $U \subseteq V(G)$ such that, for every edge $uv \in E(G)$, at least one of $u,v$ belongs to $U$.
+The size of a minimum vertex cover of a graph is denote by $\tau(G)$, and can be computed in $\bigO{1.2738^{\tau(G)} + \tau(G)|V(G)|}$ time.
+
+A graph is a \textit{cluster graph} if all of its connected components are cliques.
+Analogously, a graph is a \textit{co-cluster graph} if its complement is a cluster graph.
+The \textit{distance to cluster} (resp. \textit{co-cluster}) of a graph $G$, denoted by $\dc(G)$ (resp. $\dcc(G)$), is the size of the smallest subset of vertices $U$ of $G$ such that $G - U$ is a (co-)cluster graph.
+These parameters can be computed in $\bigO{1.92^{\dc( G )}n^2 }$
+time and $\bigO{1.92^{\dcc( G )}n^2 }$ time, respectively~\citep{branching-cluster}.
+It is quite easy, however, to obtain a 3-approximation for them in polynomial time, it suffices to note that a graph is a cluster graph if and only if it is $P_3$-free, so while there is some $P_3$ in the graph, it is sufficient to remove all three vertices.
+The above values are examples of \tdef{structural graph parameters}.
 Determining certain parameters of a generic graph $G$ is efficient (such as $\Delta(G)$ and $\delta(G)$); however, others (such as $\omega(G)$ and $\alpha(G)$) are widely believed to be hard to ascertain.
 
-A graph $G$ is \tdef{bipartite} if $V(G) \sim \{X, Y\}$ such that both $X$ and $Y$ are independent sets. Such property implies that a graph is bipartite if and only if it is $C_{2k+1}$-free, for any $k \geq 1$.
+A graph $G$ is \tdef{bipartite} if $V(G) \sim \{X, Y\}$ such that both $X$ and $Y$ are independent sets.
+Such property implies that a graph is bipartite if and only if it is $C_{2k+1}$-free, for any $k \geq 1$.
 A \tdef{biclique} $K_{n_1,n_2}$ is a bipartite graph with $|X| = n_1$, $|Y| = n_2$ and $uv \in E(G)$ for every pair $u \in X$ and $v \in Y$.
 A \tdef{star} is a biclique with $|X| = 1$ and $|Y| \geq 1$.
 Clearly, we can also define \tdef{induced bicliques} and \tdef{induced stars} much like induced cliques.
+A graph is \textit{multipartite} if $V(G) \sim \{X_1, \dots,  X_p\}$ and $X_i$ is an independent set for all $i$; it is a \textit{complete multipartite} graph if $uv \in E(G)$ whenever $u \in X_i$, $v \in X_j$ and $i \neq j$.
 
 A \tdef{hypergraph} $\hypergraph = (V, \mathcal{E})$ is a natural generalization of a graph.
 That is, $V(\hypergraph)$ is its vertex set and $\mathcal{E} \subseteq 2^{V}$ its \tdef{hyperedge} set~\citep{hypergraphs}.
 A graph $G$ is said to be a \tdef{host} of $\mathcal{H}$ if $V(G) = V(\hypergraph)$, every hyperedge of $\hypergraph$ induces a connected subgraph of $G$ and every edge of $G$ is contained in at least one hyperedge of $\mathcal{H}$.
+A hypergraph is \textit{$k$-uniform} if all of its hyperedges have the same size.
 
 A \tdef{transversal} of a hypergraph $\hypergraph$ is a set $X \subseteq V(\hypergraph)$ such that, for every hyperedge $\varepsilon \in \mathcal{E}(\hypergraph)$, $X \cap \varepsilon \neq \emptyset$.
 If $X$ is not a transversal we say that it is an \tdef{oblique}.
@@ -80,27 +91,49 @@ If $X$ is not a transversal we say that it is an \tdef{oblique}.
 The \tdef{clique hypergraph} $\Hyper{C}(G)$ of a graph $G$ is the hypergraph on the same vertex set of $G$ and with hyperedge set equal to the family of maximal cliques of $G$.
 Similarly, the \tdef{biclique hypergraph} $\Hyper{B}(G)$ of a graph $G$ is the hypergraph on the same vertex set of $G$ and with hyperedge set equal to the family of maximal bicliques of $G$.
 
-%Maybe talk about hypergraphs here, not sure where
+A \textit{tree decomposition} of a graph $G$ is defined as the pair $\mathbb{T} = \left(T, \mathcal{B} = \{B_j \mid j \in V(T)\}\right)$, where $T$ is a tree and $\mathcal{B} \subseteq 2^{V(G)}$ is a family satisfying $\bigcup_{B_j \in \mathcal{B}} B_j = V(G)$~\citep{treewidth};
+for every edge $uv \in E(G)$ there is some~$B_j$ such that $\{u,v\} \subseteq B_j$;
+for every $i,j,q \in V(T)$, if $q$ is in the path between $i$ and $j$ in $T$, then $B_i \cap B_j \subseteq B_q$.
+Each $B_j \in \mathcal{B}$ is called a \emph{bag} of the tree decomposition.
+The \emph{width} of a tree decomposition is defined as the size of a largest bag minus one.
+The \emph{treewidth} $\tw(G)$ of a graph $G$ is the smallest width among all valid tree decompositions of $G$~\citep{downey_fellows}.
+If $\mathbb{T}$ is a rooted tree, by $G_x$ we will denote the subgraph of $G$ induced by the vertices contained in any bag that belongs to the subtree of $\mathbb{T}$ rooted at bag $x$.
+An algorithmically useful property of tree decompositions is the existence of a so called \emph{nice tree decompositions} of width $\tw(G)$.
 
-\section{Complexity Classes}
+\begin{class_definition*}[Nice tree decomposition]
+    A tree decomposition $\mathbb{T}$ of $G$ is said to be \emph{nice} if it is a tree rooted at, say, the empty bag $r(T)$ and each of its bags is from one of the following four types:
+    \begin{enumerate}
+        \item \emph{Leaf node}: a leaf $x$ of $\mathbb{T}$ with $B_x = \emptyset$.
+        \item \emph{Introduce node}: an inner bag $x$ of $\mathbb{T}$ with one child $y$ such that $B_x \setminus B_y = \{u\}$.
+        \item \emph{Forget node}: an inner bag $x$ of $\mathbb{T}$ with one child $y$ such that $B_y \setminus B_x = \{u\}$.
+        \item \emph{Join node}: an inner bag $x$ of $\mathbb{T}$ with two children $y,z$ such that $B_x = B_y = B_z$.
+    \end{enumerate}
+\end{class_definition*}
 
-We discuss problems in different complexity classes; in particular, we work with the usual $\P$ and $\NP$ classes, but also the $\SiP{2}$ class of the \tdef{polynomial hierarchy}~\citep{polynomial_hierarchy}.
+\section{Parameterized Complexity}
+
+We discuss problems in different complexity classes; in particular, we work with the usual classes $\P$, $\NP$,and the \tdef{polynomial hierarchy}~\citep{polynomial_hierarchy}.
 We say that an algorithm is \tdef{efficient} if its running time is bounded by a polynomial on the size of the input and that a problem belonging to $\NPH$ is most likely intractable.
 As such, our complexity results will be given either by efficient algorithms or polynomial reductions from $\NPH$ problems.
 
-Besides the classic complexity classes, we also deal with the much newer field of \tdef{parameterized complexity} (also called \tdef{multivariate complexity}).
+Besides the classic complexity classes, we also deal with the field of \tdef{parameterized complexity} (or \tdef{multivariate complexity}).
 In this area, algorithms are designed and analyzed not only with respect to the size of the input object, but also with other \tdef{parameters} of the input.
-A parameter can be anything, from the size of the problem's solution to a measurement of how complicated the structure of the instance is.
+Parameters come in all sorts of flavors.
+Many decision problems usually have some integer quantity representing a constraint of the problem.
+For instance, \pname{Vertex Cover} -- one of the classical examples of success of parameterized complexity ~~ asks for a set of size at most $k$ of vertices covering all the edges of the graph.
+Other parameters are less problem specific and relate to the structure of the graph, such as diameter or maximum degree.
+The most prominent of these examples, however, is the graph parameter treewidth, which played a pivotal role in the theory of graph minors.
+Other previously discussed structural parameter is neighborhood diversity, distance to cluster and distance to co~cluster.
 
-A problem is said to be \tdef{fixed-parameter tractable} (or FPT) when \tdef{parameterized by} $k$ if there is an algorithm with running time $f(k)n^{\bigO{1}}$, where $n$ is the size of the input object.
+A problem is said to be \tdef{fixed-parameter tractable} (or \FPT) when \tdef{parameterized by} $k$ if there is an algorithm with running time $f(k)n^{\bigO{1}}$, where $n$ is the size of the input object.
 We denote complexities of this form by $\bigOs{f(k)}$.
-In fact, we shall use $\bigOs{}$ to omit polynomial factors of the running time; that is, an algorithm with complexity $2^{f(n)}\text{poly}(n)$ is said to execute in $\bigOs{2^{f(n)}}$.
+In fact, we shall use $\bigOs{\cdot}$ to omit polynomial factors of the running time; that is, an algorithm with complexity $2^{f(n)}\text{poly}(n)$ is said to execute in $\bigOs{2^{f(n)}}$.
 In a slight abuse of notation, $k$ is simultaneously the parameter we are working with and the value of such parameter.
 An instance of a parameterized algorithm is, therefore, the pair $(x,k)$, with $x$ the input object and $k$ as previously defined.
 The class of all problems that admit an FPT algorithm is the class $\FPT$.
-If an algorithm presents running time $\bigO{n^{f(k)}}$, for some computable function on $k$,  we say it is an XP (slicewise polynomial) algorithm, and the corresponding problem it solves is in $\XP$. 
+If an algorithm has running time $\bigO{n^{f(k)}}$, for some computable function on $k$,  we say it is an \XP (slicewise polynomial) algorithm, and the corresponding problem it solves is in $\XP$. 
 
-Much like classical univariate theory, some problems do not appear to admit an FPT algorithm for certain parameterizations. In particular, its widely believed that finding a clique of size $k$ in a graph, parameterized by $k$, is not in $\FPT$.
+Much like classical univariate theory, some problems do not appear to admit an \FPT algorithm for certain parameterizations. In particular, its widely believed that finding a clique of size $k$ in a graph, parameterized by $k$, is not in $\FPT$.
 In an analogue to the classical case, hardness results are usually given by what are called \tdef{parameterized reductions}.
 
 \begin{class_definition*}[Parameterized Reduction]
@@ -117,7 +150,7 @@ We ask that $k'$ does not depend on $|x|$ - which doesn't always happen with pol
 These differences imply that polynomial reductions and parameterized reductions are incomparable, with some rare cases where the transformation is both polynomial and parameterized.
 
 Unlike the theory of $\NPcness$, where most hard problems are equivalent to each other under polynomial reductions, in parameterized complexity problems seem to be distributed along a hierarchy of difficulty.
-Before handling the classes themselves, we must first define the problems of parameterized complexity that play the same role as \tsc{satisfability} for the classical theory. 
+Before handling the classes themselves, we must first define the problems of parameterized complexity that play the same role as \pname{Satisfability} for the classical theory. 
 
 The \tdef{depth} of a circuit is the length (in terms of number of gates) of the longest path from any one variable to the output.
 The \tdef{weft} of a circuit is the the maximum number of gates with more than 2 input variables in any path from any one variable to the circuit's output.
@@ -132,7 +165,64 @@ The circuits with weft $t$ and depth $d$, denoted by \pname{wcs}$_{t,d}$, will b
     \end{equation*}
 \end{class_definition*}
 
-For further reading and other more insightful discussions on the subject, we point to~\citep{downey_fellows} and~\citep{cygan_parameterized}, from where most of the given definitions come from. 
+
+\subsection{Kernelization}
+
+One of the broadest class of techniques to be found in the realm of computing is perhaps that of \textit{pre-processing}.
+Every real system in some sense employs routines that try to prune the search space or reduce the input instance as much as possible before doing any heavy lifting.
+Such is the case with most optimization frameworks, such as CPLEX and Gurobi, where dozens upon dozens of pre-processing methods are readily available and in many cases successfully eliminate large chunks of the input before trying to solve the integer program directly.
+Furthermore, in many cases, simple heuristics or algorithms with terrible worst case running times perform surprisingly well, and, in many cases, there is no theoretically sound approach to explain this phenomenon.
+
+
+For further reading and other more insightful discussions on the subjects of parameterized and kernelization, we point to~\citep{downey_fellows} and~\citep{cygan_parameterized}, from where most of the given definitions come from. 
+
+\section{Explicit Running Time Lower Bounds}
+
+Both the theory of \NPcness\ and \W[1]-\Hness\ give us evidence that no polynomial or \FPT\ algorithm may exist for a myriad of problems.
+However, simply assuming that $\P \neq \NP$ or that $\FPT \neq \W[1]$ seems to not be enough to prove statements about asymptotic lower bounds on the running time of an algorithm.
+All is not lost, but we do need to make some additional complexity assumptions.
+
+In their groundbreaking work, \cite{eth} give many key insights and tools which have been broadly used across the field of algorithms and parameterized complexity to prove that long known algorithms are probably optimal.
+Specifically, they prove what is known as the \textit{Sparsification Lemma}, described below.
+A logical formula $\phi$ on $n$ variables an $m$ clauses is in \textit{Conjunctive Normal Form} (CNF) if $\phi = \bigwedge_{i=1}^m C_i$ and every $C_i$ is a disjunction of a subset of the $2n$ possible literals.
+A formula is said to be in $r$-CNF if the size of each clause is no larger than $r$.
+
+\begin{class_definition*}[Sparsification Lemma]
+    For every $\epsilon > 0$ and positive
+    integer $r$, there is a constant $C = \bigO{(\frac{n}{\epsilon})^{3r}}$ so that any $r$-CNF formula $F$ with $n$ variables, can be expressed as $F = \bigvee_{i=1}^t Y_i$, where $t \leq 2^{\epsilon n}$ and each $Y_i$ is an $r$-CNF formula with every variables appearing in at most $C$ clauses.
+    Moreover, this disjunction can be computed by an algorithm running in time $2^{\epsilon n}n^{\bigO{1}}$.
+\end{class_definition*}
+
+Essentially, the Sparsification Lemma implies that, when performing a polynomial reduction \pname{$r$-Satisfability}, for \textit{fixed $r$}, it suffices to assume the input instance on $n$ variables has $\bigO{n}$ \textit{clauses}.
+Impagliazzo and Paturi then conjecture a cornerstone of lower bound asymptotic analysis, the \textit{Exponential Time Hypothesis}, commonly referred to as \ETH, and its strong version, known as \SETH.
+
+\begin{class_definition*}[Exponential Time Hypothesis]
+    There is a real number $s$ such that \pname{3-Satisfability} cannot be solved in $2^{sn}(n + m)^{\bigO{1}}$ time.
+\end{class_definition*}
+
+
+\begin{class_definition*}[Strong Exponential Time Hypothesis]
+    \pname{Satisfability} cannot be solved in $(2 - \epsilon)^{n}(n + m)^{\bigO{1}}$ time, for any $\epsilon > 0$.
+\end{class_definition*}
+
+
+It is not hard to see that if \ETH\ holds, then $\P \neq \NP$.
+From the moment they were first claimed, both hypothesis have been successfully applied across the literature.
+\cite{eth_survey} survey some of these results.
+For instance, unless the Exponential Time Hypothesis is false, there is no algorithm running in $2^{o(n)}$ time for \pname{Vertex 3-Coloring}, \pname{Dominating Set}, \pname{Independent Set}, \pname{Vertex Cover}, nor \pname{Hamiltonian Path};
+\pname{Hamiltonian Cycle} in planar graphs cannot be solved in $2^{o(\sqrt{n})}n^{\bigO{1}}$ time.
+Let $k$ denote the natural parameter of each of the following problems.
+In terms of $\FPT$ algorithms, the existence of $2^{o(k)}n^{\bigO{1}}$ was ruled out for \pname{Vertex Cover}, \pname{Feedback Vertex Set}, and \pname{Longest Path}, while no $2^{o(\sqrt{k})}n^{\bigO{1}}$ time algorithm exists for \pname{Vertex Cover} on planar graphs.
+\ETH\ can also be used to give algorithmic lower bound to problems not in $\FPT$.
+\cite{eth_survey} neither \pname{Dominating Set}, \pname{Clique}, \pname{Independent Set}, nor their multicolored versions can be solved in $f(k)n^{o(k)}$.
+
+While most of the complexity theory community believes \ETH\ to be true, the same is not true for the Strong Exponential time Hypothesis~\citep{bad_seth}.
+The implications for \SETH, however, as the name suggests, are quite powerful.
+While \ETH\ is generally used to prove assertions on the exponent of the running times of many algorithms, \SETH\ allows for a \textit{much} finer-grained analysis, at the cost of much more complex reductions and arguments, specially because the hypothesis of the Sparsification Lemma \textit{are not respected by \pname{Satisfability}}.
+\citep{seth_lokshtanov} give a series of reductions for many problems parameterized by treewidth.
+They show that the best known algorithms parameterized by treewidth for \pname{Independent Set}, \pname{Dominating Set}, \pname{Max Cut}, \pname{Odd Cycle Transversal}, \pname{Vertex $q$-Coloring} (for any $q \geq 3$), \pname{Partition Into Triangles} cannot be improved, unless \SETH\ is false.
+Recently, \cite{seth_subset_sum} proved what may surely be considered a breakthrough result: by using a hypothesis on the running time of \pname{Satsifability} (\SETH), they proved that the pseudo-polynomial dynamic programming algorithm given by \cite{bellman_dp} for \pname{Subset Sum} is optimal.
+
 
 \section{Intersection Graphs}
 \label{sec:intersections}
@@ -207,16 +297,42 @@ Both of these classes, however have nice characterizations in terms of edge cliq
             \end{scope}
         \end{tikzpicture}
     \hfill
-    \caption{A graph (left), its clique graph (center) and its line graph (right).}
+        \begin{tikzpicture}
+            \begin{scope}[rotate=90,scale=0.5]
+                \GraphInit[vstyle=Normal]
+                \SetVertexNormal[Shape=circle, FillColor=black, LineWidth=1pt,MinSize=2pt,]
+            \tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+                \Vertices[Lpos=90,Ldist=3pt,LabelOut=TRUE,unit=3]{circle}{abc,dbc,bd}
+                \Edges(abc,dbc,bd,abc)
+            \end{scope}
+        \end{tikzpicture}
+    \hfill
+    \caption{A graph, its clique graph, its line graph, and its star graph}
     %  Some graph
     \label{fig:my_label}
 \end{figure}
 
-The recognition of line graphs is known to be efficient, as shown by~\citep{line_dynamic,line_nich,line_naor}.
-For clique graphs, however, the situation was not so simple, and the complexity of clique graph recognition was left open for several years, finally being proven to be $\NPc$ by~\citep{clique_recognition} with a quite complicated argument.
+The recognition of line graphs is known to be efficient~\citep{line_dynamic,line_nich,line_naor}.
+For clique graphs, however, the situation was not so simple, and the complexity of clique graph recognition was left open for several years, finally being proven to be $\NPc$ by~\cite{clique_recognition} with a quite complicated argument.
 
-Recently, \citep{biclique_graph} defined the \tdef{biclique graph} as the intersection graph of the maximal induced bicliques of a graph.
-Their characterization for even limited input graphs, however, is a bit convoluted, and even checking membership in $\NP$ does not appear to be an easy task.
+Aside from the complexity point of view, many different properties of intersection graphs have been investigated in the literature.
+For instance, clique-critical graphs -- graphs whose clique graph is different from the clique graph of all of its proper induced subgraphs -- have different characterizations~\citep{clique_critical_toft} and bounds~\citep{clique_critical_alcon} which were crucial in the proof of the complexity of the recognition problem.
+Another common line of investigation on intersection graphs is the behaviour of iterated applications of the operators.
+For instance, \cite{clique_iterated}, and \cite{clique_divergent} study iterated applications of the clique operator.
+Biclique graphs -- the intersection graph of the maximal induced complete bipartite graphs of a graph -- were first characterized and studied by \cite{biclique_graph}.
+Their results, however, are not very useful from the algorithmic point of view, and appear to not yield many insights on the recognition problem.
+Nevertheless, they study the behaviour of biclique graphs, showing that every edge is contained either in a diamond or a 3-fan and specialize their general characterization for biclique graphs of bipartite graphs.
+As was done for clique graphs, the iterated biclique operator has also been studied by Groshaus et al. in multiple papers~\citep{biclique_iterated, almost_all_biclique}, with results ranging from characterizations of divergence, divergence type verification algorithms, and other structural results.
+
+Regarding stars, previous work handled the intersection graphs of (not necessarily maximal) substars of a tree~\citep{substar_graph} and of a star~\citep{starlike_graph}.
+For the first, a minimal infinite family of forbidden induced subgraphs was given, while, for the latter, a series of characterizations were shown (including a finite family of forbidden induced subgraphs).
+Stars are a particular case of bicliques, and both the biclique graph and star graph coincide for $C_4$-free graphs.
+In fact, this relationship was successfully applied to determine the complexity of biclique coloring~\citep{biclique_coloring_complexity}, using a reduction from \textsc{qsat}$_2$ to star coloring (a coloring of the vertices of a graph such that no maximal star is monochromatic).
+To the best of our knowledge, these are the main topics discussed in the literature that involve maximal stars in some way.
+However, star graphs appear to be natural generalizations of square graphs~\cite{murty} in the sense that, when applying the squaring operation, for each vertex $v$ only the largest, non-induced star centered at $v$ is selected, and the intersection graph of these stars is generated.
+On the other hand, for star graphs, every \textit{induced} maximal star is used in the construction of the intersection graph.
+Despite the classes of star graphs and biclique graphs being equivalent when restricting the  pre-image domain to $C_4$-free graphs, we were unable to deepen the study biclique graphs; our efforts were hindered by some of the questions posed and developed upon in this work.
+
 
 For other classical results in the area we point to~\citep{intersection_graphs}, from where most of the given definitions come from.
 
@@ -374,7 +490,10 @@ Many problems which are usually quite hard for general graphs, or even some clas
 For a chordal graph $G$, its \tdef{clique tree} is a tree $\mathcal{T}(G)$ such that: its vertex set, each of which is called a \tdef{bag}, is the set of maximal cliques of $G$, and, for every vertex $v$ of $G$, the set of bags which contains $v$ induces a subtree of $\mathcal{T}(G)$. It can be shown that such a tree satisfies property \textit{(iv)}.
 For more on clique trees and other chordal graph properties please refer to~\citep{clique_tree}.
 
-Not surprisingly, many subclasses of chordal graphs have also been studied, since even forests are chordal graphs. A \tdef{block graph} is a chordal graph where every minimal cutset is a single vertex. An \tdef{interval graph} is the intersection graph of a set of intervals over the real numbers. A \tdef{split graph} is a graph whose vertex set can be partitioned into a clique and an independent set.
+Not surprisingly, many subclasses of chordal graphs have also been studied, since even forests are chordal graphs.
+A \tdef{block graph} is a chordal graph where every minimal cutset is a single vertex.
+An \tdef{interval graph} is the intersection graph of a set of intervals over the real numbers.
+A \tdef{split graph} is a graph whose vertex set can be partitioned into a clique and an independent set.
 
 \tdef{Cographs} are the graphs $G$ such that either $G$ or its complement is disconnected. At first glance, such property may not seem very helpful to the algorithm designer, but it is equivalent to a very nice recursive definition, first given in~\citep{cographs}.
 Given two graphs $G$ and $H$, we define their \tdef{disjoint union} as the graph $G \cup H$ with $V(G \cup H)= V(G) \cup V(H)$ and $E(G \cup H) = E(G) \cup E(H)$, and their \tdef{join} as the graph $G \otimes H$ with vertex set is $V(G \otimes H)= V(G) \cup V(H)$ and edge set $E(G \otimes H)= E(G) \cup E(H) \cup \{uv \mid u \in V(G), v \in V(H)\}$.
@@ -473,133 +592,8 @@ There are polynomial time algorithms for a myriad of different classes, includin
 More generally, there are known polynomial time algorithms for \tdef{perfect graphs}~\citep{perfect_polynomial}, which is a superclass of the aforementioned ones.
 $G$ is perfect if for every induced subgraph $G'$ of $G$, $\chi(G') = \omega(G')$.
 
-More particular cases for \textsc{vertex coloring} have also been analyzed. For instance, \citep{coloring_art} presents some results for graph classes that have two connected five-vertex forbidden induced subgraphs. There are some surveys on the subject, as such we point to~\citep{coloring_survey} and \citep{coloring_survey2} for more on the classic \textsc{vertex coloring} problem, since it is not the focus of this thesis proposal.
+More particular cases for \textsc{vertex coloring} have also been analyzed. For instance, \citep{coloring_art} presents some results for graph classes that have two connected five-vertex forbidden induced subgraphs. There are some surveys on the subject, as such we point to~\citep{coloring_survey} and \citep{coloring_survey2} for more on the classic \textsc{vertex coloring} problem, since it is not the focus of this thesis.
 
-\subsection{Clique Coloring}
-A \tdef{k-clique-coloring} of $G$ is a $k$-coloring of $G$ such that no maximal clique of $G$ is entirely contained in a single color class.
-We say that $G$ is \tdef{k-clique-colorable} if $G$ admits a $k$-clique-coloring.
-The smallest integer $k$ such that $G$ is $k$-clique-colorable is called the \tdef{clique chromatic number} $\CN{C}(G)$ of $G$.
-Much like \textsc{vertex coloring}, there is a natural decision problem associated with this coloring variant, which we refer to as \textsc{clique coloring}.
-
-
-\problem{clique coloring}{A graph $G$ and a positive integer $k$.}{Is $G$ $k$-clique-colorable?}
-
-
-\begin{figure}[!htb]
-    \centering
-    \begin{tikzpicture}[rotate=90,scale=0.6]
-            %\draw[help lines] (-5,-5) grid (5,5);
-            \GraphInit[vstyle=Simple]
-            \SetVertexSimple[Shape=circle, FillColor=black, MinSize=2pt]
-            \tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
-            \SetUpVertex[Ldist=3pt]
-            \grWheel[prefix=a]{6}
-            \AssignVertexLabel{a}{1,1,1,1,1,2}
-        \end{tikzpicture}
-    \caption{An optimal clique coloring.}
-    \label{fig:clique_color}
-\end{figure}
-
-Research on the topic is much more recent than what was done for \textsc{vertex coloring}, with the first papers appearing in the early 1990s~\citep{first_clique_color} and interest on the subject rising in the early 2000s.
-Even when $k$ is fixed, \textsc{clique $k$-coloring} is known to be $\SiP{2}\text{-}\Complete$, as shown by~\citep{clique_coloring_complexity}, with an $\bigOs{2^n}$ algorithm being proposed by~\citep{clique_color_algorithm}.
-
-As with \textsc{vertex coloring}, \textsc{clique $k$-coloring} has been studied when restricting the input graph to certain graph classes.
-\citep{weakly_clique_color} investigated 2-clique-coloring in terms of \tdef{weakly chordal graphs} (graphs free of any hole or anti-hole with more than 4 vertices), giving a series of results for the general case ($\SiP{2}\text{-}\Complete$) and showing that, for some nested subclasses, there are $\NPc$ and $\P$ instances of the problem.
-When dealing with \tdef{unichord-free} graphs (graphs that contain no induced cycle with a unique chord), the problem is solvable in polynomial time (\cite{unichord_coloring}).
-
-\tdef{Circular-arc} graphs (intersection graphs of a set of arcs of a circle) are always 3-clique-colorable, with a polynomial time algorithm to determine if the input is 2-clique-colorable \citep{clique_circular_arc}.
-When the given graph is \tdef{odd-hole-free}, it is $\SiP{2}\text{-}\Complete$ to decide whether it is 2-clique-colorable or not~\citep{clique_oddhole}.
-\citep{clique_coloring_few_p4} give a series of bounds on graphs that, in some sense, contain few $P_4$'s, showing that most them are either 2 or 3-clique-colorable.
-
-For \tdef{planar graphs} (graphs that can be drawn on a plane with no crossing edges), \citep{clique_coloring_planar} show that they are 3-clique-colorable, and \citep{clique_color_perfect_np_complete} present a polynomial time algorithm to decide whether a planar graph is 2-clique-colorable or not.
-
-Some of these classes are subclasses of perfect graphs, and a conjecture suggests that every perfect graph is 3-clique-colorable~\citep{maximal_clique_coloring}.
-Also in terms of perfect graphs, it is $\NPc$ to decide whether a perfect graph is 2-clique-colorable (\cite{clique_color_perfect_np_complete}).
-\citep{clique_oddhole} also give the observation that every \tdef{strongly perfect graph} (see~\citep{strongly_perfect}) is 2-clique-colorable, a superclass of both chordal graphs and cographs.
-For a summary of the mentioned results, please refer to Table~\ref{tab:clique_color_complexity}.
-
-\begin{table}[!htb]
-    \centering
-    \begin{tabular}{c|c|c}
-        \hline
-        \hline
-        Class            & $\CN{C}$             & Complexity \\
-        \hline
-        Cograph          & $= 2$                & $\P$\\
-        Chordal          & $= 2$                & $\P$\\
-        Weakly Chordal   & $\leq 3^*$           & $\SiP{2}\text{-}\Complete^\dag$\\
-        Unichord-free    & $\leq 3 $            & $\P$ \\
-        Circular-arc     & $\leq 3$             & $\P^\dag$ \\
-        Odd-hole-free    & $\leq 3^*$           & $\SiP{2}\text{-}\Complete^\dag$\\
-        Few $P_4$'s      & $\leq 2$ or $\leq 3$ & $\P$\\
-        Planar           & $\leq 3$             & $\P^\dag$\\
-        Perfect          & $\leq 3^*$           & $\NPc^\dag$\\ 
-        Strongly Perfect & $= 2$                & $\P$\\
-        General case     & Unbounded            & $\SiP{2}\text{-}\Complete$\\
-        \hline
-        \hline
-    \end{tabular}
-    \caption{Complexity and bounds for \textsc{clique coloring}. Entries marked with a $*$ are conjectures. $\dag$ indicates results for 2-clique-colorability.}
-    \label{tab:clique_color_complexity}
-\end{table}
-
-\subsection{Biclique Coloring}
-A \tdef{k-biclique-coloring} of $G$ is a $k$-coloring of $G$ such that no maximal biclique of $G$ is entirely contained in a single color class.
-We say that $G$ is \tdef{k-biclique-colorable} if $G$ admits a $k$-biclique-coloring.
-The smallest integer $k$ such that $G$ is $k$-biclique-colorable is called the \tdef{biclique chromatic number} $\CN{B}(G)$ of $G$.
-Much like \textsc{clique coloring}, there is a natural decision problem associated with this coloring variant, which we refer to as \textsc{biclique coloring}.
-
-\problem{biclique coloring}{A graph $G$ and a positive integer $k$.}{Is $G$ $k$-biclique-colorable?}
-
-
-\begin{figure}[!htb]
-    \centering
-    \begin{tikzpicture}[rotate=90,scale=0.6]
-            %\draw[help lines] (-5,-5) grid (5,5);
-            \GraphInit[vstyle=Simple]
-            \SetVertexSimple[Shape=circle, FillColor=black, MinSize=2pt]
-            \tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
-            \SetUpVertex[Ldist=3pt]
-            \grWheel[prefix=a]{6}
-            \AssignVertexLabel{a}{1,2,1,2,3,3}
-        \end{tikzpicture}
-    \caption{An optimal biclique coloring.}
-    \label{fig:biclique_color}
-\end{figure}
-
-
-\textsc{biclique coloring} is an even more recent research topic than \textsc{clique coloring}, with the first results being a $\SiP{2}\text{-}\Cness$ proof due to~\citep{biclique_coloring_complexity} and the confirmation that verifying a solution to the problem is a $\coNP\text{-}\Complete$ task (\cite{biclique_coloring_verification}).
-
-In terms of complexity results, very little is known about \textsc{biclique coloring}.
-For unichord-free graphs, \citep{unichord_coloring} give a polynomial time algorithm to compute $\CN{B}$ and show that the biclique chromatic number of unichord-free graphs is either equal to or one greater than the size of the largest true twin class.
-\citep{biclique_coloring_verification} present a polynomial time algorithm for powers of cycles and powers of paths.
-Finally, \citep{biclique_coloring_complexity} give complexity results for $H$-free graphs, for every $H$ on three vertices, being polynomial for $H \in \{K_3, P_3, \overline{P_3}\}$ and $\NPc$ for $\overline{K_3}$-free graphs;
-moreover they show that the problem is $\NPc$ for diamond ($C_4$ plus one chord) free graphs and split graphs, and polynomial for \tdef{threshold graphs} (\{$2K_2,P_4,C_4$\}-free).
-We summarize the presented results in Table~\ref{tab:biclique_color_complexity}.
-
-\begin{table}[!htb]
-    \centering
-    \begin{tabular}{c|c|c}
-        \hline
-        \hline
-        Class            & $\CN{B}$             & Complexity \\
-        \hline
-        Split            & Unbounded            & $\NPc$\\
-        Threshold        & Unbounded            & $\P$\\
-        Diamond-free     & Unbounded            & $\NPc$\\
-        $C_n^r$          & $\leq 3$             & $\P$\\
-        $P_n^r$          & $= 2$                & $\P$\\
-        Unichord-free    & Bounded              & $\P$\\
-        General case     & Unbounded            & $\SiP{2}\text{-}\Complete$\\
-        \hline
-        \hline
-    \end{tabular}
-    \caption{Complexity and bounds for \textsc{biclique coloring}.}
-    \label{tab:biclique_color_complexity}
-\end{table}
-
-Both \textsc{clique coloring} and \textsc{biclique coloring} are, actually, colorings of the hypergraphs arising from an underlying graph (a coloring of its vertices such that no hyperedge is monochromatic), which is also an $\NPc$ task.
-However, in classical hypergraph coloring problems, the hyperedge family is part of the input of the problem and, as such, naively verifying a solution is polynomial on the size of the input.
 
 \subsection{Equitable Coloring}
 A $k$-coloring of an $n$ vertex graph is said to be \tdef{equitable} if for every color class $\varphi_i$, $\floor{\frac{n}{k}} \leq |\varphi_i| \leq \ceil{\frac{n}{k}}$ or, equivalently, if for, any two color class $\varphi_i$ and $\varphi_j$, $||\varphi_i| - |\varphi_j|| \leq 1$.
@@ -735,3 +729,203 @@ A summary of the known complexities is available in Table~\ref{tab:equitable_com
     \caption{Complexity results for \textsc{equitable coloring}. Entries marked with a * are results established in this work.}
     \label{tab:equitable_complexity}
 \end{table}
+
+\subsection{Clique Coloring}
+A \tdef{k-clique-coloring} of $G$ is a $k$-coloring of $G$ such that no maximal clique of $G$ is entirely contained in a single color class.
+We say that $G$ is \tdef{k-clique-colorable} if $G$ admits a $k$-clique-coloring.
+The smallest integer $k$ such that $G$ is $k$-clique-colorable is called the \tdef{clique chromatic number} $\CN{C}(G)$ of $G$.
+Much like \textsc{vertex coloring}, there is a natural decision problem associated with this coloring variant, which we refer to as \textsc{clique coloring}.
+
+
+\problem{clique coloring}{A graph $G$ and a positive integer $k$.}{Is $G$ $k$-clique-colorable?}
+
+
+\begin{figure}[!htb]
+    \centering
+    \begin{tikzpicture}[rotate=90,scale=0.6]
+            %\draw[help lines] (-5,-5) grid (5,5);
+            \GraphInit[vstyle=Simple]
+            \SetVertexSimple[Shape=circle, FillColor=black, MinSize=2pt]
+            \tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+            \SetUpVertex[Ldist=3pt]
+            \grWheel[prefix=a]{6}
+            \AssignVertexLabel{a}{1,1,1,1,1,2}
+        \end{tikzpicture}
+    \caption{An optimal clique coloring.}
+    \label{fig:clique_color}
+\end{figure}
+
+Research on the topic is much more recent than what was done for \textsc{vertex coloring}, with the first papers appearing in the early 1990s~\citep{first_clique_color} and interest on the subject rising in the early 2000s.
+Even when $k$ is fixed, \textsc{clique $k$-coloring} is known to be $\SiP{2}\text{-}\Complete$, as shown by~\citep{clique_coloring_complexity}, with an $\bigOs{2^n}$ algorithm being proposed by~\citep{clique_color_algorithm}.
+
+As with \textsc{vertex coloring}, \textsc{clique $k$-coloring} has been studied when restricting the input graph to certain graph classes.
+\citep{weakly_clique_color} investigated 2-clique-coloring in terms of \tdef{weakly chordal graphs} (graphs free of any hole or anti-hole with more than 4 vertices), giving a series of results for the general case ($\SiP{2}\text{-}\Complete$) and showing that, for some nested subclasses, there are $\NPc$ and $\P$ instances of the problem.
+When dealing with \tdef{unichord-free} graphs (graphs that contain no induced cycle with a unique chord), the problem is solvable in polynomial time~\citep{unichord_coloring}.
+
+\tdef{Circular-arc} graphs (intersection graphs of a set of arcs of a circle) are always 3-clique-colorable, with a polynomial time algorithm to determine if the input is 2-clique-colorable~\citep{clique_circular_arc}.
+When the given graph is \tdef{odd-hole-free}, it is $\SiP{2}\text{-}\Complete$ to decide whether it is 2-clique-colorable or not~\citep{clique_oddhole}.
+\cite{clique_coloring_few_p4} give a series of bounds on graphs that, in some sense, contain few $P_4$'s, showing that most them are either 2 or 3-clique-colorable.
+
+For \tdef{planar graphs} (graphs that can be drawn on a plane with no crossing edges), \citep{clique_coloring_planar} show that they are 3-clique-colorable, and \citep{clique_color_perfect_np_complete} present a polynomial time algorithm to decide whether a planar graph is 2-clique-colorable or not.
+
+Some of these classes are subclasses of perfect graphs, and a conjecture suggests that every perfect graph is 3-clique-colorable~\citep{maximal_clique_coloring}.
+Also in terms of perfect graphs, it is $\NPc$ to decide whether a perfect graph is 2-clique-colorable (\cite{clique_color_perfect_np_complete}).
+\citep{clique_oddhole} also give the observation that every \tdef{strongly perfect graph} (see~\citep{strongly_perfect}) is 2-clique-colorable, a superclass of both chordal graphs and cographs.
+For a summary of the mentioned results, please refer to Table~\ref{tab:clique_color_complexity}.
+
+\begin{table}[!htb]
+    \centering
+    \begin{tabular}{c|c|c}
+        \hline
+        \hline
+        Class            & $\CN{C}$             & Complexity \\
+        \hline
+        Cograph          & $= 2$                & $\P$\\
+        Chordal          & $= 2$                & $\P$\\
+        Weakly Chordal   & $\leq 3^*$           & $\SiP{2}\text{-}\Complete^\dag$\\
+        Unichord-free    & $\leq 3 $            & $\P$ \\
+        Circular-arc     & $\leq 3$             & $\P^\dag$ \\
+        Odd-hole-free    & $\leq 3^*$           & $\SiP{2}\text{-}\Complete^\dag$\\
+        Few $P_4$'s      & $\leq 2$ or $\leq 3$ & $\P$\\
+        Planar           & $\leq 3$             & $\P^\dag$\\
+        Perfect          & $\leq 3^*$           & $\NPc^\dag$\\ 
+        Strongly Perfect & $= 2$                & $\P$\\
+        General case     & Unbounded            & $\SiP{2}\text{-}\Complete$\\
+        \hline
+        \hline
+    \end{tabular}
+    \caption{Complexity and bounds for \textsc{clique coloring}. Entries marked with a $*$ are conjectures. $\dag$ indicates results for 2-clique-colorability.}
+    \label{tab:clique_color_complexity}
+\end{table}
+
+\subsection{Biclique Coloring}
+A \tdef{k-biclique-coloring} of $G$ is a $k$-coloring of $G$ such that no maximal biclique of $G$ is entirely contained in a single color class.
+We say that $G$ is \tdef{k-biclique-colorable} if $G$ admits a $k$-biclique-coloring.
+The smallest integer $k$ such that $G$ is $k$-biclique-colorable is called the \tdef{biclique chromatic number} $\CN{B}(G)$ of $G$.
+Much like \textsc{clique coloring}, there is a natural decision problem associated with this coloring variant, which we refer to as \textsc{biclique coloring}.
+
+\problem{biclique coloring}{A graph $G$ and a positive integer $k$.}{Is $G$ $k$-biclique-colorable?}
+
+
+\begin{figure}[!htb]
+    \centering
+    \begin{tikzpicture}[rotate=90,scale=0.6]
+            %\draw[help lines] (-5,-5) grid (5,5);
+            \GraphInit[vstyle=Simple]
+            \SetVertexSimple[Shape=circle, FillColor=black, MinSize=2pt]
+            \tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+            \SetUpVertex[Ldist=3pt]
+            \grWheel[prefix=a]{6}
+            \AssignVertexLabel{a}{1,2,1,2,3,3}
+        \end{tikzpicture}
+    \caption{An optimal biclique coloring.}
+    \label{fig:biclique_color}
+\end{figure}
+
+
+\textsc{biclique coloring} is an even more recent research topic than \textsc{clique coloring}, with the first results being a $\SiP{2}\text{-}\Cness$ proof due to~\citep{biclique_coloring_complexity} and the confirmation that verifying a solution to the problem is a $\coNP\text{-}\Complete$ task (\cite{biclique_coloring_verification}).
+
+In terms of complexity results, very little is known about \textsc{biclique coloring}.
+For unichord-free graphs, \citep{unichord_coloring} give a polynomial time algorithm to compute $\CN{B}$ and show that the biclique chromatic number of unichord-free graphs is either equal to or one greater than the size of the largest true twin class.
+\citep{biclique_coloring_verification} present a polynomial time algorithm for powers of cycles and powers of paths.
+Finally, \citep{biclique_coloring_complexity} give complexity results for $H$-free graphs, for every $H$ on three vertices, being polynomial for $H \in \{K_3, P_3, \overline{P_3}\}$ and $\NPc$ for $\overline{K_3}$-free graphs;
+moreover they show that the problem is $\NPc$ for diamond ($C_4$ plus one chord) free graphs and split graphs, and polynomial for \tdef{threshold graphs} (\{$2K_2,P_4,C_4$\}-free).
+We summarize the presented results in Table~\ref{tab:biclique_color_complexity}.
+
+\begin{table}[!htb]
+    \centering
+    \begin{tabular}{c|c|c}
+        \hline
+        \hline
+        Class            & $\CN{B}$             & Complexity \\
+        \hline
+        Split            & Unbounded            & $\NPc$\\
+        Threshold        & Unbounded            & $\P$\\
+        Diamond-free     & Unbounded            & $\NPc$\\
+        $C_n^r$          & $\leq 3$             & $\P$\\
+        $P_n^r$          & $= 2$                & $\P$\\
+        Unichord-free    & Bounded              & $\P$\\
+        General case     & Unbounded            & $\SiP{2}\text{-}\Complete$\\
+        \hline
+        \hline
+    \end{tabular}
+    \caption{Complexity and bounds for \textsc{biclique coloring}.}
+    \label{tab:biclique_color_complexity}
+\end{table}
+
+Both \textsc{clique coloring} and \textsc{biclique coloring} are, actually, colorings of the hypergraphs arising from an underlying graph (a coloring of its vertices such that no hyperedge is monochromatic), which is also an $\NPc$ task.
+However, in classical hypergraph coloring problems, the hyperedge family is part of the input of the problem and, as such, naively verifying a solution is polynomial on the size of the input.
+
+\section{Cut Problems}
+
+A \tdef{cut} of a graph $G = (V, E)$ is a bipartition of its vertex set $V(G)$ into two non-empty sets, denoted by $(A,B)$.
+The set of all edges with one endpoint in $A$ and the other in $B$ is the \tdef{edge cut}, or the set of \tdef{crossing edges}, of $(A,B)$.
+A \tdef{matching cut} is a (possibly empty) edge cut that is a matching, that is, such that its edges are pairwise vertex-disjoint. Equivalently, $(A, B)$ is a matching cut of $G$ if and only if every vertex is incident to at most one crossing edge of $(A, B)$~\citep{matching_cut_graham, chvatal_matching_cut}, that is, it has at most one neighbor across the cut.
+Figure~\ref{fig:matching_cut} gives an example of a graph with a matching cut.
+
+
+\begin{figure}[!htb]
+        \centering
+        \begin{tikzpicture}[rotate = 0]
+                %\draw[help lines] (-5,-5) grid (5,5);
+                \GraphInit[unit=3,vstyle=Normal]
+                \SetVertexNormal[Shape=circle, FillColor = black, MinSize=3pt]
+                \tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+                \SetVertexNoLabel
+                
+                \begin{scope}[rotate=90, shift={(0, 2)}]
+                    \tikzset{VertexStyle/.append style = {shape = rectangle, inner sep = 2pt}}
+                    \grComplete[RA=1]{2}
+                \end{scope}
+                \begin{scope}[rotate = 90, shift={(0, -1)}]
+                    \grComplete[RA=1,prefix=b]{2}
+                \end{scope}
+                \begin{scope}
+                    \tikzset{VertexStyle/.append style = {shape = rectangle, inner sep = 2pt}}
+                    \Vertex[x=-1, y=0]{f}
+                \end{scope}
+                \Vertex[x=0, y=0]{g}
+                \Edges(g,b0,a0,f,a1,b1,g,f)
+        \end{tikzpicture}
+        \caption{Example of a matching cut. Square vertices would be assigned to $A$, circles to $B$.\label{fig:matching_cut}}
+    \end{figure}
+
+
+Motivated by an open question posed by \cite{matching_cut_ipec} during the presentation of their article,  we investigate a natural generalization that arises from this alternative definition
+For a positive integer $d \geq 1$, a \tdef{$d$-cut} is a a cut $(A, B)$ such that each vertex has at most $d$ neighbors across the partition, that is, every vertex in $A$ has at most $d$ neighbors in $B$, and vice-versa. Note that a $1$-cut is a matching cut.
+As expected, not every graph admits a $d$-cut, and the \pname{$d$-Cut} problem is the problem of, for a fixed integer $d \geq 1$, deciding whether or not an input graph $G$ has a $d$-cut.
+
+When $d=1$, we refer to the problem as \pname{Matching Cut}.
+Graphs with no matching cut first appeared in Graham's manuscript~\cite{matching_cut_graham} under the name of \textit{indecomposable graphs}, presenting some examples and properties of decomposable and indecomposable graphs, leaving their recognition as an open problem.
+In answer to Graham's question, Chv\'atal~\cite{chvatal_matching_cut} proved that the problem is \NP-hard for graphs of maximum degree at least four and polynomially solvable for graphs of maximum degree at most three; in fact, as shown by Moshi~\cite{matching_cut_moshi}, every graph of maximum degree three and at least eight vertices has a matching cut.
+
+Chvátal's results spurred a lot of research on the complexity of the problem~\citep{matching_cut_ipec,matching_cut_structural,matching_cut_tcs, matching_cut_diameter, matching_cut_planar, matching_cut_series_parallel, stable_cutset_line_graphs}.
+In particular, \cite{matching_cut_planar} showed that \pname{Matching Cut} remains \NP-hard for planar graphs of maximum degree four and for planar graphs of girth five;
+\cite{stable_cutset_line_graphs} gave an \NP-hardness reduction for bipartite graphs of maximum degree four;
+\cite{matching_cut_diameter} proved that \pname{Matching Cut} is \NP-hard for graphs of diameter at least three, and presented a polynomial-time algorithm for graphs of diameter at most two.
+Beyond planar graphs, Bonsma's work~\citep{matching_cut_planar} also proves that the matching cut property is expressible in monadic second order logic and, by Courcelle's Theorem~\citep{courcelle_theorem}, it follows that \pname{Matching Cut} is $\FPT$ when parameterized by the treewidth of the input graph; he concludes with a proof that the problem admits a polynomial-time algorithm for graphs of bounded cliquewidth.
+
+\cite{matching_cut_tcs} noted that Chv\'atal's original reduction also shows that, unless the Exponential Time Hypothesis fails, there is no algorithm solving \pname{Matching Cut} in time $2^{o(n)}$ on $n$-vertex input graphs.
+Also in~\citep{matching_cut_tcs}, the authors provide a first branching algorithm, running in time $\bigOs{2^{n/2}}$, a single-exponential $\FPT$ algorithm when parameterized by the vertex cover number $\tau(G)$, and an algorithm generalizing the polynomial cases of line graphs~\citep{matching_cut_moshi} and claw-free graphs~\citep{matching_cut_planar}.
+\cite{matching_cut_tcs} also asked for the existence a single-exponential algorithm parameterized by treewidth.
+In response, \cite{matching_cut_structural} provided a $\bigOs{12^{\tw(G)}}$ algorithm for \pname{Matching Cut} using nice tree decompositions, along with $\FPT$ algorithms for other structural parameters, namely neighborhood diversity, twin-cover, and distance to split graph.
+
+The natural parameter -- the number of edges crossing the cut -- has also been considered.
+Indeed, \cite{marx_treewidth_reduction} tackled the \pname{Stable Cutset} problem, to which \textsc{Matching Cut} can be easily reduced via the line graph, and through a breakthrough technique showed that this problem is $\FPT$ when parameterized by the maximum size of the stable cutset.
+Recently, \cite{matching_cut_ipec} improved on the results of \cite{matching_cut_tcs}, providing an exact exponential algorithm for \textsc{Matching Cut} running in  time $\bigOs{1.3803^n}$, as well as $\FPT$ algorithms parameterized by the distance to a cluster graph and the distance to a co-cluster graph, which improve the algorithm parameterized by the vertex cover number, since both parameters are easily seen to be smaller than the vertex cover number.
+For the distance to cluster parameter, they also presented a quadratic kernel; while for a combination of treewidth, maximum degree, and number of crossing edges, they showed that no polynomial kernel exists unless $\NP \subseteq \coNP/\poly$.
+
+A problem  closely related to \pname{$d$-Cut} is that of \pname{Internal Partition}, first studied by \cite{internal_partition_thomassen}.
+In this problem, we seek a bipartition of the vertices of an input graph such that every vertex has at least as many neighbors in its
+own part as in the other part. Such a partition is called an \tdef{internal partition}.
+Usually, the problem is posed in a more general form: given functions $a,b: V(G) \rightarrow \mathbb{Z}_+$, we seek a bipartition $(A,B)$ of $V(G)$ such that every $v \in A$ satisfies $\dgr_A(v) \geq a(v)$ and every $u \in B$ satisfies $\dgr_B(u) \geq b(u)$, where $\dgr_A(v)$ denotes the number of neighbors of $v$ in the set $A$. Such a partition is called an \tdef{$(a,b)$-internal partition}.
+
+Originally, Thomassen asked in~\citep{internal_partition_thomassen} whether for any pair of positive integers $s,t$, a graph $G$ with $\delta(G) \geq s + t + 1$ has a vertex bipartition $(A,B)$ with $\delta(G[A]) \geq s$ and $\delta(G[B]) \geq t$.
+\cite{internal_partition_stiebitz} answered that, in fact, for any graph $G$ and any pair of functions $a,b: V(G) \rightarrow \mathbb{Z}_+$ satisfying $\dgr(v) \geq a(v) + b(v) + 1$ for every $v \in V(G)$, $G$ has an $(a,b)$-internal partition.
+Following Stiebitz's work, \cite{internal_partition_triangle_free} showed that if $G$ is triangle-free, then the pair $a,b$ only needs to satisfy $\dgr(v) \geq a(v) + b(v)$.
+More recently, \cite{internal_partition_c4_free} proved that, if $G$ is $\{C_4, K_4, \text{diamond}\}$-free, then $\dgr(v) \geq a(v) + b(v) - 1$ is enough.
+Furthermore, they also showed, for any pair $a,b$, a family of graphs such that $\dgr(v) \geq a(v) + b(v) - 2$ for every $v \in V(G)$ that do not admit an $(a,b)$-internal partition.
+
+It is conjectured that, for every positive integer $r$, there exists some constant $n_r$ for which every $r$-regular graph with more than $n_r$ vertices has an internal partition~\citep{DeVos09,internal_partition_regular6} (the conjecture for $r$ even appeared first in~\citep{internal_partition_regular3_4}).
+The cases $r \in \{3,4\}$ have been settled by \cite{internal_partition_regular3_4}; the case $r=6$ has been verified by \cite{internal_partition_regular6}.
+This latter result implies that every 6-regular graph of sufficiently large size has a 3-cut.

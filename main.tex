@@ -66,6 +66,7 @@
 
 \theoremstyle{plain}
 \newtheorem{lemma}{Lemma}[chapter]
+\newtheorem*{lemma*}{Lemma}
 \newtheorem{theorem}{Theorem}[chapter]
 \newtheorem*{theorem*}{Theorem}
 \newtheorem{corollary}{Corollary}[chapter]
@@ -95,8 +96,8 @@
 \newcommand{\Oblq}[1]{\oblq_{\mc{#1}}}
 \newcommand{\Trans}[1]{\trans_{\mc{#1}}}
 
-\newcommand{\bigO}[1]{\mathcal{O}\left(#1\right)}
-\newcommand{\bigOs}[1]{\mathcal{O}^*\left(#1\right)}
+\newcommand{\bigO}[1]{\mathcal{O}\!\left(#1\right)}
+\newcommand{\bigOs}[1]{\mathcal{O}^*\!\left(#1\right)}
 
 \newcommand{\tsc}[1]{\textsc{#1}}
 
@@ -104,48 +105,20 @@
 \newcommand{\problem}[3]{
   \begin{flushleft}
     \fbox{
-      \begin{minipage}{13.5cm}
+      \begin{minipage}{0.95\textwidth}
         \noindent \pname{#1}\\
         \textbf{Instance:} #2\\
         \textbf{Question:} #3
-      \end{minipage}}
-    \medskip
-  \end{flushleft}
-}
-
-\newcommand{\paraprobl}[5]
-{
-  \begin{flushleft}
-    \fbox{
-      \begin{minipage}{#5cm}
-        \noindent \pname{#1}\\
-        \textbf{Instance:} #2\\
-        \textbf{Parameter:} #3\\
-        \textbf{Question:} #4
       \end{minipage}
-    }
+     }
   \end{flushleft}
 }
-
-%\newcommand{\paraprobl}[4]
-%{
-%  \begin{flushleft}
-%    \fbox{
-%      \begin{minipage}{14cm}
-%        \noindent {\textsc {#1}}\\
-%        {\bf Input:} #2\\
-%        {\bf Parameter:} #4\\
-%        {\bf Output:} #3
-%      \end{minipage}
-%    }
-%  \end{flushleft}
-%}
 
 \newcommand{\pproblem}[4]
 {
   \begin{flushleft}
     \fbox{
-      \begin{minipage}{.95\textwidth}
+      \begin{minipage}{0.95\textwidth}
         \noindent \pname{#1}\\
         \textbf{Instance:} #2\\
         \textbf{Parameter:} #3\\
@@ -160,16 +133,16 @@
 \newcommand{\inners}{1.2pt}
 \newcommand{\outers}{1pt}
 
-\newcommand{\tdef}[1]{\textit{\textbf{#1}}}
+\newcommand{\tdef}[1]{\textit{#1}}
 
 %complexity
 \newcommand{\SiP}[1]{\Sigma^{\P}_{#1}}
-\newclass{\Hard}{Hard}
-\newclass{\Hness}{Hardness}
+\newclass{\Hard}{hard}
+\newclass{\Hness}{hardness}
 \newcommand{\NPH}{\NP\text{-}\Hard}
-\newclass{\Complete}{Complete}
-\newclass{\Ctude}{Completude}
-\newclass{\Cness}{Completeness}
+\newclass{\Complete}{complete}
+\newclass{\Ctude}{completude}
+\newclass{\Cness}{completeness}
 \newcommand{\NPc}{\NP\text{-}\Complete}
 \newcommand{\NPct}{\NP\text{-}\Ctude}
 \newcommand{\NPcness}{\NP\text{-}\Cness}
@@ -186,6 +159,7 @@
 \newfunc{\dc}{dc}
 \newfunc{\dcc}{d\overline{c}}
 \newclass{\ETH}{ETH}
+\newclass{\SETH}{SETH}
 \newclass{\dgr}{deg}
 \newfunc{\tw}{tw}
 
@@ -273,7 +247,7 @@
   dedication={firula/dedicatoria},
   %ack=[Acknowledgments]{},
   ack=[Acknowledgments]{firula/agradecimentos},
-  epigraphtext={Dadaaaaaaaaaaaaaaa!}{The Minions},
+  epigraphtext={Forged in...the seething flames of hatred}{Unknown},
 }
 
 % Um exemplo para documentos em ingls  apresentado a seguir (lembre-se de
@@ -301,7 +275,7 @@
 %  epigraphtext={Truth and lie are opposite things.}{Unknown},
 %}
 
-%\input{capitulos/introducao}
+\input{capitulos/introducao}
 
 %\input{capitulos/preliminares}
 
@@ -314,28 +288,6 @@
 %\input{capitulos/star}
 
 %\input{capitulos/conclusao}
-
-%\input{relatedworks}
-
-%\input{formulations}
-
-%\input{approaches}
-
-%\input{experiments}
-
-%\input{conclusions}
-
-%\begin{appendix}
-	
-%	\input{frenchabstract_v2}
-	
-%\end{appendix}	
-
-%\begin{appendix}
-
-%	\input{tabelasresumidas}
-	
-%\end{appendix}	
 
 % Aqui vem a parte da bibliografia: use o comando \ufmgbibliography indicando
 % apenas o nome do arquivo .bib (sem a extenso).

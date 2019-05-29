@@ -1,52 +1,75 @@
-\chapter{Introduction}
+\chapter{Introduction and Preliminaries}
 \label{ch:intro}
 
 Graphs are a mathematical tool mainly used to model situations where objects have some sort of interaction with each other.
 As such, they naturally arise on a plethora of problems from the most varied domains, ranging from geographical data to computer science, physics, chemistry and biology.
 Computer science, in particular, is heavily reliant on graphs and their many properties, being a core component of many database, network and artificial intelligence algorithms.
+In the information age, which encompasses the later 20th and early 21st centuries, the development of communication technologies has been a (if not the) focus point for human society.
+It is quite hard conceive a more fitting structure to the modelling of communication networks than a graph; the schematics of such a network are pretty much a drawing of a graph.
+In more recent years, the explosive popularity of online social networks has created a demand for extremely efficient and scalable implementations of graph structures and algorithms.
 
-Some applications for graphs usually seek a partition of the graph's vertices and edges such that each member of the partition satisfies some key properties for the problem.
-Such is the case for vertex coloring, where we want to partition the graph's vertices such that, at each member of the partition, no two are adjacent.
-We may further desire that the size of each partition member be as close as possible to each other; this added constraint generates the equitable coloring problem, which appears to be much harder to solve even for cases where classical vertex coloring is efficiently solvable.
+Beside their wide applicability range, graphs by themselves have been the subject of countless investigations.
+Much of the foundation of modern graph theory was laid by some of the greatest mathematicians of the nineteen hundreds, such as Bill Tutte, Claude Berge, and Paul Erd\H{o}s, with many milestone results in structural theory.
+Their work transformed graph theory from a small topic in combinatorics into one of the underpinning fields of applied mathematics, with connections to older, more established, mathematical domains.
+Another growth spurt in the area is attributed to the rapid expansion of computer science and its demands for efficient algorithms.
+Various computational problems quickly became graph theoretical ones, leading to many profound insights, which in turn presented new venues of investigation and even more important questions in graph theory, creating an ongoing virtuous cycle of research.
 
-Such problems arise in different scenarios, such as communication systems (\cite{traffic_scheduling}), timetable construction (\cite{timetable}), scheduling (\cite{mutual_exclusion_scheduling}, load balancing (\cite{domain_decomposition}) and register allocation (\cite{fernando_chordal}).
+Most of this thesis is devoted to the study of some graph theoretical problems belonging to the broad class of partitioning problems.
+Members of this family seek a partition of the graph's vertices and/or edges such that each part of the partition satisfies some problem-specific properties.
+The focus of this work is on two branches of partitioning problems: colorings and cuts.
+In a coloring problem, the goal is to partition (i.e. color) the vertices (or edges) of a graph such that each set of the partition, individually, satisfies some condition.
+For the classical \pname{Vertex Coloring} problem, the goal is to partition the graph's vertex set such that, inside each member of the partition there are no two adjacent vertices.
+By further desiring that the size of each partition member be as close as possible to each other, the \pname{Equitable Coloring} problem, which appears to be much harder to solve even for graph classes where classical vertex coloring is efficiently solvable, is generated.
+One may also impose the constraint that no maximal induced subgraph be entirely contained in a single set of the partition.
+For example, it may be required that no maximal clique or biclique (complete bipartite graph) of the given graph may be monochromatic generating the problems known as \pname{Clique Coloring} and \pname{Biclique Coloring}, respectively.
 
-Recently, partitioning problems of graphs have changed the constraint that two adjacent vertices must have a different color.
-In its place, it may be required that no maximal clique or biclique (complete bipartite graph) of the given graph may be monochromatic.
-These problems are called clique coloring and biclique coloring, respectively.
-They are defined and explored purely from a theoretical point of view, but their underlying motivation, especially for clique coloring, is the centrality that these maximal structures play across many of the results and definitions of graph theory.
+On the other hand, there are cut problems.
+While coloring problems are concerned with each set of the partition, cut problems usually define properties among different sets of the partition, usually involving the disconnection of a subset of vertices.
+Certainly, the most well known cut problem is \pname{Minimum Cut}, where the goal is to disconnect a given pair of vertices through the removal of the smallest possible subset of edges.
+This problem has been a component of numerous optimization algorithms, usually as a subroutine of more sophisticated heuristics, cutting plane, or pricing techniques.
+A lesser known relative of \pname{Minimum Cut} is the \pname{Matching Cut} problem; in this case, a bipartition of the vertex set of a graph such that each vertex has at most one neighbor across the cut is sought.
+Much work was done in this problem in recent years, building upon results of the 1980s, specially in terms of parameterized complexity.
+Many possible generalizations come to mind simply by looking at the definition.
+For instance, one could ask for a multipartition of the vertex set so that between each pair of sets there is a matching cut, or maybe a bipartition is still desired, but now a vertex may have more neighbors across the cut.
+Another cut problem with degree constraints and quite similar to the latter is known as \pname{Internal Partition}, where the goal is to find a bipartition of the vertices so that no vertex has more than half of its neighbors across the cut.
 
-One may also wonder about the relationship between these different structures, their intersections and other characteristics that may aid in the design of efficient algorithms or proofs that one is not expected to exist.
-The intersection graphs of these maximal structures are usually hard to characterize and provide few insights on the topology of the underlying graph.
-Nevertheless, their understanding was crucial to the development of a consistent theory that is used to describe important classes, such as chordal graphs and cographs.
+A secondary object of study are graph classes defined as intersection graphs.
+While it is known that every graph is the intersection graph of the subgraphs of some graph, constraints on the intersecting subgraph family impose all sorts of properties to the resulting graph.
+For example, the literature is rife with works on clique graphs -- the intersection graph class of maximal cliques of some graph, with results ranging from characterizations to other structural aspects; while biclique graphs are a far more recently studied class.
+The intersection graphs of these maximal structures are usually hard to characterize and provide few algorithmically useful insights on the topology of the underlying graph.
+Nevertheless, their understanding was crucial to the development of a consistent theory that is used to describe important classes, such as chordal graphs (intersection graphs of subtrees of a tree), cographs (intersection graphs of paths of a grid) and line graphs (intersection graphs of the edges of a graph).
 
-In this thesis proposal, three coloring problems were investigated, either in the general case or for some particular graph class, namely: equitable coloring, clique coloring and biclique coloring.
-For intersection graphs of maximal structures, we introduce and investigate star graphs (intersection graph of maximal stars of a graph), in the hopes that they may aid in the understanding of an, apparently, more complex class: biclique graphs.
-
-Most of the performed analysis is, mainly, from the complexity point of view.
-As such, our efforts are concentrated towards the discovery of efficient algorithms for each of our problems or, when we are unable to give one, present a hardness reduction, indicating that the so desired algorithm may, in fact, not exist.
-Within complexity theory, we deal with the classical univariate theory, built around $\NPcness$ and the polynomial hierarchy, and the multivariate theory of parameterized complexity, which encompasses $\FPT$ algorithms and the $\W$ hierarchy.
-
-The following is a summary of the topics and results discussed in this thesis proposal.
+In short, the study presented in this thesis, as many algorithmic graph theory works, is done from the structural and complexity point of view.
+While the reported results are mainly algorithms, hardness proofs, and kernelization techniques, most of these are heavily reliant on structural aspects, either by supporting themselves on previous results of the literature or by being structural themselves.
+Specifically, four partitioning problems were investigated: equitable coloring, clique coloring, biclique coloring, and a generalization of matching cut.
+For intersection graphs of maximal structures, motivated by the difficulty in working with biclique graphs, star graphs (intersection graph of maximal stars of a graph) are introduced and investigated.
+The following is a summary of the topics and results discussed in this thesis.
 
 \begin{itemize}
-    \item Chapter~\ref{ch:prelims} defines most of the notation used throughout this work.
-    Moreover, it also revisits some of the main results and concepts for each problem. 
-    We highlight that the tables present in this chapter consist of, to the best of our knowledge, the state of the art for each of the investigated coloring problems.
-    \item Chapter~\ref{ch:eq_coloring} tackles the equitable coloring problem. In particular, we deal with chordal graphs and one of its subclasses, block graphs.
-    The main results are: a $\bigO{n^{2k+2}}$ time algorithm for chordal graphs;
-    a linear time algorithm for \{net, claw\}-free block graphs;
-    an $\bigO{n^2 + nk}$ time algorithm for claw-free block graphs;
-    an $\bigO{kn^2 + nk}$ time algorithm for claw-free chordal graphs;
-    an $\NPcness$ proof for net-free block graphs which are also cographs;
-    and an $\NPcness$ proof for net-free block graphs which have diameter equal to 4.
-    \item Chapter~\ref{ch:cb_coloring} discusses both clique and biclique colorings.
-    At first, a $\bigOs{2^n}$ time algorithm is given for biclique coloring, exploring ideas previously used in the literature for clique coloring.
-    Afterwards, a $\bigOs{(k+2)^{2d}}$ time algorithm parameterized by neighbourhood diversity and biclique chromatic number is shown for biclique coloring.
-    A similar idea is used to show a $\bigOs{2^{2d}}$ time algorithm parameterized by neighbourhood diversity for clique coloring.
-    \item Chapter~\ref{ch:star_graph} deals with star graphs.
-    It begins by defining the class and presenting a Krausz type characterization for it.
-    After a brief discussion on the complexity of verifying a solution to the star graph recognition problem, it is shown that every edge of a star graph is contained in a triangle.
-    Finally, we show an interesting link between star graphs of triangle-free graphs and squares of graphs, which allows us to conclude that recognizing star graphs of graphs with girth exactly 4 is $\NPc$.
-    \item Chapter~\ref{ch:cfw} presents our conclusions and summarizes the future work described along this proposal.
+    \item The remainder of this chapter defines most of the notation used throughout this work.
+    It also revisits some of the main results concepts employed throughout this thesis.
+    \item Chapter~\ref{ch:eq_coloring} tackles coloring problems.
+    For equitable coloring, some \W[1]-\Hness\ results are provided: for block graphs of bounded diameter when parameterized by treewidth and maximum number of colors, for $K_{1,4}$-free interval graphs when parameterized by treewidth, maximum number of colors and maximum degree, and for disjoint union of complete multipartite graphs when parameterized by treewidth and maximum number of colors.
+    Some algorithms for equitable coloring are also described; in particular, it is shown that the problem admits an \XP\ algorithm for chordal graphs when a parameterized by the maximum number of colors, a constructive polynomial time algorithm to equitably color claw-free chordal graphs, and an \FPT\ algorithm parameterized by the treewidth of the complement graph.
+    Also in this chapter, both clique and biclique colorings are discussed.
+    The first exact exponential time algorithm for biclique coloring, which builds upon ideas used for clique coloring, is presented.
+    Then, kernelization algorithms for clique and biclique coloring when parameterized by neighborhood diversity are given; using results on covering problems, an $\FPT$ algorithm under the same parameterization is obtained for clique coloring.
+    For biclique coloring, an \FPT\ algorithm is given, but when parameterized by maximum number of colors and neighborhood diversity.
+    \item Chapter~\ref{ch:star_graph} deals with star graphs, the intersection graph of the maximal stars of a graph, and with star-critical graphs which are minimal with respect to the star graph they generate.
+    The chapter begins with a bound on the number of vertices of star-critical graphs by a quadratic function of the size of its set of maximal stars.
+    Afterwards, a Krausz-type characterization is given; both results are combined to show that the recognition problem belongs to \NP.
+    Then, a series of properties of star graphs are proved.
+    In particular, it is shown show that they are biconnected, that every edge belongs to at least one triangle, the structures that the pre-image must have in order to generate degree two vertices are characterized, and bound the diameter of the star graph with respect to the diameter of its pre-image is given.
+    Finally, a monotonicity theorem is provided, which is used to generate all star graphs on no more than eight vertices and prove that the class of star graphs and square graphs are not properly contained in each other.
+    \item Chapter~\ref{ch:cuts} presents a generalization of the matching cut problem.
+    The chapter opens up with a discussion on possible generalizations of the matching cut problem and some crucial differences found when approaching them.
+    After this initial digression, the focus shifts exclusively to the $d$-cut problem.
+    Among the presented results are included an \NP-\Hness\ proof for $(2d+2)$-regular graphs -- which has an important connection to a conjecture on the context of internal partitions -- as well as a polynomial time algorithm for graphs of maximum degree $d + 2$.
+    \FPT\ algorithms for several parameters are then given; namely: the maximum number of edges crossing the cut, treewidth, distance to cluster, and distance to co-cluster.
+    The algorithm parameterized by treewidth improves upon the running time of the best known algorithm for \pname{Matching Cut}.
+    Afterwards, building on techniques employed for \pname{Matching Cut}, a polynomial kernel for \pname{$d$-Cut} for every positive integer $d$, parameterized by the distance to a cluster graph is shown.
+    The existence of polynomial kernels when parameterizing simultaneously by the number of edges crossing the cut, the treewidth, and the maximum degree is ruled out.
+    Finally, an exact exponential algorithm slightly faster than the naive brute force approach is described.
 \end{itemize}
+
+\input{capitulos/secoes_intro/preliminares.tex}
