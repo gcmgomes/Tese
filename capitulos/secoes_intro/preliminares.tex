@@ -169,12 +169,35 @@ The circuits with weft $t$ and depth $d$, denoted by \pname{wcs}$_{t,d}$, will b
 \subsection{Kernelization}
 
 One of the broadest class of techniques to be found in the realm of computing is perhaps that of \textit{pre-processing}.
-Every real system in some sense employs routines that try to prune the search space or reduce the input instance as much as possible before doing any heavy lifting.
-Such is the case with most optimization frameworks, such as CPLEX and Gurobi, where dozens upon dozens of pre-processing methods are readily available and in many cases successfully eliminate large chunks of the input before trying to solve the integer program directly.
-Furthermore, in many cases, simple heuristics or algorithms with terrible worst case running times perform surprisingly well, and, in many cases, there is no theoretically sound approach to explain this phenomenon.
+Every real system, in one way or another, employs routines that try to prune the search space or reduce the input instance as much as possible before doing any heavy lifting.
+Such is the case with most optimization suites, such as CPLEX and Gurobi, where dozens upon dozens of pre-processing methods are readily available and in many cases successfully eliminate large chunks of the input before trying to solve the integer program directly.
+Furthermore, in many cases, simple heuristics or algorithms with terrible worst case running times perform surprisingly well, and, in many cases, there was no theoretically sound approach to explain this phenomenon.
+This lack of work on the subject is explained by the fact that, if an instance of a $\NPH$ problem can be reduced in polynomial time to one of bounded size, then $\P = \NP$~\citep{book-kernels}.
+With the advent of parameterized algorithms, however, the situation is changing drastically.
+Using this framework it has become possible to derive upper on lower bounds on the sizes of the instances obtained after a set of pre-processing rules have been applied.
+We define the notions of kernels and kernelization below.
 
+\begin{class_definition*}[Kernelization]
+    A  \textit{kernelization algorithm} is an algorithm that takes as input an instance $(x,k)$ of a parameterized problem $\Pi$ and its output is an equivalent instance $(x',k')$ of $\Pi$ such that $|x'| \leq f(k)$ and $k' \leq g(k)$, for some pair of computable functions $f,g$; instance $(x',k')$ is called the \textit{kernel} of $(x,k)$.
+\end{class_definition*}
 
-For further reading and other more insightful discussions on the subjects of parameterized and kernelization, we point to~\citep{downey_fellows} and~\citep{cygan_parameterized}, from where most of the given definitions come from. 
+It is not hard to see that a parameterized problem is in \FPT\ if and only if it admits a kernel.
+Not all kernels are equal, and a natural desire is for the best (i.e. smallest) possible kernel.
+The size of the kernel is measured by the dependency of the kernel on the parameter -- that is, a kernel that satisfies $|x'| \leq 4k$ is much better than a kernel with $|x'| \leq k^2$.
+If this dependency is linear, we say that we have a \textit{linear kernel}, if $f(k)$ is a quadratic function, than the kernel is \textit{quadratic}, and so on.
+Let $k$ be the natural parameter for the following problems.
+Some famous examples of problems and their kernels include: \pname{Vertex Cover}, which admits a kernel of size $2k$; \pname{Max 3-Satisfability}, which has a kernel on $6k$ variables and $2k$ clauses; \pname{Independent Set} on planar graphs, with a kernel of size $4(k - 1)$;
+meanwhile, for \pname{Dominating Set} on graphs of girth at least five, there is a cubic kernel, but no known subcubic one.
+
+The bound on the instance size, however, can be exponential.
+For instance, \pname{Matching Cut} parameterized by the number of edges crossing the cut does not have a polynomial kernel~\citep{matching_cut_ipec}.
+For some time, there were no techniques to prove that a parameterized problem does \textit{not} admit a polynomial kernel; this changed, however with the seminal work of~\cite{BodlaenderDFH09}, where the composition and distillation techniques were first discussed, being was further deepened
+by~\cite{weak_composition} and \cite{BodlaenderJK14}, where weak and cross-compositions were described.
+All of these techniques, however, make use of some well established hypothesis about classical complexity classes.
+For instance, distillation is based on assumption that the polynomial hierarchy does not collapse to the third level; weak-composition and cross-composition rely on the hypothesis that $\NP \subseteq \coNP/\poly$.
+Despite appearing strong assumptions, if either of these hypotheses fail the implications would reverberate through much of theoretical computer science, and not only parameterized complexity.
+
+For further reading and other more insightful discussions on the subjects of parameterized complexity and kernelization, we point to~\citep{downey_fellows},~\citep{cygan_parameterized}, and~\citep{book-kernels} from where most of the given definitions come from. 
 
 \section{Explicit Running Time Lower Bounds}
 
@@ -219,7 +242,7 @@ In terms of $\FPT$ algorithms, the existence of $2^{o(k)}n^{\bigO{1}}$ was ruled
 While most of the complexity theory community believes \ETH\ to be true, the same is not true for the Strong Exponential time Hypothesis~\citep{bad_seth}.
 The implications for \SETH, however, as the name suggests, are quite powerful.
 While \ETH\ is generally used to prove assertions on the exponent of the running times of many algorithms, \SETH\ allows for a \textit{much} finer-grained analysis, at the cost of much more complex reductions and arguments, specially because the hypothesis of the Sparsification Lemma \textit{are not respected by \pname{Satisfability}}.
-\citep{seth_lokshtanov} give a series of reductions for many problems parameterized by treewidth.
+\cite{seth_lokshtanov} give a series of reductions for many problems parameterized by treewidth.
 They show that the best known algorithms parameterized by treewidth for \pname{Independent Set}, \pname{Dominating Set}, \pname{Max Cut}, \pname{Odd Cycle Transversal}, \pname{Vertex $q$-Coloring} (for any $q \geq 3$), \pname{Partition Into Triangles} cannot be improved, unless \SETH\ is false.
 Recently, \cite{seth_subset_sum} proved what may surely be considered a breakthrough result: by using a hypothesis on the running time of \pname{Satsifability} (\SETH), they proved that the pseudo-polynomial dynamic programming algorithm given by \cite{bellman_dp} for \pname{Subset Sum} is optimal.
 
