@@ -1,4 +1,4 @@
-\section{Hardness for subclasses of Chordal Graphs}
+\subsection{Hardness for subclasses of Chordal Graphs}
 
 \begin{figure}[!tb]
     \centering
@@ -350,7 +350,7 @@ The color given to the circled vertices in Figure~\ref{fig:flower} control the b
 Each reduction uses only one of the three gadget types.
 Since every gadget is a chordal graph, their treewidth is precisely the size of the largest clique minus one, that is, $k$, which is also the number of desired colors for the built instance of \textsc{equitable coloring}.
 
-\subsection{Disjoint union of Split Graphs}
+\subsubsection{Disjoint union of Split Graphs}
 
 \begin{definition}
     An $(a,k)$-antiflower is the graph $F_-(a,k) = K_{k-1} \oplus \left(\bigcup_{i \in [a+1]} K_1\right)$, that is, it is the graph obtained after performing the disjoint union of $a+1$ $K_1$'s followed by the join with $K_{k-1}$.
@@ -378,7 +378,7 @@ Since every gadget is a chordal graph, their treewidth is precisely the size of 
     That is, $n + B = |\psi_i| = \sum_{j \mid i \notin C_j} (a_j + 1) + \sum_{j \mid i \in C_j} 1 = \sum_{j \mid i \notin C_j} (a_j + 1) + \sum_{j \in [n]} 1 - \sum_{j \mid i \notin C_j} 1 = \sum_{j \mid i \notin C_j} a_j + n$, from which we conclude that $\sum_{j \mid i \notin C_j} a_j = B$.
 \end{proof}
 
-\subsection{Block Graphs}
+\subsubsection{Block Graphs}
 
 We now proceed to the parameterized complexity of block graphs.
 Conceptually, the proof follows a similar argumentation as the one developed in Theorem~\ref{thm:dis_split}; in fact, we are able to show that even restricting the problem to graphs of diameter at least four is not enough to develop an $\FPT$ algorithm, unless $\FPT = \W[1]$.
@@ -422,7 +422,7 @@ Conceptually, the proof follows a similar argumentation as the one developed in 
     \end{align*}
 \end{tproof}
 
-\subsection{Interval Graphs without some induced stars}
+\subsubsection{Interval Graphs without some induced stars}
 
 
 \begin{definition}

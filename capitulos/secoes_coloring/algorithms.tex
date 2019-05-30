@@ -1,9 +1,9 @@
-\section{Algorithms for \pname{Equitable Coloring}}
+\section{Exact Algorithms for \pname{Equitable Coloring}}
 
 \subsection{Chordal Graphs}
 
 In this section we will make heavy use of the clique tree $\mathcal{T}(G) = (\mathcal{Q}, F)$ of our chordal graph $G$, which we denote by $\mathcal{T}$ for simplicity.
-We also assume that $\mathcal{Q} = \{Q_1, \dots, Q_r\}$, $|V(G)| = n$, that $\mathcal{T}$ is rooted at $Q_1$ and that $T_i$ is the subtree of $\mathcal{T}$ rooted on bag $Q_i$.
+We also assume that $\mathcal{Q} = \{Q_1, \dots, Q_r\}$, $|V(G)| = n$, that $\mathcal{T}$ is rooted at $Q_1$ and that $T_i$ is the subtree of $\mathcal{T}$ rooted at bag $Q_i$.
 
 Our dynamic programming algorithm explores the separability structure inherent to chordal graphs, embodied by the clique tree, to combine every coloring of a subtree that may yield an equitable coloring of the whole graph.
 To do so, we must keep track of which bag, say $Q_i$, we are currently exploring and which colors have been used at the separator between $Q_i$ and $\mathcal{T} \setminus Q_i$.
