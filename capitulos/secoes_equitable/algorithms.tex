@@ -1,0 +1,196 @@
+\section{Algorithms for \pname{Equitable Coloring}}
+
+\subsection{Chordal Graphs}
+
+In this section we will make heavy use of the clique tree $\mathcal{T}(G) = (\mathcal{Q}, F)$ of our chordal graph $G$, which we denote by $\mathcal{T}$ for simplicity.
+We also assume that $\mathcal{Q} = \{Q_1, \dots, Q_r\}$, $|V(G)| = n$, that $\mathcal{T}$ is rooted at $Q_1$ and that $T_i$ is the subtree of $\mathcal{T}$ rooted on bag $Q_i$.
+
+Our dynamic programming algorithm explores the separability structure inherent to chordal graphs, embodied by the clique tree, to combine every coloring of a subtree that may yield an equitable coloring of the whole graph.
+To do so, we must keep track of which bag, say $Q_i$, we are currently exploring and which colors have been used at the separator between $Q_i$ and $\mathcal{T} \setminus Q_i$.
+
+A \tdef{$k$-color counter}, or simply a \tdef{counter} for an $n$ vertex graph is an element $X \in \left(\left[\ceil{\frac{n}{k}}\right] \cup \{0\}\right)^k$, that is, the $k$-th Cartesian power of $\left[\ceil{\frac{n}{k}}\right] \cup \{0\}$.
+A counter $X$ is \tdef{equitable} if for every $x_i, x_j \in X$, $|x_i - x_j| \leq 1$.
+For simplicity, denote $S(n,k) = \left[\ceil{\frac{n}{k}}\right] \cup \{0\}$.
+The \tdef{sum} of two counters $X,Y$ is defined as $X + Y = (x_1 + y_1, \dots, x_k + y_k)$.
+We also define the sum of two families $\mathcal{X}, \mathcal{Y}$ of counters as $\mathcal{Z} = \mathcal{X} + \mathcal{Y} = \left\{X + Y \in S(n,k)^k \mid X \in \mathcal{X}, Y \in \mathcal{Y} \right\}$, that is, the sum of all pairs of elements from each family that belong to $S(n,k)^k$.
+
+\begin{observation}
+    \label{obs:counter_bound}
+    If $\mathcal{X}, \mathcal{Y} \subseteq S(n,k)^k$ and $\mathcal{Z} = \mathcal{X} + \mathcal{Y}$, $|\mathcal{Z}| \leq |S(n,k)|^k $.
+\end{observation}
+
+\begin{theorem}
+    \label{thm:chordal_exp}
+    There is an $\bigO{n^{2k+2}}$ time algorithm for \pname{Equitable Coloring} on chordal graphs where $k$ is the maximum number of colors.
+\end{theorem}
+
+\begin{tproof}
+    Let $G$ be the input chordal graph of order $n$ and $\mathcal{T}$ its clique tree, rooted at bag $Q_1$. Moreover, we assume that $k \geq \omega(G)$, otherwise the answer is trivially $\NOi$.
+    
+    For a bag $Q$, denote by $p(Q)$ the parent clique of $Q$ on $\mathcal{T}$, $I(Q) = Q \cap p(Q)$ and by $U(Q) = Q \setminus p(Q)$ the set of vertices that first appeared on the path between $Q$ and the root $Q_1$ (if $Q = Q_1$, $U(Q) = Q$).
+    
+    Given $Q$ and a list of available colors $L$, define $\Pi(Q,L)$ as the set of all colorings of $U(Q)$ using only the colors of $L$, $\beta(Q,L,\pi)$ the list of colors used by $L$ and $\pi$ to color $I(Q)$ and $Y(Q,\pi)$ as the counter where $y_i = 1$ if and only if some vertex of $U(Q)$ was colored with color $i$ in $\pi$.
+    
+    We define our dynamic programming state $f(Q_i, L)$ as all colorings of $T_i$ conditioned to the fact that $I(Q_i)$ was colored with $L$. Intuitively, we will try every possible coloring $\pi$ of $U(Q)$ and combine the solutions of each bag adjacent to $Q_i$ given the colors used by $\pi$ and $L$. Finally, there will be an equitable $k$-coloring of $G$ if there is an equitable counter in $f(Q_1, \emptyset)$.
+    
+    \begin{equation*}
+        f(Q_i, L) = \bigcup_{\pi \in \Pi(Q_i, [k] \setminus L)} \left(Y(Q_i, \pi) + \sum_{Q_j \in N_{T_i}(Q_i)} f(Q_j, \beta(Q_j, L, \pi))\right)
+    \end{equation*}
+    
+    To prove the correctness of our algorithm, we will use induction on the size of $\mathcal{T}$.
+    For the base case, where $|V(\mathcal{T})| = 1$, trivially, any proper coloring of $G$ will be equitable.
+    
+    For the general case, suppose that $Q_i$ has at least one child, say $Q_j$.
+    Inductively, for any list of colors $R$, $f(Q_j, R)$ holds every proper coloring of $T_j \setminus I(Q_j)$, given that $I(Q_j)$ was colored with $R$.
+    In particular, for every $\pi \in \Pi(Q_i, [k] \setminus L)$ we have this guarantee.
+    Note that, for each pair of children $Q_j, Q_l$ of $Q_i$, their solutions are completely independent because $Q_j \cap Q_l \subseteq Q_i$ (clique tree property) and $Q_i$ is entirely colored by $\pi$ and $L$.
+    This implies that no vertex was counted more than once on each counter, since their color is chosen exactly once for each possible $\pi$.
+    Therefore, since the problems are independent for each child of $Q_i$, $\mathcal{Z}(\pi) = \sum_{Q_j \in N_{T_i}(Q_i)} f(Q_j, \beta(Q_j, L, \pi))$ combines every possible coloring of the children of $Q_i$ and $\mathcal{Z}(\pi) + Y(Q_i, \pi)$ is the family of all colorings of $T_i$, given that $Q_i$ was colored with $\pi$ and $L$.
+    Finally, $\bigcup_{\pi \in \Pi(Q_i, [k] \setminus L)} Y(Q, \pi) + Z(\pi)$ tries every possible coloring $\pi$ of $Q_i$, guaranteeing that $f(Q_i, L)$ has every possible coloring of $T_i$, given that $I(Q_i)$ used $L$.
+    Since $f(Q_i, L)$ has every coloring of $\mathcal{T_i}$ given $L$, $G$ will be equitably $k$-colorable if and only if there is an equitable counter at $f(Q_1, \emptyset)$.
+    
+    In terms of complexity analysis, we first note that each sum of two counter families $\mathcal{X},\mathcal{Y}$ takes $\bigO{|\mathcal{X}||\mathcal{Y}|}$.
+    However, due to Observation~\ref{obs:counter_bound}, the size of $\mathcal{X} + \mathcal{Y}$ is at most $|S(N,k)|^k$ and, therefore, $\sum_{Q_j \in N_{T_i}(Q_i)} f(Q_j, \beta(Q_j, L, \pi))$ takes at most $\bigO{n|S(n,k)|^{2k}} = \bigO{n \left(\ceil{\frac{n}{k}} + 1\right)^{2k}}$ time; moreover, the addition of $Y(Q_i, \pi)$ to $\mathcal{Z}(\pi)$, by the same argument, is $\bigO{|S(n,k)|^k}$.
+    
+    For the outermost union, we have $\bigO{k!}$ possible colorings $\pi$ for $U(Q_i)$, which implies that computing each $f(Q_i, L)$ takes $\bigO{k!n\left(\ceil{\frac{n}{k}} + 1\right)^{2k}}$ time.
+    Since we have $r \leq n$ bags and $k!$ possible lists, there are $\bigO{nk!}$ states, therefore the total complexity of our dynamic programming algorithm is $\bigO{k!^2n^2\left(\ceil{\frac{n}{k}} + 1\right)^{2k}} = \bigO{n^{2k + 2}}$.
+\end{tproof}
+
+\begin{corollary}
+    \pname{Equitable Coloring} of chordal graphs parameterized by the number of colors is in $\XP$.
+\end{corollary}
+
+As shown by Theorem~\ref{thm:chordal_w1_hard}, \pname{Equitable Coloring} of $K_{1,4}$-free interval graphs is \W[1]-\Hard when parameterized by treewidth, maximum number of colors and maximum degree.
+The construction of the hard instance, however, has a massive amount of copies of the claw ($K_{1,3}$); determining the complexity of the problem for the class of claw-free chordal graphs is, therefore, a direct question. 
+Before answering it, we require a bit more of notation.
+Given a partial $k$-coloring $\varphi$ of $G$, let $G[\varphi]$ denote the subgraph of $G$ induced by the vertices colored with $\varphi$, define $\varphi_-$ as the set of colors used $\floor{|V(G[\varphi])|/k}$ times in $\varphi$ and $\varphi_+$ the remaining colors.
+If $k$ divides $|V(G[\varphi])|$, we say that $\varphi_+ = \emptyset$.
+Our goal is to color $G$ one maximal clique (say $Q$) at a time and keep the invariant that the new vertices introduced by $Q$ can be colored with a subset of the elements of $L_-$.
+To do so, we rely on the fact that, for claw-free graphs, the maximal connected components of the subgraph induced by any two colors form either cycles, which cannot happen since $G$ is chordal, or paths.
+By carefully choosing which colors to look at, we find odd length paths that can be greedily recolored to restore our invariant.
+
+\begin{lemma}
+    \label{lem:claw_free_chordal}
+    There is an $\bigO{n^2}$-time algorithm to equitably $k$-color a claw-free chordal graph or determine that no such coloring exists.
+\end{lemma}
+
+\begin{proof}
+    We proceed by induction on the number $n$ of vertices of $G$, and show that $G$ is equitably $k$-colorable if and only if its maximum clique has size at most $k$.
+    The case $n = 1$ is trivial.
+    For general $n$, take one of the leaves of the clique tree of $G$, say $Q$, a simplicial vertex $v \in Q$ and define $G' = G \setminus \{v\}$.
+    By the inductive hypothesis, there is an equitable $k$-coloring of $G'$ if and only if $k \geq \omega(G')$.
+    If $k < \omega(G')$ or $k < |Q|$, $G$ can't be properly colored.
+    
+    Now, since $k \geq \omega(G) \geq |Q|$, take an equitable $k$-coloring $\varphi'$ of $G'$ and define $Q' = Q \setminus \{v\}$.
+    If $|\varphi'_- \setminus \varphi'(Q')| \geq 1$, we can extend $\varphi'$ to $\varphi$ using one of the colors of $\varphi'_- \setminus \varphi'(Q')$ to greedily color $v$.
+    Otherwise, note that $\varphi'_+ \setminus \varphi'(Q') \neq \emptyset$ because $k \geq \omega(G')$.
+    Now, take some color $c \in \varphi'_- \cap \varphi'(Q')$, $d \in \varphi'_+ \setminus \varphi'(Q')$; by our previous observation, we know that $G'[\varphi_c \cup \varphi_d]$ has $C = \{C_1, \dots, C_l\}$ connected components, which in turn are paths.
+    Now, take $C_i \in C$ such that $C_i$ has odd length and both endvertices are colored with $d$; said component must exist since $d \in \varphi'_+$ and $c \in \varphi'_-$.
+    Moreover, $C_i \cap Q' = \emptyset$, we can swap the colors of each vertex of $C_i$ and then color $v$ with $d$; neither operation makes an edge monochromatic.
+    
+    As to the complexity of the algorithm, at each step we may need to select $c$ and $d$ -- which takes $\bigO{k}$ time -- construct $C$, find $C_i$ and perform its color swap, all of which take $\bigO{n}$ time.
+    Since we need to color $n$ vertices and $k \leq n$, our total complexity is $\bigO{n^2}$.
+\end{proof}
+
+The above algorithm was not the first to solve \pname{Equitable Coloring} for claw-free graphs; this was accomplished by \cite{claw_free_de_werra} which implies that, for any claw-free graph $G$, $\chi_=(G) = \chi_=^*(G) = \chi(G)$.
+
+\begin{theorem}[\cite{claw_free_de_werra}]
+    If $G$ is claw-free and $k$-colorable, then $G$ is equitably $k$-colorable.
+\end{theorem}
+
+However, \citep{claw_free_de_werra} is not easily accessible, as it is not in any online repository.
+Moreover, the given algorithm has no clear time complexity and, as far as we were able to understand the proof, its running time would be $\bigO{k^2n}$, which, for $k = f(n)$, is worse than the algorithm we present in Lemma~\ref{lem:claw_free_chordal}.
+
+\subsection{Clique Partitioning}
+
+Since \pname{Equitable Coloring} is $\W[1]$-$\Hard$ when simultaneously parameterized by many parameters, we are led to investigate a related problem.
+Much like \pname{Equitable Coloring} is the problem of partitioning $G$ in $k'$ independent sets of size $\ceil{n/k}$ and $k - k'$ independent sets of size $\floor{n/k}$, one can also attempt to partition $\overline{G}$ in cliques of size $\ceil{n/k}$ or $\floor{n/k}$.
+A more general version of this problem is formalized as follows:
+
+\problem{clique partitioning}{A graph $G$ and two positive integers $k$ and $r$.}{Can $G$ be partitioned in $k$ cliques of size $r$ and $\frac{n-rk}{r-1}$ cliques of size $ r - 1$?}
+
+We note that both \textsc{maximum matching} (when $k \geq n/2$) and \textsc{triangle packing} (when $k < n/2$) are particular instances of \textsc{clique partitioning}, the latter being $\FPT$ when parameterized by $k$~\citep{triangle_packing}.
+As such, we will only be concerned when $r \geq 3$.
+To the best of our efforts, we were unable to provide an $\FPT$ algorithm for \textsc{clique partitioning} when parameterized by $k$ and $r$, even if we fix $r = 3$.
+However, the situation is different when parameterized by the treewidth of $G$, and we obtain an algorithm running in $2^{\tw(G)}n^{\bigO{1}}$ time for the corresponding counting problem, \textsc{\#clique partitioning}.
+
+The key ideas for our bottom-up dynamic programming algorithm are quite straightforward. First, cliques are formed only when building the tables for forget nodes. Second, for join nodes, we can safely consider only the combination of two partial solutions that have empty intersection on the covered vertices (i.e. that have already been assigned to some clique). Finally, both join and forget nodes can be computed using fast subset convolution~\citep{fourier_mobius}.
+For each node $x \in \mathbb{T}$, our algorithm builds the table $f_x(S, k')$, where each entry is indexed by a subset $S \subseteq B_x$ that indicates which vertices of $B_x$ have already been covered, an integer $k'$ recording how many cliques of size $r$ have been used, and stores how many partitions exist in $G_x$ such that only $B_x \setminus S$ is yet uncovered.
+If an entry is inconsistent (e.g. $S \nsubseteq B_x$), we say that $f(S, K') = 0$.
+
+\begin{theorem}
+    \label{thm:clique_part}
+    There is an algorithm that, given a nice tree decomposition of an $n$-vertex graph $G$ of width $\tw$, computes the number of partitions of $G$ in $k$ cliques of size $r$ and $\frac{n - rk}{r-1}$ cliques of size $r-1$ in time $\bigOs{2^{\tw}}$ time.
+\end{theorem}
+
+\begin{proof}
+    \textit{Leaf node:} Take a leaf node $x \in \mathbb{T}$ with $B_x = \emptyset$. 
+    Since the only one way of covering an empty graph is with zero cliques, we compute $f_x$ with:
+    \begin{equation*}
+        \centering
+        \hfill f_x(S, k') =
+        \begin{cases}
+            1, \text{ if } k' = 0 \text{ and } S = \emptyset \text{;}\\
+            0, \text{ otherwise.}\\
+        \end{cases}
+    \end{equation*}
+    
+    \emph{Introduce node:} Let $x$ be a an introduce node, $y$ its child and $v \in B_x \setminus B_y$.
+    Due to our strategy, introduce nodes are trivial to solve; it suffices to define $f_x(S, k') = f_y(S, k')$. If $v \in S$, we simply define $f_x(S, k') = 0$.
+    
+    \emph{Forget node:} For a forget node $x$ with child $y$ and forgotten vertex $v$, we formulate the computation of $f_x(S, k')$ as the subset convolution of two functions as follows:
+    
+    \begin{align*}
+        \centering
+        f_x(S, k') &= f_y(S \cup \{v\}, k') + \sum_{A \subseteq S} f_y(S \setminus A, k' - 1)g_r(A, v) + \sum_{A \subseteq S} f_y(S \setminus A, k')g_{r-1}(A, v)\\
+        g_l(A, v) &=
+            \begin{cases}
+                1, \text{ if $A$ is a clique of size $l$ contained in $N[v]$ and $v \in A$;}\\
+                0, \text{otherwise.}
+            \end{cases}
+    \end{align*}
+    
+    The above computes, for every $S \subseteq B_x$ and every clique $A$ (that contains $v$) of size $r$ or $r - 1$ contained in $N[v] \cap B_y \cap S$, if $S \setminus A$ and some $k''$ is a valid entry of $f_y$, or if $v$ had been previously covered by another clique (first term of the sum).
+    Directly computing the last two terms of the equation, for each pair $(S, k')$, yields a total running time of the order of $ \sum_{|S| = 0}^\tw \binom{\tw}{|S|}2^{|S|} = (1+2)^\tw = 3^\tw$ for each forget node.
+    However, using the fast subset convolution technique described by~\cite{fourier_mobius}, we can compute the above equation in time $\bigOs{2^{|B_x|}} = \bigOs{2^{\tw}}$.
+    
+    Correctness follows directly from the hypothesis that $f_y$ is correctly computed and that,  for every $A \subseteq B_x$, $g_r(A, v)g_{r-1}(A, v) = 0$.
+    For the running time, we can pre-compute both $g_r$ and $g_{r-1}$ in $\bigO{2^\tw r^2}$, so their values can be queried in $\bigO{1}$ time.
+    As such, each forget node takes $\bigO{2^\tw\tw^3k}$ time, since we can compute the subset convolutions of $f_y * g_r$ and $f_y * g_{r-1}$ in $\bigO{2^\tw\tw^3}$ time each.
+    The additional factor of $k$ comes from the second coordinate of the table index.
+    
+    \emph{Join node:} Take a join node $x$ with children $y$ and $z$.
+    Since we want to partition our vertices, the cliques we use in $G_y$ and $G_z$ must be completely disjoint and, consequently, the vertices of $B_x$ covered in $B_y$ and $B_z$ must also be disjoint.
+    As such, we can compute $f_x$ through the equation:
+    
+    \begin{equation*}
+        f_x(S, k') = \sum_{k_y + k_z = k'} \sum_{A \subseteq S} f_y(A, k_y)f_z(S \setminus A, k_z)
+    \end{equation*}
+    
+    Note that we must sum over the integer solutions of the equation $k_y + k_z = k'$ since we do not know how the cliques of size $r$ are distributed in $G_x$.
+    To do that, we compute the subset convolution $f_y(\cdot, k_y) * f_z(\cdot, k_z)$.
+    The time complexity of $\bigO{2^\tw\tw^3k^2}$ follows directly from the complexity of the fast subset convolution algorithm, the range of the outermost sum and the range of the second parameter of the table index.
+    
+    For the root $x$, we have $f_x(\emptyset, k) \neq 0$ if and only if $G_x = G$ can be partitioned in $k$ cliques of size $r$ and the remaining vertices in cliques of size $r-1$.
+    Since our tree decomposition has $\bigO{n\tw}$ nodes, our algorithm runs in time $\bigO{2^\tw\tw^4k^2n}$.
+    
+    To recover a solution given the tables $f_x$, start at the root node with $S = \emptyset$, $k' = k$ and let $\mathcal{Q} = \emptyset$ be the cliques in the solution.
+    We shall recursively extend $\mathcal{Q}$ in a top-down manner, keeping track of the current node $x$, the set of vertices $S$ and the number $k'$ of $K_r$'s used to cover $G_x$.
+    Our goal is to keep the invariant that $f_x(S, k') \neq 0$.
+    
+    \emph{Introduce node:} Due to the hypothesis that $f_x(S, k') \neq 0$ and the way that $f_x$ is computed, it follows that $f_y(S, k') \neq 0$.
+        
+    \emph{Forget node:} Since the current entry is non-zero, there must be some $A \subseteq S$ such that exactly one of the products $f_y(S \setminus A, k' - 1)g_r(A, v)$, $f_y(S \setminus A, k')g_{r-1}(A, v)$ is non-zero and, in fact, any such $A$ suffices.
+    To find this subset, we can iterate through $2^S$ in $\bigO{2^\tw}$ time and test both products to see if any of them is non-zero.
+    Note that the chosen $A \cup \{v\}$ will be a clique of size either $r$ or $r-1$, and thus, we can set $\mathcal{Q} \gets \mathcal{Q} \cup \{A \cup \{v\}\}$.
+        
+    \emph{Join node:} The reasoning for join nodes is similar to forget nodes, however, we only need to determine which states to look at in the child nodes.
+    That is, for each integer solution to $k_y + k_z = k'$ and for each $A \subseteq S$, we check if both $f_y(A, k_y)f_z(S \setminus A, k_z)$ is non-zero; in the affirmative, we compute the solution for both children with the respective entries.
+    Any such triple $(A, k_y, k_z)$ that satisfies the condition suffices.
+    
+    Clearly, retrieving the solution takes $\bigO{2^\tw k}$ time per node, yielding a running time of $\bigOs{2^\tw}$.
+\end{proof}
+
+\begin{corollary}
+    Equitable coloring is $\FPT$ when parameterized by the treewidth of the complement graph.
+\end{corollary}

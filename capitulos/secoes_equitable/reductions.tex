@@ -1,0 +1,450 @@
+\section{Hardness for subclasses of Chordal Graphs}
+
+\begin{figure}[!tb]
+    \centering
+    \begin{tikzpicture}[scale=\gscale]
+        %\draw[help lines] (-5,-5) grid (5,5);
+        \GraphInit[unit=3,vstyle=Normal]
+        \SetVertexNormal[Shape=circle, FillColor=black, MinSize=2pt]
+        \tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+        \SetVertexNoLabel
+        \Vertex[x=0,y=0,L={y}, Lpos=270, LabelOut, Ldist=3pt]{y}
+        \draw[] (0,0) circle (0.4cm);
+        \Vertex[a=-5, d=1.7cm]{x11}
+        \Vertex[a=-30, d=2.3cm]{x12}
+        \Vertex[a=-55, d=1.7cm]{x13}
+        
+        \Vertex[a=115, d=1.7cm]{x21}
+        \Vertex[a=90, d=2.3cm]{x22}
+        \Vertex[a=65, d=1.7cm]{x23}
+        
+        \Vertex[a=235, d=1.7cm]{x31}
+        \Vertex[a=210, d=2.3cm]{x32}
+        \Vertex[a=185, d=1.7cm]{x33}
+        
+        \foreach \x in {1,2,3}
+            \foreach \y in {1,2,3}
+                \Edge(y)(x\x\y);
+        
+        \Edge(x11)(x12)
+        \Edge(x11)(x13)
+        \Edge(x12)(x13)
+        
+        
+        \Edge(x21)(x22)
+        \Edge(x21)(x23)
+        \Edge(x22)(x23)
+        
+        
+        \Edge(x31)(x32)
+        \Edge(x31)(x33)
+        \Edge(x32)(x33)
+        
+        
+    \end{tikzpicture}
+    \hfill
+    \begin{tikzpicture}[scale=\gscale]
+        \GraphInit[unit=3,vstyle=Normal]
+        \SetVertexNormal[Shape=circle, FillColor=black, MinSize=2pt]
+        \tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+        \SetVertexNoLabel
+        \grComplete[RA=1]{3}
+        \Vertex[a=60,d=1.5]{x}
+        \Vertex[a=180,d=1.5]{y}
+        \Vertex[a=300,d=1.5]{z}
+        \draw[] (60:1.5) circle (0.4cm);
+        \draw[] (180:1.5) circle (0.4cm);
+        \draw[] (300:1.5) circle (0.4cm);
+        
+        \Edge(x)(a0)
+        \Edge(x)(a1)
+        \Edge(x)(a2)
+        
+        \Edge(y)(a0)
+        \Edge(y)(a1)
+        \Edge(y)(a2)
+        
+        \Edge(z)(a0)
+        \Edge(z)(a1)
+        \Edge(z)(a2)
+        
+    \end{tikzpicture}
+    \hfill
+    \begin{tikzpicture}[scale=\gscale]
+        \GraphInit[unit=3,vstyle=Normal]
+        \SetVertexNormal[Shape=circle, FillColor=black, MinSize=2pt]
+        \tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+        \SetVertexNoLabel
+        \Vertex[x=0,y=0]{y1}
+        
+        \draw[] (0,0) circle (0.4cm);
+        
+        \Vertex[x=3,y=0]{y2}
+        
+        \draw[] (3,0) circle (0.4cm);
+        
+        \begin{scope}[shift={(1.5cm,0)}, rotate=-90]
+            \grComplete[RA=1, prefix=a]{2}
+        \end{scope}
+        
+        \begin{scope}[shift={(0cm,-1.5cm)}]
+            \grComplete[RA=1, prefix=c]{2}
+        \end{scope}
+        
+        \begin{scope}[shift={(-1.5cm,0)}, rotate=-90]
+            \grComplete[RA=1, prefix=b]{2}
+        \end{scope}
+        
+        \begin{scope}[shift={(3cm,-1.5cm)}]
+            \grComplete[RA=1, prefix=d]{2}
+        \end{scope}
+        
+        \Edges(a0,y1,a1)
+        \Edges(b0,y1,b1)
+        \Edges(c0,y1,c1)
+        
+        \Edges(a0,y2,a1)
+        \Edges(d0,y2,d1)
+        
+        
+    \end{tikzpicture}
+    \hfill
+    
+    \caption{A $(2,4)$-flower, a $(2,4)$-antiflower, and a $(2,2)$-trem.}
+    \label{fig:flower}
+\end{figure}
+
+\begin{figure}[!tb]
+    \centering
+    \begin{tikzpicture}[scale=\gscale]
+            %\draw[help lines] (-8,-8) grid (8,8);
+        \begin{scope}[rotate=36,shift={(0cm, 5cm)}]
+            \GraphInit[unit=3,vstyle=Normal]
+            \SetVertexNormal[Shape=circle, FillColor=black, MinSize=2pt]
+            \tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+            \SetVertexNoLabel
+            \Vertex[Math, x=0,y=0,L={y_1}, Lpos=290, LabelOut, Ldist=3pt]{1y}
+            \Vertex[a=-5, d=1.7cm]{1x11}
+            \Vertex[a=-30, d=2.3cm]{1x12}
+            \Vertex[a=-55, d=1.7cm]{1x13}
+            
+            \Vertex[a=115, d=1.7cm]{1x21}
+            \Vertex[a=90, d=2.3cm]{1x22}
+            \Vertex[a=65, d=1.7cm]{1x23}
+            
+            \Vertex[a=235, d=1.7cm]{1x31}
+            \Vertex[a=210, d=2.3cm]{1x32}
+            \Vertex[a=185, d=1.7cm]{1x33}
+            
+            \foreach \x in {1,2,3}
+                \foreach \y in {1,2,3}
+                    \Edge(1y)(1x\x\y);
+            
+            \Edge(1x11)(1x12)
+            \Edge(1x11)(1x13)
+            \Edge(1x12)(1x13)
+            
+            
+            \Edge(1x21)(1x22)
+            \Edge(1x21)(1x23)
+            \Edge(1x22)(1x23)
+            
+            
+            \Edge(1x31)(1x32)
+            \Edge(1x31)(1x33)
+            \Edge(1x32)(1x33)
+        \end{scope}
+        \begin{scope}[rotate=-36,shift={(0cm, 5cm)}]
+            \GraphInit[unit=3,vstyle=Normal]
+            \SetVertexNormal[Shape=circle, FillColor=black, MinSize=2pt]
+            \tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+            \SetVertexNoLabel
+            \Vertex[Math, x=0,y=0,L={y_1}, Lpos=290, LabelOut, Ldist=3pt]{2y}
+            \Vertex[a=-5, d=1.7cm]{2x11}
+            \Vertex[a=-30, d=2.3cm]{2x12}
+            \Vertex[a=-55, d=1.7cm]{2x13}
+            
+            \Vertex[a=115, d=1.7cm]{2x21}
+            \Vertex[a=90, d=2.3cm]{2x22}
+            \Vertex[a=65, d=1.7cm]{2x23}
+            
+            \Vertex[a=235, d=1.7cm]{2x31}
+            \Vertex[a=210, d=2.3cm]{2x32}
+            \Vertex[a=185, d=1.7cm]{2x33}
+            
+            \foreach \x in {1,2,3}
+                \foreach \y in {1,2,3}
+                    \Edge(2y)(2x\x\y);
+            
+            \Edge(2x11)(2x12)
+            \Edge(2x11)(2x13)
+            \Edge(2x12)(2x13)
+            
+            
+            \Edge(2x21)(2x22)
+            \Edge(2x21)(2x23)
+            \Edge(2x22)(2x23)
+            
+            
+            \Edge(2x31)(2x32)
+            \Edge(2x31)(2x33)
+            \Edge(2x32)(2x33)
+        \end{scope}
+        \begin{scope}[rotate=-108,shift={(0cm, 5cm)}]
+            \GraphInit[unit=3,vstyle=Normal]
+            \SetVertexNormal[Shape=circle, FillColor=black, MinSize=2pt]
+            \tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+            \SetVertexNoLabel
+            \Vertex[Math, x=0,y=0,L={y_1}, Lpos=290, LabelOut, Ldist=3pt]{3y}
+            \Vertex[a=-5, d=1.7cm]{3x11}
+            \Vertex[a=-30, d=2.3cm]{3x12}
+            \Vertex[a=-55, d=1.7cm]{3x13}
+            
+            \Vertex[a=115, d=1.7cm]{3x21}
+            \Vertex[a=90, d=2.3cm]{3x22}
+            \Vertex[a=65, d=1.7cm]{3x23}
+            
+            \Vertex[a=235, d=1.7cm]{3x31}
+            \Vertex[a=210, d=2.3cm]{3x32}
+            \Vertex[a=185, d=1.7cm]{3x33}
+            
+            \foreach \x in {1,2,3}
+                \foreach \y in {1,2,3}
+                    \Edge(3y)(3x\x\y);
+            
+            \Edge(3x11)(3x12)
+            \Edge(3x11)(3x13)
+            \Edge(3x12)(3x13)
+            
+            
+            \Edge(3x21)(3x22)
+            \Edge(3x21)(3x23)
+            \Edge(3x22)(3x23)
+            
+            
+            \Edge(3x31)(3x32)
+            \Edge(3x31)(3x33)
+            \Edge(3x32)(3x33)
+        \end{scope}
+        \begin{scope}[rotate=108,shift={(0cm, 5cm)}]
+            \GraphInit[unit=3,vstyle=Normal]
+            \SetVertexNormal[Shape=circle, FillColor=black, MinSize=2pt]
+            \tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+            \SetVertexNoLabel
+            \Vertex[Math, x=0,y=0,L={y_1}, Lpos=290, LabelOut, Ldist=3pt]{4y}
+            \Vertex[a=-5, d=1.7cm]{4x11}
+            \Vertex[a=-30, d=2.3cm]{4x12}
+            \Vertex[a=-55, d=1.7cm]{4x13}
+            
+            \Vertex[a=115, d=1.7cm]{4x21}
+            \Vertex[a=90, d=2.3cm]{4x22}
+            \Vertex[a=65, d=1.7cm]{4x23}
+            
+            \Vertex[a=235, d=1.7cm]{4x31}
+            \Vertex[a=210, d=2.3cm]{4x32}
+            \Vertex[a=185, d=1.7cm]{4x33}
+            
+            \foreach \x in {1,2,3}
+                \foreach \y in {1,2,3}
+                    \Edge(4y)(4x\x\y);
+            
+            \Edge(4x11)(4x12)
+            \Edge(4x11)(4x13)
+            \Edge(4x12)(4x13)
+            
+            
+            \Edge(4x21)(4x22)
+            \Edge(4x21)(4x23)
+            \Edge(4x22)(4x23)
+            
+            
+            \Edge(4x31)(4x32)
+            \Edge(4x31)(4x33)
+            \Edge(4x32)(4x33)
+        \end{scope}
+        \begin{scope}[rotate=120,shift={(0cm, 0cm)}]
+            \GraphInit[unit=3,vstyle=Normal]
+            \SetVertexNormal[Shape=circle, FillColor=black, MinSize=2pt]
+            \tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+            \SetVertexNoLabel
+            \Vertex[Math, x=0,y=0,L={y_1}, Lpos=290, LabelOut, Ldist=3pt]{0y}
+            \Vertex[a=-15, d=1.7cm]{0x11}
+            \Vertex[a=-30, d=2.3cm]{0x12}
+            \Vertex[a=-45, d=1.7cm]{0x13}
+            
+            \Vertex[a=-87, d=1.7cm]{0x21}
+            \Vertex[a=-102, d=2.3cm]{0x22}
+            \Vertex[a=-117, d=1.7cm]{0x23}
+            
+            \Vertex[a=-159, d=1.7cm]{0x31}
+            \Vertex[a=-174, d=2.3cm]{0x32}
+            \Vertex[a=-189, d=1.7cm]{0x33}
+            
+            \Vertex[a=-231, d=1.7cm]{0x41}
+            \Vertex[a=-246, d=2.3cm]{0x42}
+            \Vertex[a=-261, d=1.7cm]{0x43}
+            
+            \Vertex[a=-303, d=1.7cm]{0x51}
+            \Vertex[a=-318, d=2.3cm]{0x52}
+            \Vertex[a=-333, d=1.7cm]{0x53}
+            
+            
+            \foreach \x in {1,2,3,4,5}
+                \foreach \y in {1,2,3}
+                    \Edge(0y)(0x\x\y);
+                    
+                    \Edge(0x11)(0x11)
+            \Edge(0x11)(0x12)
+            \Edge(0x11)(0x13)
+            \Edge(0x12)(0x12)
+            \Edge(0x12)(0x13)
+            \Edge(0x13)(0x13)
+            \Edge(0x21)(0x21)
+            \Edge(0x21)(0x22)
+            \Edge(0x21)(0x23)
+            \Edge(0x22)(0x22)
+            \Edge(0x22)(0x23)
+            \Edge(0x23)(0x23)
+            \Edge(0x31)(0x31)
+            \Edge(0x31)(0x32)
+            \Edge(0x31)(0x33)
+            \Edge(0x32)(0x32)
+            \Edge(0x32)(0x33)
+            \Edge(0x33)(0x33)
+            \Edge(0x41)(0x41)
+            \Edge(0x41)(0x42)
+            \Edge(0x41)(0x43)
+            \Edge(0x42)(0x42)
+            \Edge(0x42)(0x43)
+            \Edge(0x43)(0x43)
+            \Edge(0x51)(0x51)
+            \Edge(0x51)(0x52)
+            \Edge(0x51)(0x53)
+            \Edge(0x52)(0x52)
+            \Edge(0x52)(0x53)
+            \Edge(0x53)(0x53)
+            
+        \end{scope}
+        \Edge(0y)(1y)
+        \Edge(0y)(2y)
+        \Edge(0y)(3y)
+        \Edge(0y)(4y)
+        
+        
+    \end{tikzpicture}
+    
+    \caption{\textsc{equitable coloring} instance built on Theorem~\ref{thm:blocks} corresponding to the \pname{Bin Packing} instance $A = \{2,2,2,2\}$, $k=3$ and $B = 4$.}
+    \label{fig:super_flower}
+\end{figure}
+
+All of our reductions involve the \pname{Bin Packing} problem, which is $\NPH$ in the strong sense~\citep{garey_johnson} and $\W[1]$-$\Hard$ when parameterized by the number of bins~\citep{bin_packing_w1}.
+In the general case, the problem is defined as: given a set of positive integers $A = \{a_1, \dots, a_n\}$, called \textit{items}, and two integers $k$ and $B$, can we partition $A$ into $k$ \emph{bins} such that the sum of the elements of each bin is at most $B$?
+We shall use a version of \pname{Bin Packing} where each bin sums \emph{exactly} to~$B$.
+This second version is equivalent to the first, even from the parameterized point of view; it suffices to add~$kB - \sum_{j \in [n]} a_j$ unitary items to~$A$.
+For simplicity, by \pname{Bin Packing} we shall refer to the second version, which we formalize as follows.
+
+\pproblem{bin-packing}{A set of $n$ items $A$ and a bin capacity $B$.}{The number of bins $k$.}{Is there a $k$-partition $\varphi$ of $A$ such that, $\forall i \in [k]$, $\sum_{a_j \in \varphi_i} a_j = B$?}
+
+The idea for the following reductions is to build one gadget for each item~$a_j$ of the given \pname{Bin Packing} instance, perform their disjoint union, and equitably $k$-color the resulting graph.
+The color given to the circled vertices in Figure~\ref{fig:flower} control the bin to which the corresponding item belongs to.
+Each reduction uses only one of the three gadget types.
+Since every gadget is a chordal graph, their treewidth is precisely the size of the largest clique minus one, that is, $k$, which is also the number of desired colors for the built instance of \textsc{equitable coloring}.
+
+\subsection{Disjoint union of Split Graphs}
+
+\begin{definition}
+    An $(a,k)$-antiflower is the graph $F_-(a,k) = K_{k-1} \oplus \left(\bigcup_{i \in [a+1]} K_1\right)$, that is, it is the graph obtained after performing the disjoint union of $a+1$ $K_1$'s followed by the join with $K_{k-1}$.
+\end{definition}
+
+\begin{theorem}
+    \label{thm:dis_split}
+    \textsc{equitable coloring} of the disjoint union of split graphs parameterized by the number of colors is $\W[1]$-$\Hard$.
+\end{theorem}
+\begin{proof}
+    Let $\langle A,k,B\rangle$ be an instance of \pname{Bin Packing} and $G$ a graph such that~$G = \bigcup_{j \in [n]} F_-(a_j,k)$.
+    Note that $|V(G)| = \sum_{j \in [n]} |F_-(a_j, k)| = \sum_{j \in [n]} k + a_j = nk + kB$.
+    Therefore, in any equitable $k$-coloring of~$G$, each color class has~$n + B$ vertices.
+    Define~$F_j = F_-(a_j,k)$ and let~$C_j$ be the corresponding $K_{k-1}$.
+    We show that there is an equitable~$k$-coloring~$\psi$ of~$G$ if and only if~$\varphi = \langle A,k,B\rangle$ is a $\YES$ instance of \pname{Bin Packing}.
+    
+    Let~$\varphi$ be a solution to \pname{Bin Packing}.
+    For each~$a_j \in A$, we do $\psi(C_j) = [k] \setminus \{i\}$ if $a_j \in \varphi_i$.
+    We color each vertex of the independent set of~$F_{j}$ with~$i$ and note that all remaining possible proper colorings of the gadget use each color the same number of times.
+    Thus, $|\psi_i| = \sum_{j \mid a_j \in \varphi_i} (a_j + 1) + \sum_{j \mid a_j \notin \varphi_i} 1 = \sum_{j \mid a_j \in \varphi_i} (a_j + 1) + \sum_{j \in [n]} 1 - \sum_{j \mid a_j \in \varphi_i} 1 = n + B$.
+    
+    Now, let~$\psi$ be an equitable $k$-coloring of~$G$.
+    Note that~$|\psi_i| = n+B$ and that the independent set of an antiflower is monochromatic.
+    For each $j \in [n]$, $a_j \in \varphi_i$ if $i \notin \psi(C_j)$.
+    That is, $n + B = |\psi_i| = \sum_{j \mid i \notin C_j} (a_j + 1) + \sum_{j \mid i \in C_j} 1 = \sum_{j \mid i \notin C_j} (a_j + 1) + \sum_{j \in [n]} 1 - \sum_{j \mid i \notin C_j} 1 = \sum_{j \mid i \notin C_j} a_j + n$, from which we conclude that $\sum_{j \mid i \notin C_j} a_j = B$.
+\end{proof}
+
+\subsection{Block Graphs}
+
+We now proceed to the parameterized complexity of block graphs.
+Conceptually, the proof follows a similar argumentation as the one developed in Theorem~\ref{thm:dis_split}; in fact, we are able to show that even restricting the problem to graphs of diameter at least four is not enough to develop an $\FPT$ algorithm, unless $\FPT = \W[1]$.
+ 
+\begin{definition}
+    An $(a,k)$-flower is the graph $F(a,k) = K_1 \oplus \left(\bigcup_{i \in [a+1]} K_{k-1}\right)$, that is, it is obtained from the union of $a+1$ cliques of size $k-1$ followed by a join with $K_1$.
+\end{definition}
+
+\begin{theorem}
+    \label{thm:blocks}
+    \textsc{equitable coloring} of block graphs of diameter at least four parameterized by the number of colors and treewidth is $\W[1]$-$\Hard$. 
+\end{theorem}
+
+\begin{tproof}
+    Let $\langle A,k,B\rangle$ be an instance of \pname{Bin Packing}, $\forall k \in [n]$, $F_j = F(a_j, k+1)$, $F_0 = F(B, k+1)$ and, for $j \in \{0\} \cup [n]$, let $y_j$ be the universal vertex of $F_j$.
+    Define a graph $G$ such that $V(G) = V\left(\bigcup_{j \in \{0\} \cup [n]} V(F_j)\right)$ and $E(G) = \{y_0y_j \mid j \in [n]\} \cup E\left(\bigcup_{j \in \{0\} \cup [n]} E(F_j)\right)$.
+    Looking at Figure~\ref{fig:super_flower}, it is easy to see that any minimum path between a non-universal vertex of $F_a$ and a non-universal vertex of $F_b$, $a \neq b \neq 0$ has length four.
+    We show that $\langle A,k,B\rangle$ is an $\YES$ instance if and only if $G$ is equitably $(k+1)$-colorable.
+    \begin{align*}
+        |V(G)| &= |V(F_0)| + \sum_{j \in [n]} |V(F_j)| &= &k(B + 1) + 1 + \sum_{j \in [n]} \left(1 + k(a_j + 1)\right)\\
+               &= kB + k + n + k^2B + kn + 1           &= &(k+1)(kB + n + 1)\\
+    \end{align*}
+    
+    Given a $k$-partition $\varphi$ of $A$ that solves our instance of \pname{Bin Packing}, we construct a coloring $\psi$ of $G$ such that $\psi(y_j) = i$ if $a_j \in \varphi_i$ and $\psi(y_0) = k+1$.
+    Using a similar argument to the previous theorem, after coloring each $y_j$, the remaining vertices of $G$ are automatically colored.
+    For $\psi_{k+1}$, note that $|\psi_{k+1}| = 1 + \sum_{j \in [n]} (a_j + 1) = kB + n + 1 = \frac{|V(G)|}{k+1}$.
+    It remains to prove that every other color class $\psi_i$ also has $\frac{|V(G)|}{k+1}$ vertices.
+    
+    \begin{align*}
+        |\psi_i| &= B + 1 + \sum_{j \mid y_j \notin \psi_i} (a_j + 1) + \sum_{j \mid y_j \in \psi_i} 1 &= &B + 1 + \sum_{j \in [n]} (a_j + 1) - \sum_{j \mid y_j \in \psi_i} a_j\\
+                 &= B + 1 + kB + n - B &= &kB + n + 1\\
+    \end{align*}
+    
+    For the converse we take an equitable $(k+1)$-coloring of $G$ and suppose, without loss of generality, that $\psi(y_0) = k+1$ and, consequently, for every other $y_i$, $\psi(y_i) \neq k+1$.
+    To build our $k$-partition $\varphi$ of $A$, we say that $a_j \in \varphi_i$ if $\psi(y_j) = i$.
+    The following equalities show that $\sum_{a_j \in \varphi_i} a_j = B$ for every $i$, completing the proof.
+    
+    \begin{align*}
+        |\psi_i|  &= B + 1 + \sum_{j \mid y_j \in \psi_i} 1 + \sum_{j \mid y_j \notin \psi_i} (a_j + 1) &= &B + 1 + \sum_{j \in [n]} (a_j + 1) - \sum_{j \mid y_j \in \psi_i} a_j \\
+        kB + n + 1 &= B + 1 + kB + n - \sum_{j \mid y_j \in \psi_i} a_j &\Rightarrow &B =  \sum_{j \mid y_j \in \psi_i} a_j
+    \end{align*}
+\end{tproof}
+
+\subsection{Interval Graphs without some induced stars}
+
+
+\begin{definition}
+    Let $\mathcal{Q} = \{Q_1, Q_1', \dots, Q_a, Q_a'\}$ be a family of cliques such that $Q_i \simeq Q_i' \simeq K_{k-1}$ and $Y = \{y_1, \dots, y_a\}$ be a set of vertices.
+    An $(a,k)$-trem is the graph $H(a,k)$ where $V\left(H(a,k)\right) = \mathcal{Q} \cup Y$ and $E\left(H(a,k)\right) = E\left(\bigcup_{i \in [a]} (Q_i \cup Q_i') \oplus y_i\right) \cup E\left(\bigcup_{i \in [a-1]} y_i \oplus Q_{i+1}\right)$.
+\end{definition}
+
+\begin{theorem}
+    \label{thm:chordal_w1_hard}
+    \pname{Equitable Coloring} of $K_{1,4}$ free interval graphs parameterized by treewidth, maximum number of colors and maximum degree is $\W[1]$-$\Hard$.
+\end{theorem}
+
+\begin{tproof}
+    Once again, let $\langle A,k,B\rangle$ be an instance of \pname{Bin Packing}, define $\forall j \in [n]$, $H_j = H(a_j, k)$ and let $Y_j$ be the set of cut-vertices of $H_j$.
+    The graph $G$ is defined as $G = \bigcup_{j \in [n]} V(H_j)$.
+    By the definition of an $(a,k)$-trem, we note that the vertices with largest degree are the ones contained in $Y_j \setminus \{y_a\}$, which have degree equal to $3(k-1)$.
+    We show that $\langle A,k,B\rangle$ is an $\YES$ instance if and only if $G$ is equitably $k$-colorable, but first note that $|V(G)| = \sum_{j \in [n]} |V(H_j)| = \sum_{j \in [n]} a_j + 2a_j(k-1) = kB + 2(k-1)kB = k(2kB - B)$.
+    
+    Given a $k$-partition $\varphi$ of $A$ that solves our instance of \pname{Bin Packing}, we construct a coloring $\psi$ of $G$ such that, for each $y \in Y_j$, $\psi(y) = i$ if and only if $a_j \in \varphi_i$.
+    Using a similar argument to the other theorems, after coloring each $Y_j$, the remaining vertices of $G$ are automatically colored, and we have  $|\psi_i| = \sum_{j \in \varphi_i} a_j + \sum_{j \notin \varphi_i} 2a_j = B + 2(k-1)B = 2kB - B$.
+    
+    For the converse we take an equitable $k$-coloring of $G$ and observe that, for every $j \in [n]$, $|\psi(Y_j)| = 1$.
+    As such, to build our $k$-partition $\varphi$ of $A$, we say that $a_j \in \varphi_i$ if and only if $\psi(Y_j) = \{i\}$.
+    Thus, since $|\psi| = 2kB - B$, we have that $2kB - B = \sum_{j \in \varphi_i} a_j + \sum_{j \notin \varphi_i} 2a_j = \sum_{j \in [n]} a_j - \sum_{j \in \varphi_i} a_j = 2kB - \sum_{j \in \varphi_i} a_j$, from which we conclude that $B = \sum_{j \in \varphi_i} a_j$.
+\end{tproof}
