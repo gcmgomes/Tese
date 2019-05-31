@@ -21,7 +21,6 @@ A vertex is \tdef{simplicial} if its neighbours are pairwise adjacent.
 For a set $S \subseteq V$, we denote its open and closed neighbourhood as $N_G(S) = \bigcup_{v \in S} N_G(v) \setminus S$, $N_G[S] = N_G(S) \cup S$ and $\deg_G(S) = |N_G(S)|$, respectively.
 The \tdef{complement} $\overline{G}$ of $G$ is defined as $V(\overline{G}) = V(G)$ and $E(\overline{G}) = \{uv | uv \notin E\}$.
 Given a graph $G$, we denote its \tdef{maximum degree} by $\Delta(G)$ and \tdef{minimum degree} by $\delta(G)$.
-A graph $G$ is \tdef{$k$-regular} if , for every $u \in V(G)$, $\deg_G(u) = k$.
 
 Two vertices $u,v$ are \tdef{false twins} if $N_G(u) = N_G(v)$ and \tdef{true twins} if $N_G[u] = N_G[v]$. $u,v$ are of the same \tdef{type} if they are either true or false twins.
 Being of the same type is an equivalence relation~\citep{neighbourhood_diversity}, and the number of different types on a graph $G$ is called its \tdef{neighbourhood diversity}, $\nd(G)$.
@@ -557,9 +556,12 @@ Given two graphs $G$ and $H$, we define their \tdef{disjoint union} as the graph
     \label{fig:some_cograph}
 \end{figure}
 
-A graph $G$ is \tdef{distance-hereditary} if and only if for every $u,v$ and in every induced subgraph $H$ that preserves the connectivity between $u$ and $v$, $\dist_H(u,v) = \dist_G(u,v)$~\citep{distance_hereditary}.
-A graph is \tdef{ptolemaic} if, for any $u,v,w,x$, $\dist(u,v) \dist(w,x) \leq \dist(u,w) \dist(v,x) + \dist(u,x) \dist(v,w)$~\citep{ptolemaic}.
-Cographs and ptolemaic graphs are special cases of distance-hereditary graphs. In particular, ptolemaic graphs are exactly the graphs that are chordal and distance-hereditary.
+Another important class on graph theory, and one with a very long history of research, is the class of \textit{regular graphs}.
+A graph $G$ is regular if all of vertices of $G$ have the same degree, and is $k$-regular if $\deg(v) = k$ for all $v \in V(G)$.
+Despite its simplicity, regular graphs appear in many different scenarios, such as in the E$\Delta$CC conjecture on \pname{Equitable Coloring}, a conjecture for \pname{Internal Partitions}, but even more in terms of algebraic graph theory~\citep{godsil}, a field dedicated to the analysis of many graph parameters through algebraic methods, such as spectral decompositions, graph polynomials, and interlacing.
+In particular, by using the eigenvalues of the adjacency matrix of a graph, or its Laplacian matrix, it is possible to derive bounds for a large collection of parameters, such as independence number and chromatic number, usually in polynomial time.
+Regular graphs, in particular, benefit greatly from this approach, with stronger results for this class when compared to other classes.
+
 
 \section{Coloring Problems}
 
