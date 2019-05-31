@@ -153,9 +153,9 @@ Before handling the classes themselves, we must first define the problems of par
 
 The \tdef{depth} of a circuit is the length (in terms of number of gates) of the longest path from any one variable to the output.
 The \tdef{weft} of a circuit is the the maximum number of gates with more than 2 input variables in any path from any one variable to the circuit's output.
-The circuits with weft $t$ and depth $d$, denoted by \pname{wcs}$_{t,d}$, will be the fundamental problems of the $t$-th level of our hierarchy.
+The circuits with weft $t$ and depth $d$, denoted by \pname{WCS}$_{t,d}$, will be the fundamental problems of the $t$-th level of our hierarchy.
 
-\pproblem{weighted circuit satisfability of weft $t$ and depth $d$ (\pname{wcs}$_{t,d}$)}{A Boolean circuit $C$ with $n$ variables, weft $t$ and depth $d$.}{A positive integer $k$.}{Is $C$ satisfiable with exactly $k$ variables set to $\TRUEt$?}
+\pproblem{weighted circuit satisfability of weft $t$ and depth $d$ (\pname{WCS}$_{t,d}$)}{A Boolean circuit $C$ with $n$ variables, weft $t$ and depth $d$.}{A positive integer $k$.}{Is $C$ satisfiable with exactly $k$ variables set to $\TRUEt$?}
 
 \begin{class_definition*}[$\W$-hierarchy]
     For $t \geq 1$, a parameterized problem $\Pi$ is in $\W[t]$ if there is a parameterized reduction from $\tsc{wsc}_{t,d}$ to it, for some $d \geq 1$. Moreover,
@@ -349,7 +349,7 @@ As was done for clique graphs, the iterated biclique operator has also been stud
 Regarding stars, previous work handled the intersection graphs of (not necessarily maximal) substars of a tree~\citep{substar_graph} and of a star~\citep{starlike_graph}.
 For the first, a minimal infinite family of forbidden induced subgraphs was given, while, for the latter, a series of characterizations were shown (including a finite family of forbidden induced subgraphs).
 Stars are a particular case of bicliques, and both the biclique graph and star graph coincide for $C_4$-free graphs.
-In fact, this relationship was successfully applied to determine the complexity of biclique coloring~\citep{biclique_coloring_complexity}, using a reduction from \textsc{qsat}$_2$ to star coloring (a coloring of the vertices of a graph such that no maximal star is monochromatic).
+In fact, this relationship was successfully applied to determine the complexity of biclique coloring~\citep{biclique_coloring_complexity}, using a reduction from \pname{QSAT}$_2$ to star coloring (a coloring of the vertices of a graph such that no maximal star is monochromatic).
 To the best of our knowledge, these are the main topics discussed in the literature that involve maximal stars in some way.
 However, star graphs appear to be natural generalizations of square graphs~\cite{murty} in the sense that, when applying the squaring operation, for each vertex $v$ only the largest, non-induced star centered at $v$ is selected, and the intersection graph of these stars is generated.
 On the other hand, for star graphs, every \textit{induced} maximal star is used in the construction of the intersection graph.
@@ -572,12 +572,12 @@ In a slight abuse of notation, we use $\varphi(v)$ to denote the color of $v$ an
 \subsection{Proper Coloring}
 
 A \tdef{proper k-coloring} of $G$ is a $k$-coloring such that each $\varphi_i$ is an independent set.
-In the literature, proper coloring is usually referenced to as \tdef{vertex coloring}, a convention we also adopt.
+In the literature, proper coloring is usually referenced to as \tdef{Vertex Coloring}, a convention we also adopt.
 If $G$ has a proper $k$-coloring we say that $G$ is \tdef{k-colorable}.
 The smallest integer $k$ such that $G$ is $k$-colorable is called the \tdef{chromatic number} $\chi(G)$ of $G$.
 The natural decision problem associated with vertex coloring simply asks whether or not a given graph is $k$-colorable.
 
-\problem{vertex coloring}{A graph $G$ and a positive integer $k$.}{Is $G$ $k$-colorable?}
+\problem{Vertex Coloring}{A graph $G$ and a positive integer $k$.}{Is $G$ $k$-colorable?}
 
 
 \begin{figure}[!htb]
@@ -595,29 +595,28 @@ The natural decision problem associated with vertex coloring simply asks whether
     \label{fig:prop_color}
 \end{figure}
 
-Determining if a given instance of \textsc{vertex coloring} is a $\YES$ instance is a classic problem in both graph theory and algorithmic complexity, being a known $\NPc$ problem.
-Some particular cases of \textsc{vertex coloring} are still $\NPc$.
+Determining if a given instance of \pname{Vertex Coloring} is a $\YES$ instance is a classic problem in both graph theory and algorithmic complexity, being a known $\NPc$ problem.
+Some particular cases of \pname{Vertex Coloring} are still $\NPc$.
 For instance, even if we fix $k=3$ or restrict the input to $K_3$-free graphs the problem does not get any easier.
 
 It is worth to point out the subtle difference between the parameter $k$ being part of the input or being \tdef{fixed}.
 Informally, when $k$ is fixed, we are willing to pay exponential time only on $k$ to solve our problem, whereas when $k$ is part of the input, we are not.
 Note that when we fix $k$ and find an $f(k)n^{\bigO{1}}$ time algorithm, we show that the problem is in $\FPT$ when parameterized by $k$.
-The fact that $3$-coloring is $\NPc$ is evidence that \textsc{vertex coloring} parameterized by the number of colors is not in $\FPT$, otherwise we would have an $f(3)n^{\bigO{1}}$ algorithm, which would imply that $\P = \NP$. 
-For the remainder of this work, when dealing with fixed $k$, we will include the fixed parameter in the name of the problem, such as in \textsc{vertex $k$-coloring} or \textsc{weighted circuit satisfability of weft $t$ and depth $d$}.
+The fact that $3$-coloring is $\NPc$ is evidence that \pname{Vertex Coloring} parameterized by the number of colors is not in $\FPT$, otherwise we would have an $f(3)n^{\bigO{1}}$ algorithm, which would imply that $\P = \NP$. 
 
-For an unconstrained input, \textsc{vertex coloring} is hard to approximate to a factor of $n^{1-\epsilon}$, for any $\epsilon > 0$, unless some complexity hypothesis fail (see~\citep{color_zpp} for more on the topic).
+For an unconstrained input, \pname{Vertex Coloring} is hard to approximate to a factor of $n^{1-\epsilon}$, for any $\epsilon > 0$, unless some complexity hypothesis fail (see~\citep{color_zpp} for more on the topic).
 On a brighter note, a celebrated theorem due to Brooks in~\citep{brooks_theorem} gives a nice upper bound for general graphs, and gives a natural direction for research on tighter upper bounds on graph classes.
 
 \begin{theorem*}[Brooks' Theorem]
     For every connected graph $G$ which is neither complete nor an odd-cycle $\chi(G) \leq \Delta(G)$.
 \end{theorem*}
 
-These results motivated much of the research about \textsc{vertex coloring}.
+These results motivated much of the research about \pname{Vertex Coloring}.
 There are polynomial time algorithms for a myriad of different classes, including chordal, bipartite and cographs.
 More generally, there are known polynomial time algorithms for \tdef{perfect graphs}~\citep{perfect_polynomial}, which is a superclass of the aforementioned ones.
 $G$ is perfect if for every induced subgraph $G'$ of $G$, $\chi(G') = \omega(G')$.
 
-More particular cases for \textsc{vertex coloring} have also been analyzed. For instance, \citep{coloring_art} presents some results for graph classes that have two connected five-vertex forbidden induced subgraphs. There are some surveys on the subject, as such we point to~\citep{coloring_survey} and \citep{coloring_survey2} for more on the classic \textsc{vertex coloring} problem, since it is not the focus of this thesis.
+More particular cases for \pname{Vertex Coloring} have also been analyzed. For instance, \citep{coloring_art} presents some results for graph classes that have two connected five-vertex forbidden induced subgraphs. There are some surveys on the subject, as such we point to~\citep{coloring_survey} and \citep{coloring_survey2} for more on the classic \pname{Vertex Coloring} problem, since it is not the focus of this thesis.
 
 
 \subsection{Equitable Coloring}
@@ -627,9 +626,9 @@ Unlike other coloring variants previously discussed, an equitably $k$-colorable 
 
 As such, two different parameters are defined: the smallest integer $k$ such that $G$ is equitably $k$-colorable is called the \tdef{equitable chromatic number} $\CN{=}(G)$; the smallest integer $k'$ such that $G$ is equitably $k$-colorable for every $k \geq k'$ is the \textit{equitable chromatic threshold} $\CN{=}^*(G)$ of $G$.
 
-As with the previous coloring problems, we define the \textsc{equitable coloring} decision problem.
+As with the previous coloring problems, we define the \pname{Equitable Coloring} decision problem.
 
-\problem{equitable coloring}{A graph $G$ and a positive integer $k$.}{Is $G$ equitably $k$-colorable?}
+\problem{Equitable Coloring}{A graph $G$ and a positive integer $k$.}{Is $G$ equitably $k$-colorable?}
 
 
 \begin{figure}[!htb]
@@ -664,9 +663,9 @@ As with the previous coloring problems, we define the \textsc{equitable coloring
 \end{figure}
 
 
-\textsc{equitable coloring} was first discussed by~\citep{first_equitable}, with an intended application for municipal garbage collection, and later in processor task scheduling~\citep{mutual_exclusion_scheduling} and server load balancing~\citep{domain_decomposition}.
+\pname{Equitable Coloring} was first discussed by~\citep{first_equitable}, with an intended application for municipal garbage collection, and later in processor task scheduling~\citep{mutual_exclusion_scheduling} and server load balancing~\citep{domain_decomposition}.
 
-Much of the work done over \textsc{equitable coloring} aims to prove an analogue of Brooks' theorem, known as the \tdef{Equitable coloring conjecture} (ECC).
+Much of the work done over \pname{Equitable Coloring} aims to prove an analogue of Brooks' theorem, known as the \tdef{Equitable coloring conjecture} (ECC).
 In terms of the equitable chromatic threshold, however, we have the \tdef{Hajnal-Szemerédi theorem}~\citep{hajnal_szmeredi_theorem}.
 
 \begin{conjecture*}[ECC]
@@ -703,27 +702,27 @@ random graphs and
 some forms of graph products.
 For the exact results please refer to the survey.
 
-Almost all complexity results for \textsc{equitable coloring} arise from a related problem, known as \textsc{bounded coloring}, an observation given by~\citep{equitable_treewidth}.
+Almost all complexity results for \pname{Equitable Coloring} arise from a related problem, known as \pname{Bounded Coloring}, an observation given by~\citep{equitable_treewidth}.
 A $k$-coloring is said to be \tdef{$l$-bounded} if for every color class $\varphi_i$, $|\varphi_i| \leq l$.
 $G$ is \tdef{l-bounded k-colorable} if it admits an $l$-bounded $k$-coloring.
 
-\problem{bounded coloring}{A graph $G$ and two positive integers $l$ and $k$.}{Is $G$ $l$-bounded $k$-colorable?}
+\problem{Bounded Coloring}{A graph $G$ and two positive integers $l$ and $k$.}{Is $G$ $l$-bounded $k$-colorable?}
 
 \begin{observation*}
     A Graph $G$ with $n$ vertices is $l$-bounded $k$-colorable if and only if $G' = G \cup \overline{K_{lk - n}}$ is equitably $k$-colorable.
 \end{observation*}
 
 
-In terms of computational complexity, however, neither problem was nearly as explored as \textsc{vertex coloring}.
-Among the complexity results for \textsc{bounded coloring} and, consequently, \textsc{equitable coloring}, we have polynomial time solvability for split graphs~\citep{equitable_split}, complement of interval graphs~\citep{graph_partitioning1}, forests~\citep{mutual_exclusion_scheduling}, trees~\citep{equitable_trees} and complements of bipartite graphs~\citep{graph_partitioning1}.
+In terms of computational complexity, however, neither problem was nearly as explored as \pname{Vertex Coloring}.
+Among the complexity results for \pname{Bounded Coloring} and, consequently, \pname{Equitable Coloring}, we have polynomial time solvability for split graphs~\citep{equitable_split}, complement of interval graphs~\citep{graph_partitioning1}, forests~\citep{mutual_exclusion_scheduling}, trees~\citep{equitable_trees} and complements of bipartite graphs~\citep{graph_partitioning1}.
 
 For cographs, we have a polynomial time algorithm when $k$ is fixed, otherwise the problem is $\NPc$~\citep{graph_partitioning1}, a situation similar to that of bipartite and interval graphs~\citep{graph_partitioning1}.
-A consequence of the hardness result for cographs is that \textsc{equitable coloring} is $\NPc$ for graphs of bounded cliquewidth.
+A consequence of the hardness result for cographs is that \pname{Equitable Coloring} is $\NPc$ for graphs of bounded cliquewidth.
 
-On complements of \tdef{comparability graphs} (graphs representing a valid partial ordering) however, even if we fix $l$, \textsc{bounded coloring} is still $\NPc$~\citep{chain_antichain}.
-\citep{colorful_treewidth} show that, when parameterized by treewidth, \textsc{equitable coloring} is $\W[1]\text{-}\Hard$.
+On complements of \tdef{comparability graphs} (graphs representing a valid partial ordering) however, even if we fix $l$, \pname{Bounded Coloring} is still $\NPc$~\citep{chain_antichain}.
+\citep{colorful_treewidth} show that, when parameterized by treewidth, \pname{Equitable Coloring} is $\W[1]\text{-}\Hard$.
 Also in terms of treewidth, \citep{equitable_treewidth} give a polynomial time algorithm for graphs of bounded treewidth.
-Note that for all of the mentioned classes, \textsc{vertex coloring} is polynomially solvable.
+Note that for all of the mentioned classes, \pname{Vertex Coloring} is polynomially solvable.
 
 A summary of the known complexities is available in Table~\ref{tab:equitable_complexity}.
 
@@ -751,7 +750,7 @@ A summary of the known complexities is available in Table~\ref{tab:equitable_com
        \hline
        \hline
     \end{tabular}
-    \caption{Complexity results for \textsc{equitable coloring}. Entries marked with a * are results established in this work.}
+    \caption{Complexity results for \pname{Equitable Coloring}. Entries marked with a * are results established in this work.}
     \label{tab:equitable_complexity}
 \end{table}
 
@@ -759,10 +758,10 @@ A summary of the known complexities is available in Table~\ref{tab:equitable_com
 A \tdef{k-clique-coloring} of $G$ is a $k$-coloring of $G$ such that no maximal clique of $G$ is entirely contained in a single color class.
 We say that $G$ is \tdef{k-clique-colorable} if $G$ admits a $k$-clique-coloring.
 The smallest integer $k$ such that $G$ is $k$-clique-colorable is called the \tdef{clique chromatic number} $\CN{C}(G)$ of $G$.
-Much like \textsc{vertex coloring}, there is a natural decision problem associated with this coloring variant, which we refer to as \textsc{clique coloring}.
+Much like \pname{Vertex Coloring}, there is a natural decision problem associated with this coloring variant, which we refer to as \pname{Clique Coloring}.
 
 
-\problem{clique coloring}{A graph $G$ and a positive integer $k$.}{Is $G$ $k$-clique-colorable?}
+\problem{Clique Coloring}{A graph $G$ and a positive integer $k$.}{Is $G$ $k$-clique-colorable?}
 
 
 \begin{figure}[!htb]
@@ -780,11 +779,11 @@ Much like \textsc{vertex coloring}, there is a natural decision problem associat
     \label{fig:clique_color}
 \end{figure}
 
-Research on the topic is much more recent than what was done for \textsc{vertex coloring}, with the first papers appearing in the early 1990s~\citep{first_clique_color} and interest on the subject rising in the early 2000s.
-Even when $k$ is fixed, \textsc{clique $k$-coloring} is known to be $\SiP{2}\text{-}\Complete$, as shown by~\citep{clique_coloring_complexity}, with an $\bigOs{2^n}$ algorithm being proposed by~\citep{clique_color_algorithm}.
+Research on the topic is much more recent than what was done for \pname{Vertex Coloring}, with the first papers appearing in the early 1990s~\citep{first_clique_color} and interest on the subject rising in the early 2000s.
+Even when $k$ is fixed, \pname{Clique Coloring} is known to be $\SiP{2}\text{-}\Complete$, as shown by~\cite{clique_coloring_complexity}, with an $\bigOs{2^n}$ algorithm being proposed by~\cite{clique_color_algorithm}.
 
-As with \textsc{vertex coloring}, \textsc{clique $k$-coloring} has been studied when restricting the input graph to certain graph classes.
-\citep{weakly_clique_color} investigated 2-clique-coloring in terms of \tdef{weakly chordal graphs} (graphs free of any hole or anti-hole with more than 4 vertices), giving a series of results for the general case ($\SiP{2}\text{-}\Complete$) and showing that, for some nested subclasses, there are $\NPc$ and $\P$ instances of the problem.
+As with \pname{Vertex Coloring}, \pname{Clique Coloring} has been studied when restricting the input graph to certain graph classes.
+\cite{weakly_clique_color} investigated 2-clique-coloring in terms of \tdef{weakly chordal graphs} (graphs free of any hole or anti-hole with more than 4 vertices), giving a series of results for the general case ($\SiP{2}\text{-}\Complete$) and showing that, for some nested subclasses, there are $\NPc$ and $\P$ instances of the problem.
 When dealing with \tdef{unichord-free} graphs (graphs that contain no induced cycle with a unique chord), the problem is solvable in polynomial time~\citep{unichord_coloring}.
 
 \tdef{Circular-arc} graphs (intersection graphs of a set of arcs of a circle) are always 3-clique-colorable, with a polynomial time algorithm to determine if the input is 2-clique-colorable~\citep{clique_circular_arc}.
@@ -819,7 +818,7 @@ For a summary of the mentioned results, please refer to Table~\ref{tab:clique_co
         \hline
         \hline
     \end{tabular}
-    \caption{Complexity and bounds for \textsc{clique coloring}. Entries marked with a $*$ are conjectures. $\dag$ indicates results for 2-clique-colorability.}
+    \caption{Complexity and bounds for \pname{Clique Coloring}. Entries marked with a $*$ are conjectures. $\dag$ indicates results for 2-clique-colorability.}
     \label{tab:clique_color_complexity}
 \end{table}
 
@@ -827,9 +826,9 @@ For a summary of the mentioned results, please refer to Table~\ref{tab:clique_co
 A \tdef{k-biclique-coloring} of $G$ is a $k$-coloring of $G$ such that no maximal biclique of $G$ is entirely contained in a single color class.
 We say that $G$ is \tdef{k-biclique-colorable} if $G$ admits a $k$-biclique-coloring.
 The smallest integer $k$ such that $G$ is $k$-biclique-colorable is called the \tdef{biclique chromatic number} $\CN{B}(G)$ of $G$.
-Much like \textsc{clique coloring}, there is a natural decision problem associated with this coloring variant, which we refer to as \textsc{biclique coloring}.
+Much like \pname{Clique Coloring}, there is a natural decision problem associated with this coloring variant, which we refer to as \pname{Biclique Coloring}.
 
-\problem{biclique coloring}{A graph $G$ and a positive integer $k$.}{Is $G$ $k$-biclique-colorable?}
+\problem{Biclique Coloring}{A graph $G$ and a positive integer $k$.}{Is $G$ $k$-biclique-colorable?}
 
 
 \begin{figure}[!htb]
@@ -848,9 +847,9 @@ Much like \textsc{clique coloring}, there is a natural decision problem associat
 \end{figure}
 
 
-\textsc{biclique coloring} is an even more recent research topic than \textsc{clique coloring}, with the first results being a $\SiP{2}\text{-}\Cness$ proof due to~\citep{biclique_coloring_complexity} and the confirmation that verifying a solution to the problem is a $\coNP\text{-}\Complete$ task (\cite{biclique_coloring_verification}).
+\pname{Biclique Coloring} is an even more recent research topic than \pname{Clique Coloring}, with the first results being a $\SiP{2}\text{-}\Cness$ proof due to~\citep{biclique_coloring_complexity} and the confirmation that verifying a solution to the problem is a $\coNP\text{-}\Complete$ task (\cite{biclique_coloring_verification}).
 
-In terms of complexity results, very little is known about \textsc{biclique coloring}.
+In terms of complexity results, very little is known about \pname{Biclique Coloring}.
 For unichord-free graphs, \citep{unichord_coloring} give a polynomial time algorithm to compute $\CN{B}$ and show that the biclique chromatic number of unichord-free graphs is either equal to or one greater than the size of the largest true twin class.
 \citep{biclique_coloring_verification} present a polynomial time algorithm for powers of cycles and powers of paths.
 Finally, \citep{biclique_coloring_complexity} give complexity results for $H$-free graphs, for every $H$ on three vertices, being polynomial for $H \in \{K_3, P_3, \overline{P_3}\}$ and $\NPc$ for $\overline{K_3}$-free graphs;
@@ -874,11 +873,11 @@ We summarize the presented results in Table~\ref{tab:biclique_color_complexity}.
         \hline
         \hline
     \end{tabular}
-    \caption{Complexity and bounds for \textsc{biclique coloring}.}
+    \caption{Complexity and bounds for \pname{Biclique Coloring}.}
     \label{tab:biclique_color_complexity}
 \end{table}
 
-Both \textsc{clique coloring} and \textsc{biclique coloring} are, actually, colorings of the hypergraphs arising from an underlying graph (a coloring of its vertices such that no hyperedge is monochromatic), which is also an $\NPc$ task.
+Both \pname{Clique Coloring} and \pname{Biclique Coloring} are, actually, colorings of the hypergraphs arising from an underlying graph (a coloring of its vertices such that no hyperedge is monochromatic), which is also an $\NPc$ task.
 However, in classical hypergraph coloring problems, the hyperedge family is part of the input of the problem and, as such, naively verifying a solution is polynomial on the size of the input.
 
 \section{Cut Problems}
@@ -936,8 +935,8 @@ Also in~\citep{matching_cut_tcs}, the authors provide a first branching algorith
 In response, \cite{matching_cut_structural} provided a $\bigOs{12^{\tw(G)}}$ algorithm for \pname{Matching Cut} using nice tree decompositions, along with $\FPT$ algorithms for other structural parameters, namely neighborhood diversity, twin-cover, and distance to split graph.
 
 The natural parameter -- the number of edges crossing the cut -- has also been considered.
-Indeed, \cite{marx_treewidth_reduction} tackled the \pname{Stable Cutset} problem, to which \textsc{Matching Cut} can be easily reduced via the line graph, and through a breakthrough technique showed that this problem is $\FPT$ when parameterized by the maximum size of the stable cutset.
-Recently, \cite{matching_cut_ipec} improved on the results of \cite{matching_cut_tcs}, providing an exact exponential algorithm for \textsc{Matching Cut} running in  time $\bigOs{1.3803^n}$, as well as $\FPT$ algorithms parameterized by the distance to a cluster graph and the distance to a co-cluster graph, which improve the algorithm parameterized by the vertex cover number, since both parameters are easily seen to be smaller than the vertex cover number.
+Indeed, \cite{marx_treewidth_reduction} tackled the \pname{Stable Cutset} problem, to which \pname{Matching Cut} can be easily reduced via the line graph, and through a breakthrough technique showed that this problem is $\FPT$ when parameterized by the maximum size of the stable cutset.
+Recently, \cite{matching_cut_ipec} improved on the results of \cite{matching_cut_tcs}, providing an exact exponential algorithm for \pname{Matching Cut} running in  time $\bigOs{1.3803^n}$, as well as $\FPT$ algorithms parameterized by the distance to a cluster graph and the distance to a co-cluster graph, which improve the algorithm parameterized by the vertex cover number, since both parameters are easily seen to be smaller than the vertex cover number.
 For the distance to cluster parameter, they also presented a quadratic kernel; while for a combination of treewidth, maximum degree, and number of crossing edges, they showed that no polynomial kernel exists unless $\NP \subseteq \coNP/\poly$.
 
 A problem  closely related to \pname{$d$-Cut} is that of \pname{Internal Partition}, first studied by \cite{internal_partition_thomassen}.
