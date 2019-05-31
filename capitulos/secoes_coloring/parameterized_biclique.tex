@@ -1,0 +1,220 @@
+\section{Algorithms Parameterized by Neighborhood Diversity}
+
+As previously discussed, a type is a maximal set of vertices that are either true or false twins to each other.
+Suppose that we are already given a partition $\{D_1, \dots, D_{\nd(G)}\}$ of $V(G)$ in types.
+If $D_i$ is composed of true twins, we say that it is a \tdef{true twin class} $T_i$ and, by definition, $G[D_i]$ is a clique.
+Similarly, if $D_i$ is composed of false twins, it is a \tdef{false twin class} $F_i$ and $G[D_i]$ is an independent set.
+When $|D_i| = 1$, we treat the class differently depending on the problem.
+For the entirety of this section, we assume that $d = \nd(G)$.
+
+\subsection{\pname{Biclique Coloring}}
+
+For \pname{Biclique Coloring}, if there is some $D_i$ with a single vertex we shall treat it as a true twin class.
+
+\begin{observation}
+    \label{obs:biclique_true_twins}
+    Given $G$ and a true twin class $T_i$ of $G$, any $k$-biclique-coloring~$\varphi$ of $G$ has $|\varphi(T_i)| = |T_i|$.
+\end{observation}
+
+\begin{lemma}
+    \label{lem:biclique_false_twins}
+    Given $G$ and a false twin class $F \subset V(G)$, any  $k$-biclique-coloring~$\varphi'$ of $G$ can be changed into a $k$-biclique-coloring $\varphi$ of $G$ such that $|\varphi(F)| \leq 2$.
+\end{lemma}
+
+%\begin{tproof}
+\begin{proof}
+    If $|\varphi'(F)| \leq 2$, $\varphi = \varphi'$.
+    Otherwise, there exists $f_1, f_2, f_3 \in F$ with three different colors. 
+    Since every maximal biclique $B$ of $G$ that intercepts $F$ has that $F \subset B$ and thus $|\varphi'(B)| \geq 3$.
+    By making $\varphi(f_1) = \varphi'(f_1)$ and $\varphi(f_3) = \varphi(f_2) = \varphi'(f_2)$, we obtain $|\varphi(B)| \geq |\varphi(F)| \geq 2$.
+    Repeating this process until $|\varphi(F)| = 2$ does not make any biclique monochromatic and completes the proof.
+\end{proof}
+%\end{tproof}
+
+The central idea of our parameterized algorithm is to build an induced subgraph $H$ of $G$ and, afterward, use the results established here and in Section~\ref{sec:biclique_exact} to show that the solution to a particular instance of \pname{Set Multicover} derived from $H$ can be transformed in a solution to \pname{Biclique Coloring} of $G$.
+
+
+\begin{definition}[B-Projection and B-Lifting]
+    Let $T_i$ and $F_j$ be as previously discussed.
+    We define the following projection rules:
+    $\forall t_i^q \in T_i,\ \Proj{B}(t_i^q) = \{t'_i\}$;
+    for $f_j^1\in F_j,\ \Proj{B}(f_j^1) = \{f'{_j^1}\}$;
+    $\forall f_j^r \in F_j \setminus \{f_j^1\}$, $\Proj{B}(f_j^r) = \{f'{_j^2}\}$
+    and $\Proj{B}(X) = \bigcup_{u \in X} \Proj{B}(u)$.
+    
+    Lifting rules are defined as $\Lift{B}(t'_i) = \{t_i\}$; $\Lift{B}(f'{_j^1}) = \{f_j^1\}$; $\Lift{B}(f'{_j^2}) = F_j \setminus \{f_j^1\}$ and $\Lift{B}(Y) = \bigcup_{u \in Y} \Lift{B}(u)$. Note that $\Proj{B}(\Lift{B}(X)) = X$, $\forall X$.
+\end{definition}
+
+
+\begin{definition}[B-Projected Graph]
+    The B-projected graph $H$ of $G$ satisfies $V(H) = \Proj{B}(V(G))$ and $v'_iv'_j \in E(H)$ if and only if there exist $v_i \in \Lift{B}(v'_i)$ and $v_j \in \Lift{B}(v'_j)$ such that $v_iv_j \in E(G)$. $H$ is an induced subgraph of $G$.
+\end{definition}
+
+\begin{figure}[!tb]
+    \centering
+        \begin{tikzpicture}[scale=1]
+            \GraphInit[unit=3,vstyle=Normal]
+            \SetVertexNormal[Shape=circle, FillColor=black, MinSize=2pt]
+            \tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+            \SetVertexNoLabel
+            \Vertex[x=0,y=0]{a}
+            \Vertex[x=-1,y=0]{b}
+            \Vertex[x=0,y=-1]{c}
+            
+            
+            
+            \Vertex[x=1,y=0]{h}
+            \Vertex[x=0,y=1]{i}
+            \Vertex[a=45, d=1]{j}
+            
+            \Edge(a)(b)
+            \Edge(a)(c)
+            
+            \Edge(a)(h)
+            \Edge(a)(i)
+            \Edge(a)(j)
+            \begin{scope}[shift={(-1.65cm, 0cm)}]
+                \grComplete[RA=0.65]{3}
+            \end{scope}
+            \begin{scope}[shift={(0cm, -1.65cm)}]
+                \grComplete[RA=0.65]{4}
+            \end{scope}
+        \end{tikzpicture}
+    \hfill
+        \begin{tikzpicture}[scale=1]
+            \GraphInit[unit=3,vstyle=Normal]
+            \SetVertexNormal[Shape=circle, FillColor=black, MinSize=2pt]
+            \tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+            \SetVertexNoLabel
+            \Vertex[x=0,y=0]{a}
+            \Vertex[x=-1,y=0]{b}
+            \Vertex[x=0,y=-1]{c}
+            \Vertex[x=0,y=-1.65]{d}
+            \Vertex[x=-1.65,y=0]{e}
+            
+            
+            
+            \Vertex[x=1,y=0]{h}
+            \Vertex[x=0,y=1]{i}
+            
+            \Edge(a)(b)
+            \Edge(a)(c)
+            
+            \Edge(a)(h)
+            \Edge(a)(i)
+            \Edge(b)(e)
+            \Edge(c)(d)
+        \end{tikzpicture}
+    \hfill
+        \begin{tikzpicture}[scale=1]
+            \GraphInit[unit=3,vstyle=Normal]
+            \SetVertexNormal[Shape=circle, FillColor=black, MinSize=2pt]
+            \tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+            \SetVertexNoLabel
+            \Vertex[x=0,y=0]{a}
+            \Vertex[x=-1,y=0]{b}
+            \Vertex[x=0,y=-1]{c}
+            
+            
+            
+            \Vertex[a=45, d=1]{j}
+            
+            \Edge(a)(b)
+            \Edge(a)(c)
+            
+            \Edge(a)(j)
+            \begin{scope}[shift={(-1.65cm, 0cm)}]
+                \grComplete[RA=0.65]{3}
+            \end{scope}
+            \begin{scope}[rotate=90,shift={(-1.65cm, 0cm)}]
+                \grComplete[RA=0.65]{3}
+            \end{scope}
+        \end{tikzpicture}
+    \hfill
+    
+    
+    \caption{A graph, its B-projected and C-projected graphs}
+    \label{fig:b-projected}
+\end{figure}
+
+For the remainder of this section, $G$ will be the input graph to \pname{Biclique Coloring} and $H$ the B-Projected graph of $G$.
+Our \pname{Set Multicover} instance consists of $V(H)$ as the ground set, $\transs{B}(H)$ as the covering family, the size $k$ of the cover the same as the coloring of $G$ and $c(t_i') = |T_i|$ for every true twin class $T_i$ and $c(f'{_j^1}) = c(f'{_j^2}) = 1$ for each false twin class $F_j$.
+The next observation follows directly from the fact that $\transs{B}(H)$ is closed under the subset operation, while the subsequent results allow us to move freely between $\transs{B}(G)$ and $\transs{B}(H)$.
+
+\begin{observation}
+    \label{obs:fatless_multicover}
+    If there is a minimum $k$-multicover $\psi$ of $V(H)$ by $\transs{B}(H)$, then there exists a minimum $k$-multicover $\psi' = \{\psi_1, \dots, \psi_k\}$ such that $\left|\left\{j \mid u \in \psi_j\right\}\right| = c(u)$ for every $u \in V(H)$.
+\end{observation}
+
+\begin{lemma}
+    \label{lem:lift_proj_biclique}
+    If $B' \in \biq(H)$ then $B = \Lift{B}(B') \in \biq(G)$. Conversely, if $B \in \biq(G)$ and $B$ is not contained in any true twin class, then $B' = \Proj{B}(B) \in \biq(H)$.
+\end{lemma}
+
+%\begin{tproof}
+\begin{proof}
+    Note that $B$ is a biclique by the definition of $\Lift{B}$ and the fact that $B'$ is a biclique. By the contrapositive, suppose that $B \notin \biq(G)$ and that $u \in V(G)$ is such that $B \cup \{u\}$ is a (not necessarily maximal) biclique of $G$. Note that either:
+    (i) if $u \in F_j$ then $F_j \nsubseteq B$ and $\Proj{B}(u) \notin B'$, because $u \notin \Lift{B}(f'{_j^1})$ or $u \notin \Lift{B}(f'{_j^2})$;
+    or (ii) if $u \in T_i$ then $T_i \cap B = \emptyset$, which implies that $\Proj{B}(u) \notin B'$.
+    %Since $H$ is an induced subgraph of $G$, no new bicliques can be created in $H$ that were not present in $G$.
+    Since $B \cup \{u\}$ is a biclique, $\Proj{B}(u)$ is adjacent to only one partition of $B'$.
+    The fact that $\Proj{B}(u) \notin B'$ implies that $\Proj{B}(B \cup \{u\}) = \Proj{B}(B) \cup \Proj{B}(u) = B' \cup \Proj{B}(u)$ is a biclique of $H$ and $B'$ is not maximal.
+    
+    Conversely, by the definition of $\Proj{B}$, $B' = (X, Y)$ must be a biclique of~$H$. By the contrapositive, there is $u' \in V(H)$ such that $B' \cup \{u'\}$ is a (not necessarily maximal) biclique of $H$, and let $u \in \Lift{B}(u')$. By the definition of $\Lift{B}$, it follows that $u$ can only be adjacent to one of partition of $B$, say $\Lift{B}(X)$. Thus, $u' \in Y$ and, for each $v \in \Lift{B}(Y)$, $uv \notin E(G)$, otherwise there would be $v' \in \Proj{B}(v)$ with $u'v' \in E(H)$. Hence, $B \cup \{u\}$ is a biclique of $G$ and $B$ is not maximal.
+\end{proof}
+%\end{tproof}
+
+
+\begin{theorem}
+    \label{thm:lifted_transversal}
+    $X \subseteq V(H)$ is in $\transs{B}(H)$ if and only if $\Lift{B}(X) \in \transs{B}(G)$.
+\end{theorem}
+
+%\begin{tproof}
+\begin{proof}
+    Recall that $X \in \transs{B}(H)$ if and only if no maximal biclique of $H$ is contained in $X$.
+    It is clear that, for every $B' \in \biq(H)$, $B' \nsubseteq X$ implies that $\Lift{B}(B') \nsubseteq \Lift{B}(X)$, since no two vertices of $H$ are lifted to the same vertex of $G$, and $\Lift{B}(B') \in \biq(G)$ due to Lemma~\ref{lem:lift_proj_biclique}.
+    Moreover, no biclique of $G$ entirely contained in a true twin class can be a subset of $\Lift{B}(X)$. As such, $\Lift{B}(X)$ contains a maximal biclique $B$ only if $\Proj{B}(B) \subseteq X$ and $\Proj{B}(B) \notin \biq(H)$, which is impossible due to Lemma~\ref{lem:lift_proj_biclique} and the assumption that $B$ is maximal.
+    
+    Taking the contrapositive, $X \notin \transs{B}(H)$ implies that there is some maximal biclique $B'$ of $H$ such that $B' \subseteq X$. This implies that $\Lift{B}(B') \subseteq \Lift{B}(X)$, and, since $\Lift{B}(B')$ is a maximal biclique of $G$ due to Lemma~\ref{lem:lift_proj_biclique}, it holds that $\Lift{B}(X)$ is not a complement of transversal of $G$.
+\end{proof}
+%\end{tproof}
+
+
+\begin{theorem}
+    \label{thm:lifted_multicover}
+    $\psi$ is a $k$-multicover of $H$ if and only if $G$ is $k$-biclique-colorable.
+\end{theorem}
+
+%\begin{tproof}
+\begin{proof}
+    Recall that a $k$-partition is a $k$-biclique-coloring if and only if all elements of the partition belong to $\transs{B}(G)$. By the construction of our set multicover instance, we have that, for each $\psi_i$, $\psi_i \in \transs{B}(H)$. By making $\varphi = \left\{\Lift{B}(\psi_1), \dots, \Lift{B}(\psi_k)\right\}$, and recalling Observation~\ref{obs:fatless_multicover}, we have that each vertex $u \in V(H)$ is covered exactly $c(u)$ times; moreover, since true twins appear multiple times and types are equivalence relations, we can attribute to each $t_i^q$ any of the $|T_i|$ colors available, as long as no two receive the same color.
+    Therefore, $\varphi$, after properly allocating the true twin classes, is a $k$-partition of $V(G)$.
+    Due to Theorem~\ref{thm:lifted_transversal}, every $\Lift{B}(\psi_i)$ is a complement of transversal and therefore $\varphi$ is a valid $k$-biclique-coloring of $G$.
+    
+    For the converse, we first make use of Lemma~\ref{lem:biclique_false_twins} to guarantee that every false twin class is in at most two color classes. In particular, if two colors are required we force $f_j^1$ to have the smallest color and $F_j \setminus \{f_j^1\}$ to have the other one.
+    Afterwards, for every color class $\varphi_i$, we take $\psi_i = \Proj{B}(\varphi_i)$.
+    Note that, each color class has at most one element of each $T_i$. Also, for each $F_j$ and any two distinct color classes $\varphi_l, \varphi_r$, $\Proj{B}(\varphi_l) \cap \Proj{B}(\varphi_r) \cap \Proj{B}(F_j) = \emptyset$, since $f_j^1$ has a different color from $F_j \setminus \{f_j^1\}$.
+    These observations guarantee that $\Lift{B}(\psi_i) = \varphi_i$ and, because of Theorem~\ref{thm:lifted_transversal}, $\psi_i \in \transs{B}(H)$.
+    Finally, $\psi = \{\psi_1, \dots, \psi_k\}$ will be a valid $k$-multicover of $H$ because every vertex of $V(H)$ will be covered the required amount of times.
+\end{proof}
+%\end{tproof}
+
+Note that the size of the largest true twin class is exactly the largest coverage requirement $b$ of our \pname{Set Multicover} instance.
+Moreover, since we need at least $b$ colors to biclique color $G$, it holds that $b \leq k$.
+
+\begin{theorem}
+    \label{thm:fpt_biclique}
+    \pname{Biclique Coloring} can be solved in $\bigOs{(k+2)^{2d}}$.
+\end{theorem}
+
+%\begin{tproof}
+\begin{proof}
+        Start by computing the type partition of $G$ in $\bigO{n^3}$ time and building $H$ in $O(n + m)$.
+        Afterwards, solve the corresponding \pname{Set Multicover} instance in $\bigOs{(b+2)^{2d}}$ time using Theorem~\ref{thm:set_multicover} and lift the multicover using the construction described in the proof of Theorem~\ref{thm:lifted_multicover} in $\bigO{n}$.
+\end{proof}
+%\end{tproof}
+
+Another option would be not to contract true twin classes, keeping all such vertices in the projected graph, which would effectively yield a kernel linear on the product $kd$.
+The brute force approach would yield a running time of $\bigOs{k^{kd}3^{kd/3}}$: we could verify if one of the $k^{kd}$ possible colorings is a proper $k$-biclique-coloring by checking if none of the $\bigO{3^{kd/3}}$ maximal bicliques is monochromatic.
+We could refine our algorithm and use Theorem~\ref{thm:exact_biclique} to solve the problem in $\bigOs{2^{kd}}$, which is no better than $(k+2)^{2d} \approx k^{2d} = 2^{2d\log k}$.

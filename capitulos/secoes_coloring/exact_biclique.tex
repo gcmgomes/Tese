@@ -1,11 +1,11 @@
-\section{Exact Algorithm for \textsc{biclique coloring}}
+\section{Exact Algorithm for \pname{Biclique Coloring}}
 \label{sec:biclique_exact}
 
-\begin{figure}[!htb]
+\begin{figure}[!tb]
     \centering
     \begin{tikzpicture}[scale=1]
         \begin{scope}
-         %\draw[help lines] (-5,-5) grid (5,5);
+        %\draw[help lines] (-5,-5) grid (5,5);
             \GraphInit[unit=3,vstyle=Normal]
             \SetVertexNormal[Shape=circle, FillColor=black, MinSize=2pt]
             \tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
@@ -66,11 +66,11 @@
             \Edge(x0-1)(x1-1)
             
             \Edge(x-10)(x-11)
-            \Edge(x-10)(x00)
+          \Edge(x-10)(x00)
             \Edge(x00)(x01)
             \Edge(x00)(x10)
             
-            \Edge(x-11)(x01)
+          \Edge(x-11)(x01)
             \Edge(x01)(x11)
             
             \Edge(x10)(x11)
@@ -116,49 +116,50 @@
             \Edge(x10)(x1-1)
         \end{scope}
     \end{tikzpicture}
-    \hfill
-    
-    
-    \caption{A graph (left), one of its maximal bicliques in black (center), and a transversal in black (right).}
+
+    \caption{From left to right: a graph, one of its maximal bicliques, and a transversal.}
     \label{fig:transversals}
 \end{figure}
 
-
-Our first task is to establish a family of sets that can be safely used to cover $V(G)$, which we accomplish as follows.
-
+Drawing inspiration from~\cite{clique_color_algorithm}, we first show the relationships between hypergraph structures and colorings, and use these to build an $\bigOs{2^n}$-time algorithm for \pname{Biclique Coloring} by stating it as an exact cover instance.
+Naturally, the covering family must be carefully chosen such that any solution to the covering problem produces a valid coloring.
+We first formalize the observation that, given a color~$i$, every maximal biclique of~$G$ must have one color other than~$i$.
+%Our first task is to establish a family of sets that can be safely used to cover~$V(G)$,
 
 \begin{lemma}
     \label{lem:transversal_colorings}
     A $k$-partition $\varphi = \{\varphi_1, \dots, \varphi_k\}$ is a $k$-biclique-coloring of $G$ if and only if for every $i$, $\overline{\varphi_i} \in \trans{B}(G)$.
 \end{lemma}
 
-\begin{tproof}
-$(\Rightarrow)$ Suppose that there exists some $\varphi_i$ such that $\overline{\varphi_i} \notin \trans{B}(G)$.
-This implies that there exists some $B \in \biq(G)$ such that $B \cap \overline{\varphi_i} = \emptyset$ and that $B \subseteq \varphi_i$; that is, $|\varphi(B)| = 1$, which is a contradiction, since $\varphi$ is a $k$-biclique-coloring.
-
-$(\Leftarrow)$ Let $\varphi$ be a $k$-partition of $G$ with $\overline{\varphi_i} \in \trans{B}(G)$, but suppose that $\varphi_k$ is not a $k$-biclique-coloring.
-That is, there exists some maximal biclique $B \in \biq(G)$ such that $B \subseteq \varphi_i$ for some $i$.
-This implies that $B \cap \overline{\varphi_i} = \emptyset$, and, therefore, $\overline{\varphi_i} \notin \trans{B}(G)$, which contradicts the hypothesis.
-\end{tproof}
+%\begin{tproof}
+\begin{proof}
+    Suppose that there exists some $\varphi_i$ such that $\overline{\varphi_i} \notin \trans{B}(G)$.
+    This implies that there exists some $B \in \biq(G)$ such that $B \cap \overline{\varphi_i} = \emptyset$ and that $B \subseteq \varphi_i$; that is, $|\varphi(B)| = 1$, which is a contradiction, since $\varphi$ is a $k$-biclique-coloring.
+    
+    For the converse, let $\varphi$ be a $k$-partition of $G$ with $\overline{\varphi_i} \in \trans{B}(G)$, but suppose that $\varphi_k$ is not a $k$-biclique-coloring.
+    That is, there exists some maximal biclique $B \in \biq(G)$ such that $B \subseteq \varphi_i$ for some $i$.
+    This implies that $B \cap \overline{\varphi_i} = \emptyset$, and, therefore, $\overline{\varphi_i} \notin \trans{B}(G)$, which contradicts the hypothesis.
+\end{proof}
+%\end{tproof}
 
 Simply testing for each $X \in 2^{V(G)}$ if $X \in \transs{B}(G)$ is a costly task.
 A naive algorithm would check, for each $B \in \biq(G)$, if $\overline{X} \cap B \neq \emptyset$.
-With $|\biq(G)| \in \bigO{n3^{\frac{n}{3}}}$ (see~\citep{gaspers} for the proof), such algorithm would take $\bigO{n2^n3^{\frac{n}{3}}}$ time.
-
-The next Lemma, along with Lemma~\ref{lem:down_closure}, considerably reduce the complexity of enumerating $\trans{B}(G)$.
-Effectively, we will enumerate $\oblq{B}(G)$ by first generating its maximal elements and then use the fact that $\oblq{B}(G)$ is closed under the subset operation, which takes $\bigOs{2^n}$ time.
+With $|\biq(G)| \in \bigO{n3^{\frac{n}{3}}}$ (see~\cite{gaspers} for the proof), such algorithm would take $\bigO{n2^n3^{\frac{n}{3}}}$-time.
+The next Lemma, along with Lemma~\ref{lem:down_closure}, considerably reduces the complexity of enumerating $\trans{B}(G)$.
+We will enumerate $\oblq{B}(G)$ by generating its maximal elements and then use the fact that $\oblq{B}(G)$ is closed under the subset operation.
 
 \begin{lemma}
     \label{lem:complementary_obliques}
     The maximal obliques of $\Hyper{B}(G)$ are exactly the complements of the maximal bicliques of $G$.
 \end{lemma}
 
-\begin{tproof}
-    $(\Rightarrow)$ Let $X \in \oblq{B}$ be a maximal oblique. By definition, there exists some $B \in \biq(G)$ such that $X \cap B = \emptyset$, which implies that $X \subseteq \overline{B}$.
+%\begin{tproof}
+\begin{proof}
+    Let $X \in \oblq{B}$ be a maximal oblique. By definition, there exists some~$B \in \biq(G)$ such that~$X \cap B = \emptyset$, which implies that $X \subseteq \overline{B}$.
     Note that, if $X \subset \overline{B}$, there is some $v \in \overline{B} \setminus X$, which implies that $(X \cup \{v\}) \cap B = \emptyset$ and that $X$ is not a maximal oblique.
-    
-    $(\Leftarrow)$ Let $B \in \biq(G)$. By definition, $\overline{B} \in \oblq{B}$ and must be maximal because $\{B, \overline{B}\}$ is a partition of $V(G)$.
-\end{tproof}
+    Let $B \in \biq(G)$. By definition, $\overline{B} \in \oblq{B}$ and must be maximal because $\{B, \overline{B}\}$ is a partition of $V(G)$.
+\end{proof}
+%\end{tproof}
 
 \begin{corollary}
     \label{col:is_maximal_oblique}
@@ -166,15 +167,16 @@ Effectively, we will enumerate $\oblq{B}(G)$ by first generating its maximal ele
 \end{corollary}
 
 \begin{theorem}
-    There is an $\bigOs{2^n}$ time algorithm for \textsc{biclique coloring}.
+    \label{thm:exact_biclique}
+    There is an $\bigOs{2^n}$-time algorithm for \pname{Biclique Coloring}.
 \end{theorem}
 
-\begin{tproof}
-    Our goal is to make use of Theorem~\ref{thm:inc_exc} to solve an instance of \textsc{exact cover}, with $A = V(G)$, $\mathcal{F} = \transs{B}(G)$ and $k$ the partition size.
-    Lemma~\ref{lem:transversal_colorings} guarantees that there is an answer to our instance of \textsc{biclique coloring} if and only if there is an answer to the corresponding \textsc{exact cover} instance.
-    
-    To compute $\transs{B}(G)$, for each $X \in 2^{V(G)}$, we use Lemma~\ref{lem:complementary_obliques} and Corollary~\ref{col:is_maximal_oblique} to say whether or not $X$ is a maximal oblique of $\Hyper{B}(G)$.
-    
-    Afterwards, we compute $\oblq{B}(G)$ from its maximal elements using Lemma~\ref{lem:down_closure}, and use the fact that $\trans{B}(G) = 2^{V(G)} \setminus \oblq{B}(G)$ and complement each transversal to obtain $\transs{B}(G)$.
-    Clearly, this procedure takes $\bigOs{2^n}$ to construct $\transs{B}(G)$ and an additional $\bigOs{2^n}$ to use Theorem~\ref{thm:inc_exc}.
-\end{tproof}
+%\begin{tproof}
+\begin{proof}
+    Our goal is to make use of Theorem~\ref{thm:inc_exc} to solve an instance of \pname{Exact Cover}, with $A = V(G)$, $\mathcal{F} = \transs{B}(G)$ and $k$ the partition size.
+    Lemma~\ref{lem:transversal_colorings} guarantees that there is an answer to our instance of \pname{Biclique Coloring} if and only if there is an answer to the corresponding \pname{Exact Cover} one.
+    To compute~$\transs{B}(G)$, for each $X \in 2^{V(G)}$, we use Lemma~\ref{lem:complementary_obliques} and Corollary~\ref{col:is_maximal_oblique} to say whether or not $X$ is a maximal oblique of $\Hyper{B}(G)$.
+    Next, we compute $\oblq{B}(G)$ from its maximal elements using Lemma~\ref{lem:down_closure}, and use the fact that $\trans{B}(G) = 2^{V(G)} \setminus \oblq{B}(G)$ and complement each transversal to obtain $\transs{B}(G)$.
+    Clearly, this procedure takes $\bigOs{2^n}$-time to construct $\transs{B}(G)$ and an additional $\bigOs{2^n}$-time by Theorem~\ref{thm:inc_exc}.
+\end{proof}
+%\end{tproof}

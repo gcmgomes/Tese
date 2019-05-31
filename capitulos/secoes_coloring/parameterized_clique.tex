@@ -1,0 +1,114 @@
+\subsection{\pname{Clique Coloring}}
+
+For \pname{Clique Coloring}, a type class with a single vertex is treated as a false twin class.
+Unlike \pname{Biclique Coloring}, both true and false twin classes are well behaved, one of the reasons we get a much better algorithm for this problem.
+
+
+\begin{lemma}
+    \label{lem:clique_false_twins}
+    Given $G$ and a false twin class $F \subset V(G)$, any  $k$-clique-coloring~$\varphi'$ can be changed into a $k$-clique-coloring $\varphi$ such that $|\varphi(F)| = 1$.
+\end{lemma}
+
+%    \begin{tproof}
+\begin{proof}
+    If $|\varphi'(F)| = 1$, we are done.
+    Otherwise, there exists $f_1, f_2 \in F$ such that $\varphi'(f_1) \neq \varphi'(f_2)$.
+    For every maximal clique $C_1$ where $f_1 \in C_1$, define $C' = C \setminus \{f_1\}$ and note that $C_2 = C' \cup \{f_2\}$ is also a maximal clique.
+    Since $\varphi'$ is an  coloring $|\varphi'(C') \cup \{\varphi'(f_1)\}| \geq 2$.
+    Therefore, making $\varphi(f_2) = \varphi(f_1) = \varphi'(f_1)$ does not make $|\varphi(C_2)| = 1$. 
+    Repeating this until $|\varphi(F)| = 1$ does not make any clique that intercepts $F$ monochromatic and completes the proof.
+\end{proof}
+%    \end{tproof}
+    
+\begin{lemma}
+    \label{lem:clique_true_twins}
+    Given $G$ and  a true twin class $T \subseteq V(G)$, any  $k$-clique-coloring $\varphi'$ can be changed into a $k$-clique-coloring $\varphi$ such that $|\varphi(T)| \leq 2$.
+\end{lemma}
+
+%\begin{tproof}
+\begin{proof}
+    If $|\varphi'(T)| \leq 2$, we are done.
+    Otherwise, there exists $t_1, t_2, t_3 \in T$ with different colors.
+    Note that, for every maximal clique $C$ that intercepts $T$, $C \subseteq T$.
+    Therefore, $|\varphi'(C)| \geq |\varphi'(T)| \geq 3$.
+    By making $\varphi(t_1) = \varphi'(t_1)$ and $\varphi(t_3) = \varphi(t_2) = \varphi'(t_2)$ we have $|\varphi(C)| \geq |\varphi(T)| \geq 2$.
+    Repeating this process until $|\varphi(T)| \leq 2$ does not make any clique that intercepts $T$ monochromatic and the proof follows.
+\end{proof}
+%\end{tproof}
+
+\begin{definition}[C-Projection and C-Lifting]
+    Let $T_i$ be any true twin class and $F_j$ be any false twin class.
+    We define the following projection rules:
+    for $t_i^1 \in T_i,\ \Proj{C}(t_i^1) = \{t'{_i^1}\}$,
+    $\forall t_i^q \in T_i \setminus \{t_i^1\}$, $\Proj{C}(t_i^q) = \{t'{_i^2}\}$,
+    $\forall f_j^r \in F_j$, $\Proj{C}(f_j^r) = \{f'_j\}$
+    and $\Proj{C}(X) = \bigcup_{u \in X} \Proj{C}(u)$.
+    
+    Lifting rules are defined as $\Lift{C}(t'{_i^1}) = \{t_i^1\}$,
+    $\Lift{C}(t'{_i^2}) = T_i \setminus \{t_i^1\}$,
+    $\Lift{C}(f'_j) = \{f_j^1\}$ and $\Lift{C}(Y) = \bigcup_{u' \in Y} \Lift{C}(u')$.
+    Note that $\Proj{C}(\Lift{C}(X)) = X$, $\forall X$.
+\end{definition}
+
+\begin{definition}[C-Projected Graph]
+    The C-projected graph $H$ of $G$ satisfies $V(H) = \Proj{C}(V(G))$ and $v'_iv'_j \in E(H)$ if and only if there exist~$v_i \in \Lift{C}(v'_i)$ and $v_j \in \Lift{C}(v'_j)$ such that $v_iv_j \in E(G)$. $H$ is an induced subgraph of $G$.
+\end{definition}
+
+
+For the remainder of this section, $G$ will be the input graph to \pname{Clique Coloring} and $H$ the C-Projected graph of $G$.
+We show, using Lemma~\ref{lem:lift_proj_clique} and Theorem~\ref{thm:projected_clique_coloring}, that \pname{Clique Coloring} parameterized by neighborhood diversity has a linear kernel.
+Note that our results imply that $\CN{C}(G) \leq 2d$.
+A straightforward brute force approach would yield an $\bigOs{4^dd^{2d}3^{2d/3}}$-time algorithm: for each of the $k^{2d} \leq (2d)^{2d}$ possible colorings of $H$, we check if none of the $\bigO{3^{2d/3}}$ maximal cliques of $H$ are monochromatic, returning $\YES$ if none are, otherwise $\NOi$.
+Instead, we use Theorem~\ref{thm:clique_color_algorithm} and obtain an $\bigOs{2^{2d}}$-time algorithm.
+
+
+\begin{lemma}
+    \label{lem:lift_proj_clique}
+    If $C' \in \clq(H)$ then $\Lift{C}(C') \in \clq(G)$. Conversely, if $C \in \clq(G)$ then $\Proj{C}(C) \in \clq(H)$.
+\end{lemma}
+
+%\begin{tproof}
+\begin{proof}
+    Note that $C = \Lift{C}(C')$ is a clique due to the definition of $\Lift{C}$ and the fact that $C'$ is a clique.
+    By the contrapositive, suppose that $C$ is not a maximal clique.
+    In this case, there is some vertex $u \in V(G)$ such that $C \cup \{u\}$ is a (not necessarily maximal) clique of $G$. Note that either:
+    (i) if $u \in T_i$, $T_i \nsubseteq C$ and $u \notin \Lift{C}(t'{_i^1})$ or $u \notin \Lift{C}(t'{_i^2})$, thus $\Proj{C}(u) \notin C'$;
+    (ii) if $u \in F_j$, $F_j \cap C = \emptyset$ and $\Proj{C}(u) \notin C'$.
+    Since no two vertices of $H$ are lifted to the same vertex of $G$ and $\Proj{C}(u) \notin C'$, it follows that  $\Proj{C}(C \cup \{u\}) = \Proj{C}(C) \cup \Proj{C}(u) = C' \cup \Proj{C}(u)$ is a clique by the definition of $\Proj{C}$.
+    
+    Clearly, $C' = \Proj{C}(C)$ is a clique of $H$, due to the definition of $\Proj{C}$.
+    Suppose, however, that $C' \notin \clq(H)$, which implies that there is some $u' \in V(H)$ such that $C' \cup \{u'\}$ is a clique of $H$ and let $u \in \Lift{C}(u')$.
+    By the definition of $\Lift{C}$, $C \subseteq N(u)$ if and only if $\Proj{C}(C) \subseteq N(u')$, which implies that $C'$ is not maximal only if $C$ is not maximal.
+    A contradiction that completes the proof.
+\end{proof}
+%\end{tproof}
+
+\begin{theorem}
+    \label{thm:projected_clique_coloring}
+     $G$ is $k$-clique-colorable if and only if $H$ is $k$-clique-colorable.
+\end{theorem}
+
+%\begin{tproof}
+\begin{proof}
+    Let $\varphi_G$ be a $k$-clique-coloring of $G$ that complies with Lemmas~\ref{lem:clique_false_twins} and~\ref{lem:clique_true_twins}.
+    Without loss of generality, for every $T_i$, we color $t_i^1$ with one color and $T_i \setminus \{t_i^1\}$ with the other, if it exists, otherwise color every vertex of $T_i$ with the same color.
+    We define the $k$-clique-coloring of $H$ as $\varphi_H(u') = \varphi_G(u \in \Lift{C}(u'))$, for every $u' \in V(H)$.
+    Suppose now that there exists some $C' \in \clq(H)$ such that $|\varphi_H(C')| = 1$.
+    By Lemma~\ref{lem:lift_proj_clique}, $\Lift{C}(C')$ is a maximal clique of $G$ and, since $|\varphi_G\left(\Lift{C}(C')\right)| = 1$, it holds that $\Lift{C}(C')$ is a monochromatic maximal clique of $G$ and $\varphi_G$ is not a valid $k$-clique-coloring, which contradicts the hypothesis.
+        
+    Now, let $\varphi_H$ be a $k$-clique-coloring of $H$, and define $\varphi_G(u) = \varphi_H(u' \in \Proj{C}(u))$.
+    By assuming that there exists some $C \in \clq(G)$ such that $\left|\varphi_G(C)\right| = 1$ and using Lemma~\ref{lem:lift_proj_clique}, it is clear that $\left|\varphi_H(\Proj{C}(C))\right| = 1$ which is impossible, since $\varphi_H$ is a valid $k$-clique-coloring of $H$.
+\end{proof}
+%\end{tproof}
+
+\begin{theorem}
+    \label{thm:fpt_clique}
+    There is an $\bigOs{2^{2d}}$-time algorithm for \pname{Clique Coloring}.
+\end{theorem}
+
+%\begin{tproof}
+\begin{proof}
+    Start by computing the optimal type partition of $G$ in $\bigO{n^3}$-time and building $H$ in $\bigO{n + m}$.
+    Then color $H$ in $\bigOs{2^{2d}}$-time by Theorem~\ref{thm:clique_color_algorithm} and lift the coloring using the construction described in Theorem~\ref{thm:projected_clique_coloring} in $\bigO{n}$.
+\end{proof}
+%\end{tproof}

@@ -1,0 +1,133 @@
+\subsection{A lower bound under ETH}
+
+We now proceed to show that the algorithm described in Theorem~\ref{thm:fpt_clique} is optimal, up to a constant in the exponent, under the assumption that ETH holds.
+Before proceeding, we recall the canonical problem associated with the $\SiP{2}$ class.
+
+\problem{2-quantified satisfability (\pname{QSAT}$_2$)}
+{An $n_1 + n_2$ variable 3DNF formula $\varphi(\boldsymbol{x}, \boldsymbol{y})$, on $\boldsymbol{x}$ and $\boldsymbol{y}$.}
+{Is there $\boldsymbol{x} \in \{0,1\}^{n_1}$ such that for every $\boldsymbol{y} \in \{0,1\}^{n_2}$, $\varphi(\boldsymbol{x}, \boldsymbol{y}) = 1$?}
+
+\begin{lemma}
+    There is no $\bigOs{2^{o(n_1 + n_2)}}$ algorithm for an instance of \pname{QSAT}$_2$ on $n_1 + n_2$ variables if ETH holds.
+\end{lemma}
+
+\begin{proof}
+    By the counter-positive, suppose that there is an algorithm $\prod$ for \pname{QSAT}$_2$ with complexity $\bigOs{2^{o(n_1 + n_2}}$ and let $\langle\boldsymbol{x}, \boldsymbol{y}, \varphi(\boldsymbol{x},\boldsymbol{y})\rangle$ be an instance of \pname{QSAT}$_2$ as in the definition of \pname{QSAT}$_2$.
+    With $\prod$ in hand, we can solve $\neg\left(\exists \boldsymbol{x} \forall \boldsymbol{y}\varphi(\boldsymbol{x}, \boldsymbol{y})\right) \equiv \forall \boldsymbol{x} \exists \boldsymbol{y} \neg\varphi(\boldsymbol{x}, \boldsymbol{y})$ simply by negating the output of $\prod$.
+    Note that, since $\varphi(\boldsymbol{x}, \boldsymbol{y})$ is in 3DNF, $\neg\varphi(\boldsymbol{x}, \boldsymbol{y})$ is in 3CNF.
+    The case where $n_1 = 0$ is precisely \textsc{3sat}, and we have an algorithm that solves it in $\bigOs{2^{o(n_2)}}$, implying that ETH is false.
+\end{proof}
+
+\begin{figure}[!tb]
+    \centering
+        \begin{tikzpicture}[scale=1]
+            \GraphInit[unit=3,vstyle=Normal]
+            \SetVertexNormal[Shape=circle, FillColor=black, MinSize=2pt]
+            \tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+            \begin{scope}[shift={(-2.5cm,0)}]
+                \Vertex[x=0,y=0,LabelOut,Lpos=90,Ldist=0pt,Math,L={x_1}]{x-1}
+                \Vertex[x=1,y=0,LabelOut,Lpos=90,Ldist=0pt,Math,L={\overline{x}_1}]{o-x-1}
+                \Vertex[x=0,y=1,LabelOut,Lpos=90,Ldist=0pt,Math,L={x_1'}]{x-1-l}
+                \Vertex[x=1,y=1,LabelOut,Lpos=90,Ldist=0pt,Math,L={\overline{x}_1'}]{o-x-1-l}
+                \Edges[style={bend left=50}](x-1, x-1-l)
+                \Edge(x-1-l)(o-x-1-l)
+                \Edges[style={bend right=50}](o-x-1-l, o-x-1)
+                \Edge[style={dashed, thin}](x-1)(o-x-1)
+            \end{scope}
+            \begin{scope}[shift={(-0.5cm,0)}]
+                \Vertex[x=0,y=0,LabelOut,Lpos=90,Ldist=0pt,Math,L={x_2}]{x-2}
+                \Vertex[x=1,y=0,LabelOut,Lpos=90,Ldist=0pt,Math,L={\overline{x}_2}]{o-x-2}
+                \Vertex[x=0,y=1,LabelOut,Lpos=90,Ldist=0pt,Math,L={x_2'}]{x-2-l}
+                \Vertex[x=1,y=1,LabelOut,Lpos=90,Ldist=0pt,Math,L={\overline{x}_2'}]{o-x-2-l}
+                \Edges[style={bend left=50}](x-2, x-2-l)
+                \Edge(x-2-l)(o-x-2-l)
+                \Edges[style={bend right=50}](o-x-2-l, o-x-2)
+                \Edge[style={dashed, thin}](x-2)(o-x-2)
+            \end{scope}
+            \begin{scope}[shift={(1.5cm,0)}]
+                \Vertex[x=0,y=0,LabelOut,Lpos=90,Ldist=0pt,Math,L={y_1}]{y-1}
+                \Vertex[x=1,y=0,LabelOut,Lpos=90,Ldist=0pt,Math,L={\overline{y}_1}]{o-y-1}
+                \Vertex[x=0,y=1,LabelOut,Lpos=90,Ldist=0pt,Math,L={y_1'}]{y-1-l}
+                \Vertex[x=1,y=1,LabelOut,Lpos=0,Ldist=0pt,Math,L={\overline{y}_1'}]{o-y-1-l}
+                \Edges[style={bend left=50}](y-1, y-1-l)
+                \Edges[style={bend right=50}](o-y-1-l, o-y-1)
+                \Edge[style={dashed, thin}](y-1)(o-y-1)
+            \end{scope}
+            \begin{scope}[shift={(3.5cm,0)}]
+                \Vertex[x=0,y=0,LabelOut,Lpos=90,Ldist=0pt,Math,L={y_2}]{y-2}
+                \Vertex[x=1,y=0,LabelOut,Lpos=90,Ldist=0pt,Math,L={\overline{y}_2}]{o-y-2}
+                \Vertex[x=0,y=1,LabelOut,Lpos=0,Ldist=0pt,Math,L={y_2'}]{y-2-l}
+                \Vertex[x=1,y=1,LabelOut,Lpos=90,Ldist=0pt,Math,L={\overline{y}_2'}]{o-y-2-l}
+                \Edges[style={bend left=50}](y-2, y-2-l)
+                \Edges[style={bend right=50}](o-y-2-l, o-y-2)
+                \Edge[style={dashed, thin}](y-2)(o-y-2)
+            \end{scope}
+            
+            \begin{scope}[shift={(-1.0cm,-2cm)}]
+                \Vertex[x=0,y=0,LabelOut,Lpos=270,Ldist=0pt,Math,L={p_1}]{p-1}
+                \Vertex[x=1.25,y=0,LabelOut,Lpos=270,Ldist=0pt,Math,L={p_1'}]{p-1-l}
+                \Edges(p-1, p-1-l)
+            \end{scope}
+            \Edge(p-1)(o-x-1)
+            \Edge(p-1)(x-2)
+            \Edge(p-1)(o-y-1)
+            \Edges(y-2,p-1, o-y-2)
+            \begin{scope}[shift={(1.5cm,-2cm)}]
+                \Vertex[x=0,y=0,LabelOut,Lpos=270,Ldist=0pt,Math,L={p_2}]{p-2}
+                \Vertex[x=1.25,y=0,LabelOut,Lpos=270,Ldist=0pt,Math,L={p_2'}]{p-2-l}
+                \Edges(p-2, p-2-l)
+            \end{scope}
+            \Edge(p-2)(x-2)
+            \Edge(p-2)(y-1)
+            \Edge(p-2)(o-y-2)
+            \Edges(x-1,p-2, o-x-1)
+            \Edge(p-1-l)(p-2)
+            \begin{scope}[shift={(4cm,-2cm)}]
+                \Vertex[x=0,y=0,LabelOut,Lpos=270,Ldist=0pt,Math,L={p_3}]{p-3}
+                \Vertex[x=-1,y=4,LabelOut,Lpos=90,Ldist=0pt,Math,L={p_3'}]{p-3-l}
+            \end{scope}
+            \Edge(p-3)(o-x-1)
+            \Edge(p-3)(x-2)
+            \Edge(p-3)(y-2)
+            \Edges(y-1,p-3, o-y-1)
+            \Edge(p-2-l)(p-3)
+            
+            \draw[dashed] (-2.7,-0.15) rectangle (4.7,0.15);
+            \Edge(p-3-l)(y-1-l)
+            \Edge(p-3-l)(o-y-1-l)
+            \Edge(p-3-l)(y-2-l)
+            \Edge(p-3-l)(o-y-2-l)
+            
+            \draw[] (4,-2) arc (-90:120:2.12); 
+        
+        \end{tikzpicture}
+    \caption{Construction for the formula $\varphi(\boldsymbol{x},\boldsymbol{y}) = (\overline{x}_1 \wedge x_2 \wedge \overline{y}_1) \vee (x_2 \wedge y_1 \wedge \overline{y}_2) \vee (\overline{x}_1 \wedge x_2 \wedge y_2)$.}
+    \label{fig:reduction}
+\end{figure}
+
+\begin{theorem}
+    If ETH holds, there is no $\bigOs{2^{o(d)}}$ time algorithm for \textsc{clique 2-coloring} parameterized by the neighborhood diversity $d$ of the graph.
+\end{theorem}
+
+\begin{proof}
+    Let $\Phi = \langle\boldsymbol{x}, \boldsymbol{y}, \varphi(\boldsymbol{x},\boldsymbol{y})\rangle$ be an instance of \pname{QSAT}$_2$ as in the problem's definition.
+    We construct the graph $G$ for \pname{Clique bicoloring} as follows:
+    For each $x_i \in \boldsymbol{x}$, $G$ has 4 vertices $x_i,x_i',\overline{x}_i',\overline{x}_i$ and the edges $x_ix_i',x_i'\overline{x}_i',\overline{x}_i'\overline{x}_i$.
+    For each $y_j \in \boldsymbol{y}$, $G$ also has 4 vertices $y_j,y_j',\overline{y}_j',\overline{y}_j$ but only the edges $y_jy_j',\overline{y}_j\overline{y}_j'$.
+    Vertices $x_i,\overline{x}_i, y_j, \overline{y}_j$ form a clique minus the edges between a literal and its negation.
+    For each clause $p_l \in \varphi(\boldsymbol{x}, \boldsymbol{y})$, add two vertices $p_l,p_l'$ to $G$ and an edge between~$p_l$ and $x_i$ ($\overline{x}_i$) if $x_i$ ($\overline{x}_i$) is in clause $p_l$. If neither $x_i$ nor $\overline{x}_i$ are in clause $p_l$, connect $p_l$ to both $x_i$ and $\overline{x}_i$.
+    The same is done between $p_l$ and each $y_j$.
+    Vertex $p_m'$ is adjacent to every $y_j'$ and every $\overline{y}_j'$;
+    furthermore, $p_1p_1'\dots p_mp_m'$ is an induced path of $G$.
+    By~\cite{clique_coloring_complexity}, $G$ is a $\YES$ instance if and only if $\Phi$ is also a $\YES$ instance.
+    We now show that $\nd(G)$ is linearly bounded by the size of $\Phi$.
+    
+    Define $\eta = \{x_1, \overline{x}_1, \dots, \overline{x}_{n_1}, y_1, \overline{y}_1, \dots, \overline{y}_{n_2}\}$ and $P = \bigcup_{l \leq m}\{p_l, p_l'\}$, $\eta' = \{x_1', \overline{x}_1', \dots, \overline{x}_{n_1}', y_1', \overline{y}_1', \dots, \overline{y}_{n_2}'\}$, $P = \{p_l \mid l \leq m\}$ and $P' = \{p_l' \mid l \leq m\}$
+    For any $\{a,b\} \subseteq \eta \cup \eta'$, it is straightforward to verify that $N(a) \setminus N(b)$, $N[a] \setminus N[b]$, $N(b) \setminus N(a)$ and $N[b] \setminus N[a]$ are non-empty, which implies that $a$ and $b$ are neither false nor true twins.
+    For any $a \in \eta'$ and any $b \in P \cup P'$, it is easy to see that $a$ and $b$ cannot be of the same type.
+    If $a \in \eta$ and $b \in P$, since $\varphi(\boldsymbol{x}, \boldsymbol{y})$ is in 3DNF, there is at least one variable not adjacent to $b$ which is adjacent to $a$, since $\eta$ induces a clique minus a matching and, consequently, $a$ and $b$ are not of the same type.
+    If $a \in \eta \cup P$ and $b \in P'$ or $\{a,b\} \subseteq P'$, it is trivial to verify that $a$ and $b$ are neither true nor false twins.
+    For $\{a,b\} \subseteq P$, since no two clauses are equal, it follows that $a$ and $b$ are not of the same type.
+    
+    As such, we conclude that each vertex of $G$ is in a different type and, consequently, it has $d = \nd(G) = 4(n_1 + n_2) + 2m$ which is $\bigOs{n_1 + n_2 + m}$ and implies that there is no $\bigOs{2^{o(d)}}$ time algorithm for \textsc{clique 2-coloring} parameterized by neighborhood diversity unless ETH fails.
+\end{proof}

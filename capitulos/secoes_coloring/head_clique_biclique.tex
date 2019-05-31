@@ -1,20 +1,20 @@
 \section{Clique and Biclique Coloring}
 
-Both \textsc{clique coloring} and \textsc{biclique coloring} are relaxations of the classical \textsc{vertex coloring} problem, in the sense that monochromatic edges are allowed.
+Both \pname{Clique Coloring} and \pname{Biclique Coloring} are relaxations of the classical \pname{Vertex Coloring} problem, in the sense that monochromatic edges are allowed.
 However, this freedom comes at the cost of validating a solution, which becomes a $\coNP\text{-}\Complete$ task in both cases.
-One may think of \textsc{vertex coloring} as the task of covering a graph's vertices using a given number of independent sets.
+One may think of \pname{Vertex Coloring} as the task of covering a graph's vertices using a given number of independent sets.
 That is, there cannot be a color class with an edge inside it.
-For \textsc{clique coloring} and \textsc{biclique coloring}, the idea is quite similar.
+For \pname{Clique Coloring} and \pname{Biclique Coloring}, the idea is quite similar.
 We want to forbid not edges, but maximal clique or bicliques, respectively, inside our color classes.
 All of the following results establish families of sets that may safely be used to cover the given graph and describe how to compute them.
 
-Much of the discussion will deal with the clique and biclique hypergraphs $\Hyper{C}(G)$ and $\Hyper{B}(G)$.
+Much of the following discussion will deal with the clique and biclique hypergraphs $\Hyper{C}(G)$ and $\Hyper{B}(G)$.
 As such, we denote by $\trans{C}(G)$ ($\trans{B}(G)$) the \tdef{family of all transversals} of the clique (biclique) hypergraph of $G$ and by $\transs{C}(G)$ ($\transs{B}(G)$) the \tdef{family of complements of transversals}.
 Also, denote by $\oblq{C}(G)$ ($\oblq{B}(G)$) the \tdef{family of all obliques} of the clique (biclique) hypergraph of $G$.
 Finally, $\clq(G)$ ($\biq(G)$) is the family of \tdef{maximal cliques} (bicliques) of $G$.
 
-In this chapter, we present algorithms that make heavy use of the algorithm described by~\cite{inclusion_exclusion}, which applies the inclusion-exclusion principle to solve a variety of problems in $2^nn^{\bigO{1}}$ time, including \textsc{vertex coloring}.
-Our main results are an $\bigOs{2^n}$ algorithm for \textsc{biclique coloring}, an $\FPT$ algorithm for \textsc{clique coloring} parameterized by neighbourhood diversity and an $\FPT$ algorithm for \textsc{biclique coloring} parameterized by the number of colors and neighbourhood diversity.
+In this chapter, we present algorithms that make heavy use of the algorithm described by~\cite{inclusion_exclusion}, which applies the inclusion-exclusion principle to solve a variety of problems in $2^nn^{\bigO{1}}$ time, including \pname{Vertex Coloring}.
+Our main results are an $\bigOs{2^n}$ algorithm for \pname{Biclique Coloring}, an $\FPT$ algorithm for \pname{Clique Coloring} parameterized by neighbourhood diversity and an $\FPT$ algorithm for \pname{Biclique Coloring} parameterized by the number of colors and neighbourhood diversity.
 To achieve them, we will rely on the following problems and results of the literature.
 
 \begin{lemma}[\cite{clique_color_algorithm}]
@@ -31,12 +31,12 @@ To achieve them, we will rely on the following problems and results of the liter
 
 \begin{theorem}[\cite{inclusion_exclusion}]
     \label{thm:inc_exc}
-    There is a $\bigOs{2^n}$ time algorithm to solve \textsc{exact cover}.
+    There is a $\bigOs{2^n}$ time algorithm to solve \pname{exact cover}.
 \end{theorem}
 
 \begin{theorem}[\cite{clique_color_algorithm}]
     \label{thm:clique_color_algorithm}
-    There is an $\bigOs{2^n}$ time algorithm for \textsc{clique coloring}.
+    There is an $\bigOs{2^n}$ time algorithm for \pname{Clique Coloring}.
 \end{theorem}
 
 
