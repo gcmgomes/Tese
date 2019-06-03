@@ -101,6 +101,14 @@ The above algorithm was not the first to solve \pname{Equitable Coloring} for cl
 However, \citep{claw_free_de_werra} is not easily accessible, as it is not in any online repository.
 Moreover, the given algorithm has no clear time complexity and, as far as we were able to understand the proof, its running time would be $\bigO{k^2n}$, which, for $k = f(n)$, is worse than the algorithm we present in Lemma~\ref{lem:claw_free_chordal}.
 
+% \subsection{Distance to Cluster}
+
+% In this section and the one that follows, we adapt the algorithm for \pname{Equitable Coloring} of unipolar graphs~\citep{unipolar_graphs} given by~\cite{matheus_etc}.
+% A graph is \textit{unipolar} if its vertex set can be decomposed in cliques $\{C_1, C_2, \dots, C_\ell\}$ such that between $C_i$ and $C_j$, $2 \leq i,j \leq \ell$, there are no edges; $C_1$ is called the \textit{central clique}.
+% Essentially, \cite{matheus_etc} construct an auxiliary graph upon which they apply maximum a maximum flow algorithm to obtain the equitable coloring.
+% We describe their algorithm in detail, as it will be required to 
+% The key insight they rely upon is the fact, on the auxiliary graph, an
+
 \subsection{Clique Partitioning}
 
 Since \pname{Equitable Coloring} is $\W[1]$-$\Hard$ when simultaneously parameterized by many parameters, we are led to investigate a related problem.

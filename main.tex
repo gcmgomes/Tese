@@ -62,17 +62,17 @@
 \newtheorem{class_definition*}{}
 
 \theoremstyle{definition}
-\newtheorem{definition}{Definition}[chapter]
+\newtheorem{definition}{Definition}
 
 \theoremstyle{plain}
-\newtheorem{lemma}{Lemma}[chapter]
-\newtheorem*{lemma*}{Lemma}
-\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{theorem}{Theorem}
 \newtheorem*{theorem*}{Theorem}
-\newtheorem{corollary}{Corollary}[chapter]
-\newtheorem{observation}{Observation}[chapter]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem*{lemma*}{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{observation}[theorem]{Observation}
 \newtheorem*{observation*}{Observation}
-\newtheorem{conjecture}{Conjecture}[chapter]
+\newtheorem{conjecture}{Conjecture}
 \newtheorem*{conjecture*}{Conjecture}
 \newtheorem{rrule}{Reduction Rule}
 
@@ -161,7 +161,8 @@
 \newfunc{\dcc}{d\overline{c}}
 \newclass{\ETH}{ETH}
 \newclass{\SETH}{SETH}
-\newclass{\dgr}{deg}
+\newfunc{\border}{border}
+\newfunc{\dgr}{deg}
 \newfunc{\tw}{tw}
 
 
@@ -248,7 +249,7 @@
   dedication={firula/dedicatoria},
   %ack=[Acknowledgments]{},
   ack=[Acknowledgments]{firula/agradecimentos},
-  epigraphtext={Forged in...the seething flames of hatred}{Unknown},
+  epigraphtext={There is no struggle too vast,\\no odds too overwhelming,\\for even should we fail\\--- should we fall ---\\we will know that we have lived.}{Steven Erikson},
 }
 
 % Um exemplo para documentos em ingls  apresentado a seguir (lembre-se de
@@ -280,11 +281,11 @@
 
 %\input{capitulos/preliminares}
 
-\input{capitulos/coloring}
+%\input{capitulos/coloring}
 
 %\input{capitulos/clique_biclique}
 
-%\input{capitulos/dcut}
+\input{capitulos/dcut}
 
 %\input{capitulos/star}
 

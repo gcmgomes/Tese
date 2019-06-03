@@ -3,7 +3,7 @@
 We now proceed to show that the algorithm described in Theorem~\ref{thm:fpt_clique} is optimal, up to a constant in the exponent, under the assumption that ETH holds.
 Before proceeding, we recall the canonical problem associated with the $\SiP{2}$ class.
 
-\problem{2-quantified satisfability (\pname{QSAT}$_2$)}
+\problem{2-Quantified Satisfability (\pname{QSAT}$_2$)}
 {An $n_1 + n_2$ variable 3DNF formula $\varphi(\boldsymbol{x}, \boldsymbol{y})$, on $\boldsymbol{x}$ and $\boldsymbol{y}$.}
 {Is there $\boldsymbol{x} \in \{0,1\}^{n_1}$ such that for every $\boldsymbol{y} \in \{0,1\}^{n_2}$, $\varphi(\boldsymbol{x}, \boldsymbol{y}) = 1$?}
 
@@ -102,7 +102,7 @@ Before proceeding, we recall the canonical problem associated with the $\SiP{2}$
         
         \end{tikzpicture}
     \caption{Construction for the formula $\varphi(\boldsymbol{x},\boldsymbol{y}) = (\overline{x}_1 \wedge x_2 \wedge \overline{y}_1) \vee (x_2 \wedge y_1 \wedge \overline{y}_2) \vee (\overline{x}_1 \wedge x_2 \wedge y_2)$.}
-    \label{fig:reduction}
+    \label{fig:opt_reduction}
 \end{figure}
 
 \begin{theorem}
@@ -120,6 +120,7 @@ Before proceeding, we recall the canonical problem associated with the $\SiP{2}$
     Vertex $p_m'$ is adjacent to every $y_j'$ and every $\overline{y}_j'$;
     furthermore, $p_1p_1'\dots p_mp_m'$ is an induced path of $G$.
     By~\cite{clique_coloring_complexity}, $G$ is a $\YES$ instance if and only if $\Phi$ is also a $\YES$ instance.
+    For an example of the constructed graph, please refer to Figure~\ref{fig:opt_reduction}.
     We now show that $\nd(G)$ is linearly bounded by the size of $\Phi$.
     
     Define $\eta = \{x_1, \overline{x}_1, \dots, \overline{x}_{n_1}, y_1, \overline{y}_1, \dots, \overline{y}_{n_2}\}$ and $P = \bigcup_{l \leq m}\{p_l, p_l'\}$, $\eta' = \{x_1', \overline{x}_1', \dots, \overline{x}_{n_1}', y_1', \overline{y}_1', \dots, \overline{y}_{n_2}'\}$, $P = \{p_l \mid l \leq m\}$ and $P' = \{p_l' \mid l \leq m\}$

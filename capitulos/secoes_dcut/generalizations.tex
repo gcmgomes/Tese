@@ -1,0 +1,17 @@
+\section{Generalizations for \pname{Matching Cut}}
+
+We have already discussed \pname{$d$-Cut}, so this section will detail some other venues we have attempted to explore.
+In the definition of a matching cut, we would like each vertex of the graph, on the cut $(A,B)$, to have at most one neighbor across the cut.
+This can be rephrased to the following: a cut $(A,B)$ is a matching cut if and only if each vertex has at most one neighbor \textit{outside} of its part.
+Through this perspective, there is nothing special about the number of parts we want to partition our graph into.
+A cut on $\ell$ parts satisfying the above is called an \textit{$\ell$-nested matching cut}, and the decision problem for this generalization is dubbed the \pname{$\ell$-Nested Matching Cut} problem.
+
+\problem{$\ell$-Nested Matching Cut}{A graph $G$.}{Does $G$ admit an $\ell$-nested matching cut?}
+
+Let $\varphi = \{\varphi_1, \dots, \varphi_\ell\}$ be a partition of $V(G)$ and $\border(\varphi_i)$ be the vertices of $\varphi_i$ with one neighbor outside of $\varphi_i$.
+The following observation gives some intuition as to the structure of the positive instances of \pname{$\ell$-Nested Matching Cut}
+
+\begin{observation}
+    Let $G$ be a graph and $\ell \geq 2$ an integer.
+    $G$ admits an $\ell$-nested matching cut if and only if there is a an ($\ell-1$)-nested matching cut
+\end{observation}

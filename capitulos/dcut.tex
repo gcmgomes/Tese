@@ -1,6 +1,29 @@
 \chapter{Finding Cuts of Bounded Degree}
 
+Unlike coloring problems, cut problems enforce properties \textit{between} sets.
+The most famous cut problem is, most likely, \pname{Minimum Cut} (or \pname{Min Cut}), where the objective is to find a subset of edges of minimum size whose removal disconnects a specified pair of vertices.
+A celebrated theorem, known as the \textit{Max-Flow Min-Cut theorem}~\citep{ford_fulkerson}, a special case of strong linear programming duality~\citep{linear_optimization}, states that the capacity of a minimum $s,t$ is precisely the value of the maximum flow between $s$ and $t$; when all edges have unit capacity, we simply seek a cut of minimum cardinality.
+Other cases of cut problems in the literature include, for instance, \pname{Maximum Cut}, \pname{Max Cut} for short.
+As the name implies, the goal is to find an $s,t$ cut of the graph with the maximum number of edges between them; however, unlike \pname{Min Cut}, \pname{Max Cut} is $\NPH$, in fact, the value of the cannot be arbitrarily approximated by a polynomial time approximation scheme unless $\P = \NP$, i.e. it is $\APX$-$\Hard$.
+Naturally, one can ask whether or not there is a set of edges whose removal causes the disconnection of some vertices, but \textit{not others}.
+Some research has been dedicated to this topic under the name of \pname{Multicut-Uncut}, especially in terms of parameterized complexity~\citep{marx_treewidth_reduction,marx_separation}, with powerful meta-theorems guaranteeing fixed parameter tractability for any class whose membership is hereditary and decidable.
+Aside from constraints on which vertices are separated or the size of the separation, some cutting problems impose restrictions on the ``shape" of the edges crossing the cut.
+Such is the case of \pname{Matching Cut} and the generalizations we discuss further on.
+
+After some additional definitions and related work, we open the discussion of this chapter with a brief digression on possible generalization directions for \pname{Matching Cut}; our main goal, however, is at generalizing several results for the \pname{$d$-Cut} problem, which, to the best of our knowledge, we are the firsts to formally describe and investigate.
+First, by using a reduction inspired by Chvátal's~\citep{chvatal_matching_cut}, we show that for every $d \geq 1$, \pname{$d$-Cut} is \NP-hard even when restricted to $(2d+2)$-regular graphs and that, if $\Delta(G) \leq d+2$, finding a $d$-cut can be done in polynomial time. The degree bound in the \NP-hardness result is unlikely to be improved: if we had an \NP-hardness result for \pname{$d$-Cut} restricted to $(2d+1)$-regular graphs, this would disprove the conjecture about the existence of internal partitions on $r$-regular graphs~\citep{DeVos09,internal_partition_regular6,internal_partition_regular3_4} for $r$ odd, unless every problem in $\NP$ could be solved in \textit{constant} time.
+Afterwards, we present a simple exact exponential algorithm that, for every $d \geq 1$, runs in time $\bigOs{c_d^n}$ for some constant $c_d < 2$, hence improving over the trivial brute-force algorithm running in time $\bigOs{2^n}$.
+
+We then proceed to analyze the problem in terms of its parameterized complexity.
+Section~\ref{sec:param} begins with a proof, using the treewidth reduction technique of \citep{marx_treewidth_reduction}, that \pname{$d$-Cut} is $\FPT$ parameterized by the maximum number of edges crossing the cut.
+Afterwards, we present a dynamic programming algorithm for \pname{$d$-Cut} parameterized by treewidth running in time $\bigOs{2^{\tw(G)+1}(d+1)^{2\tw(G) + 2}}$; in particular, for $d=1$ this algorithm runs in time $\bigOs{8^{\tw(G)}}$ and improves the one given by \cite{matching_cut_structural} for \pname{Matching Cut}, running in time  $\bigOs{12^{\tw(G)}}$.
+By employing the cross-composition framework of \cite{cross_composition}, and using a reduction similar to the one in~\citep{matching_cut_ipec}, we show that, unless $\NP \subseteq \coNP/\poly$, there is no polynomial kernel for \pname{$d$-Cut} parameterized simultaneously by the number of crossing edges, the maximum degree, and the treewidth of the input graph.
+We then present a polynomial kernel and an $\FPT$ algorithm when parameterizing by the distance to cluster.
+This polynomial kernel is our main technical contribution, and it is strongly inspired by the technique presented by \cite{matching_cut_ipec} for \pname{Matching Cut}. Finally, we give an $\FPT$ algorithm parameterized by the distance to co-cluster, denoted by $\dcc(G)$.
+These results imply fixed-parameter tractability for \pname{$d$-Cut} parameterized by $\tau(G)$.
+
 \input{capitulos/secoes_dcut/intro.tex}
+\input{capitulos/secoes_dcut/generalizations.tex}
 \input{capitulos/secoes_dcut/np.tex}
 \input{capitulos/secoes_dcut/param.tex}
 \input{capitulos/secoes_dcut/conclusion.tex}
