@@ -1,0 +1,24 @@
+\begin{tikzpicture}
+\GraphInit[unit=3,vstyle=Normal]
+\SetVertexNormal[Shape=circle, FillColor = black, MinSize=3pt]
+\tikzset{VertexStyle/.append style = {inner sep = \inners,outer sep = \outers}}
+\SetVertexNoLabel
+\Vertex[x = 1.46994, y = 0.989]{v1}
+\Vertex[x = 0.054778, y = 0.91242]{v0}
+\Vertex[x = 0.67678, y = 2.545]{v3}
+\Vertex[x = 0.80808, y = 0.036]{v2}
+\Vertex[x = 1.40618, y = 1.66]{v5}
+\Vertex[x = 0.036, y = 1.58814]{v4}
+\Edge(v0)(v3)
+\Edge(v4)(v5)
+\Edge(v0)(v2)
+\Edge(v0)(v5)
+\Edge(v1)(v3)
+\Edge(v1)(v4)
+\Edge(v3)(v4)
+\Edge(v0)(v1)
+\Edge(v2)(v5)
+\Edge(v1)(v2)
+\Edge(v3)(v5)
+\Edge(v2)(v4)
+\end{tikzpicture}

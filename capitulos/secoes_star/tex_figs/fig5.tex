@@ -1,0 +1,10 @@
+\begin{tikzpicture}[rotate=135]
+\GraphInit[unit=3,vstyle=Normal]
+\SetVertexNormal[Shape=circle, FillColor = black, MinSize=3pt]
+\tikzset{VertexStyle/.append style = {inner sep = \inners,outer sep = \outers}}
+\SetVertexNoLabel
+\grComplete[RA=1]{4}
+\Vertex[a=45, d=1.5]{v}
+\Edge(v)(a0)
+\Edge(v)(a1)
+\end{tikzpicture}

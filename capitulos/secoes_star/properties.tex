@@ -1,0 +1,434 @@
+\section{Properties}
+The next theorem uses the known result, due to~\cite{moon_moser}, that a graph of order $n$ has at most $3^{n/3}$ maximal independent sets.
+
+\begin{theorem}
+    If $G$ is the star graph of a $n$ vertex graph $H$, then $|V(G)| \leq n3^{\Delta(H)/3}$.
+\end{theorem}
+
+\begin{tproof}
+    For every $v \in V(H)$, define $H_v = H[N(v)]$ and note that each maximal independent set of $H_v$ might induce a maximal star of $H$ centered around $v$.
+    Since $|V(H_v)| \leq \Delta(H)$, we have that $H_v$ has at most $3^{\Delta(H)/3}$ maximal independent sets and, therefore, $H$ has at most $3^{\Delta(H)/3}$ maximal stars centered around $v$.
+    Summing for every $v \in V(H)$ we arrive at the $n3^{\Delta(H)/3}$ bound.
+\end{tproof}
+
+\begin{theorem}
+    \label{thm:star_cutless}
+    If $G$ is a connected star graph, $G$ has no cut-vertex.
+\end{theorem}
+
+\begin{tproof}
+    If $|V(G)| \leq 4$, we are done as there are only 5 graphs that satisfy these constraints and none of them contain a cut-vertex.
+    They are $K_1$, $K_2$, $K_3$, $K_4$ and $K_4$ with one missing edge (the diamond).
+    The first three are trivial, while the last two are shown in Figure~\ref{fig:four_star}
+    
+    For graphs with 5 or more vertices, suppose that there is some cut-vertex $x \in G$, that $A,B$ are two of the connected components obtained after removing $x$ from $G$ and take a pair of vertices $a \in V(A) \cap N(x)$, $b \in V(B) \cap N(x)$.
+    Suppose now that $G = \K{S}(H)$ for some $H$ and take the stars $s_a, s_b, s_x$ corresponding to $a, b, x$, respectively.
+    Since $ab \notin E(G)$ and $ax, bx \in E(G)$, it holds that $s_a \cap s_x \neq \emptyset$ and $s_b \cap s_x \neq \emptyset$ but $s_a \cap s_b = \emptyset$.
+    
+    If $c(a) = c(x) = i$ and $k = c(b) \neq c(x)$, $s_x$ and $s_b$ share at least one leaf, say $v_j$, since they intercept at some vertex, and $v_j \notin s_a$.
+    However, there is no leaf $v_{j'} \in s_a$ adjacent to $v_j$, otherwise there would be an edge $v_jv_{j'} \in E(H)$ and, consequently, some star $s_y$, corresponding to vertex $y \in V(G)$, that keeps $A,B$ connected and intercepts $s_a, s_b, s_x$.
+    Therefore, we conclude that no leaf of $s_a$ is adjacent to $v_j$ and, since $c(a) = c(x)$ and $v_iv_j \in E(H)$, we conclude that $v_j \in s_a$, otherwise it would not be maximal, and, consequently, $v_j \in s_a \cap s_b$ and $ab \in E(H)$, which contradicts the hypothesis that $A,B$ are disconnected after removing $x$.
+    The case where $c(x) = c(b) \neq c(a)$ follows the exact same argument.
+    
+    Now if $c(a) \neq c(x) = i$ and $c(x) \neq c(b)$, it is easy to see that $v_i$ cannot be a leaf of both $s_a$ and $s_b$ simultaneously, otherwise $v_i \in s_a \cap s_b$ and $ab \in E(H)$.
+    So we have two cases to analyze:
+    \begin{enumerate}
+        \item If $v_i$ is a leaf of $s_a$, $v_j \in s_x \cap s_b$ and $k = c(b)$, clearly $s_y = \{v_j\}\{v_i, v_k, \dots \}$ is a maximal star of $H$ that intercepts $s_a, s_b, s_x$, keeping $A,B$ from being disconnected.
+        The case where $v_i$ is a leaf $s_b$ is the same, and we omit it for brevity.
+        \item If $v_i$ not a leaf of neither $s_a$ nor $s_b$, $c(a) = j$ and $c(b) = k$, we have leaves $v_{j'} \in s_a \cap s_x$ , $v_{k'} \in s_b \cap s_x$ which form at least two intercepting maximal stars, $s_{a'} = \{v_{j'}\}\{v_i, v_j, \dots\}$ and $s_{b'} = \{v_{k'}\}\{v_i, v_k, \dots\}$, such that $s_{a'} \cap s_a \cap s_x \neq \emptyset$ and $s_{b'} \cap s_b \cap s_x \neq \emptyset$.
+    \end{enumerate}
+    
+    These cases allow us to conclude that $A,B$ remains connected no matter the configuration of the intersection of the corresponding stars in $H$.
+    Consequently, $x$ cannot exist and we complete the proof.
+\end{tproof}
+
+
+\begin{theorem}
+    Every edge of a star graph $G$ is contained in at least one triangle if $|V(G)| \geq 3$.
+\end{theorem}
+
+\begin{tproof}
+    The only connected star graph with 3 vertices is $K_3$, so take $G$ with $|V(G)| \geq 4$.
+    Take a pre-image $H$ of $G$, $ab \in E(G)$, $s_a, s_b \in \str(H)$ the corresponding stars to $a, b$, and assume that $ab$ is not contained in any triangle of $G$.
+    Since $G$ is connected, there is at least one $x \in V(G)$ adjacent to (w.l.o.g) $a$, but not to $b$, and a corresponding maximal star $s_x$ of $H$.
+    Below, we analyze the possible intersections between $s_a$ and $s_b$ and conclude that there is always some star $s_y$ that shares one vertex with $s_a$ and $s_b$.
+    \begin{enumerate}
+        \item If $c(a) = c(b) = i$ and the center of $s_x$ is a leaf of $s_a$, clearly $v_i$ is not a leaf of $s_x$, otherwise $s_x \cap s_b \neq \emptyset$, therefore there is some leaf $v_j \in s_x$ with $v_iv_j \in E(H)$, which must be part of at least one maximal star $s_y$ of $H$, from which we conclude that $s_a \cap s_b \cap s_y \neq \emptyset$, $s_a \cap s_x \cap s_y \neq \emptyset$ and both $ab$ and $ax$ are in a triangle of $G$.
+        \item If $c(a) = c(b) = i$ and a leaf $v_j$ of $s_x$ is a leaf of $s_a$, either the center $v_k$ of $s_x$ is adjacent to $v_i$, in which case $v_iv_k \in E(H)$ and we follow the same argument as in the previous case, or they are not adjacent, implying that there is a maximal star $s_y = \{v_j\}\{v_i, v_k, \dots\}$ which intercepts $s_a, s_b, s_x$, which allows us to conclude that $s_a, s_b, s_x, s_y$ is a clique of $G$.
+        \item if $i = c(a) \neq c(b) = k$, there is some leaf $v_j \in s_a \cap s_b$. Clearly, if $v_iv_k \in E(H)$, there is a star that intercepts both $s_a$ and $s_b$;
+        otherwise, $v_iv_k \notin E(H)$ and we conclude that $s_y = \{v_j\}\{v_i, v_k, \dots\} \in \str(H)$ intercepts $s_a$ and $s_b$ and creates a triangle that contains $ab$.
+    \end{enumerate}
+\end{tproof}
+
+The previous theorem implies that the minimum degree of any star graph on at least three vertices is at least two.
+A natural question arises about the vertices of degree two and the structures on the pre-image that generate them.
+
+A \textit{pending-$P_4$} $\{u, v, w, z\}$ is an induced path on four vertices that satisfies $d(u) = 1$, $N(v) = \{u, w\}$, $N(w) = \{v, z\}$ and $N(z)$ is an independent set of $H$.
+A \textit{terminal triangle} is a set $\{u, v, z\}$ such that $N[u] = N[v] = \{u,v,z\}$, and no other pair of vertices in $N(z)$ is adjacent.
+In both cases, $z$ is called the \textit{anchor} of the structure.
+Our next result shows that for nearly all star graphs, their degree two vertices are either generated by pending-$P_4$'s or terminal triangles.
+
+\begin{lemma}
+    If $H$ is star-critical, $G = \K{S}(H)$, and $G$ is not isomorphic to a diamond, then every vertex of degree two of $G$ is generated by a pending-$P_4$,
+    or by a terminal triangle.
+    Moreover, for every degree two vertex $a \in V(G)$, it holds that $a$ has a vertex $a'$ not adjacent to another vertex of degree two.
+\end{lemma}
+
+\begin{proof}
+    If $|V(G)| \leq 3$ the result holds, so suppose $|V(G)| \geq 4$, let $a$ be a degree two vertex of $G$ with $N(a) = \{b,d\}$, $s_a$ be the corresponding maximal star of $H$, $c(s_a) = v$, and $u \in s_a$ be one of its leaves.
+    Since $d_G(a) = 2$, neither $v$ nor any of its leave can be contained in any other maximal star of $H$, aside possibly from $b$ and $d$.
+    
+    Suppose that $s_a = \{u,v\}$.
+    In this case, we have that both $u$ and $v$ are true twins, with $w \in N_H(u)$.
+    If $u$ is simplicial, $|N_H(u)| = 2$, otherwise $a$ would have more than two neighbors.
+    If $N_H(u) \setminus \{v\}$ is not an independent set, it has at least two adjacent vertices $w,z$ forming a $K_4$ with $u$ and $v$; regardless of the neighborhood of $w$ and $z$, at least four distinct maximal stars contain either $u$ or $v$, implying $d_G(a) \geq 3$.
+    If $N_H(u) \setminus \{v\}$ is an independent set, we have two options:
+    \begin{enumerate}
+        \item $N_H(u) \supseteq \{v,w,z\}$, in which case at least one of $w$ or $z$, say $w$, has a neighbor other than $u$ and $v$, since $H$ is star-critical. This configuration, however, generates a $K_5$ in $G$: two stars centered at $w$, $s_a$, one centered at $v$ containing all its neighbors, except $u$, and one centered at $u$ with all its neighbors except $v$.
+        \item Otherwise, $N_H(u) = \{v,w\}$. Since $|V(G)| \geq 4$, $w$ necessarily has an additional neighbor. If $N_H(w) \setminus \{u,v\}$ is not an independent set of $H$, $w$ has a pair of adjacent neighbors $x,y$, which are not adjacent to $u$ nor $v$.
+        However, note that there are at least four stars centered at $w$ that intersect $s_a$, contradicting the hypothesis that $a$ has only two neighbors in $G$.
+   \end{enumerate}
+   From the above, we conclude that if $|s_a| = 2$, it corresponds to an edge of a terminal triangle.
+   
+   On the other hand, suppose now that $s_a \supseteq \{u,v,w\}$, and that $c(s_a) = v$.
+   Towards showing that $N_H(v)$ is an independent set, suppose that $v$ has at least one edge in its neighborhood.
+   \begin{enumerate}\addtocounter{enumi}{2}
+       \item If no such edge is incident to $u$ or $w$, then there are two maximal stars centered at $v$ containing $\{u,v,w\}$ but, in this case, neither $u$ nor $w$ may have a star centered at it and, consequently, one of them is non-star-critical. 
+       \item If $w$ is adjacent to some $z \in N_H(v)$ but $zu \notin E(H)$, again there are two stars centered at $v$ ($s_a$ and another one containing $\{u,v,z\}$) both being adjacent to any star that includes the edge $wz$.
+       For $s_a$ to have only two neighbors, neither $u$, nor $v,$ nor $w$ may be in another other star.
+       Since $G$ is connected and has at least four vertices, $z$ must have another neighbor $x$.
+       We subdivide our analysis on the neighborhood of $x$:
+       \begin{enumerate}
+            \item If $xv \in E(H)$, either $x$ or $z$ must be part of another maximal star; actually, $x$ cannot be the center of another star (note that $x$ is part of $s_a$, or it would be in another star that intersects $s_a$), so $z$ must be part of another star, that is, it has a neighbor $y$ not adjacent to $x$; but, in this case, $\{z,x,y\}$ intersects $s_a$, increasing the degree of $a$ to at least three.
+            \item So $xv \notin E(H)$ and there is a star centered at $z$ containing $\{v,z,x\}$ which does not contain $w$, this implies that $s_a$ intersects at least three stars.
+       \end{enumerate}
+       \item If $z$ is adjacent to both $u$ and $w$, $s_a$ already intersects two maximal stars -- one containing $vz$ and another containing $\{u,z,w\}$.
+       Note that neither $w$ nor $u$ may have another neighbor, as that would inevitably generate a third star that intersects $s_a$.
+       The only possibility would be that $z$ is part of a maximal star that does not contain neither $u$, nor $v$, nor $w$.
+       That is, every star that contains $z$ has it as one of its leaves (otherwise we would have leaves adjacent to $u$, $v$, and $w$).
+       This implies that $N_H(z) \setminus \{u,v,w\}$ is an independent set.
+       However, either $u$ or $w$ is non-star-critical, since its removal does not change the intersection graph, a contradiction.
+   \end{enumerate}
+   To realize that $N_H(v) = \{u,w\}$, note that at most two of the neighbors of $v$ may have a single star centered at each of them, all others would be of degree one and, consequently, non-star-critical.
+   
+   We now show that one of the neighbors of $v$ has degree one.
+   To see that this is the case, note that, if neither has degree one, both have at least one neighbor not adjacent to $v$ and, thus, centers of maximal stars containing $v$.
+   However, neither may be in \textit{any} other star, as this would increase the degree of $s_a$ to more than two, but this is impossible, since at least one of $u$ and $w$ must be in another star for $G$ to have at least four vertices and remain connected.
+   For the remainder of the proof, suppose that $u$ has degree one.
+   Together with the fact that $v$ only has two neighbors, we conclude that $w$ must be in precisely two maximal stars, one of them with $w$ being its center, since no neighbor of $w$ may be adjacent to $v$.
+   This implies that $N_H(w)$ is either an independent set or that it has at most one edge.
+   If $N_H(w)$ has an edge $xy$, however, neither $x$ nor $y$ may have a neighbor not adjacent to $w$, otherwise we would have another star containing $w$ and $s_a$ would intersect three stars.
+   In this case, $G$ would be precisely a diamond.
+   So now we have that $N_H(w)$ is also an independent set and, furthermore, $N_H(w) = \{z, v\}$, since $H$ is star-critical.
+   Now, the only way for $w$ to be in more than two stars is if there is more than one star centered at $z$ containing $w$; which is possible only if $z$ is part of a triangle; so we also conclude that $N(z)$ is an independent set.
+   This configuration is precisely a pending-$P_4$.
+   
+   For the second assertion, to show that every vertex $a \in V(G)$ of degree two has a neighbor not adjacent to another vertex of degree two, suppose that this is not the case, and let $a'$ be such that $N(a) = N(a')$.
+   We have three possible cases:
+   \begin{enumerate}\addtocounter{enumi}{5}
+       \item If both $a$ and $a'$ belong to pending-$P_4$'s. Note that, if $s_a$ is generated by the $P_4$ $\{u,v,w,z\}$, we have that $s_{a'}$ must be formed by the $P_4$ $\{u',v', z, w\}$, since $s_{a'}$ must intersect the star centered at $z$ and the star centered at $w$.
+       However, this implies that $H$ is isomorphic to $P_6$, since the degree of every vertex, except $u$ and $u'$, is two, and we have that $G$ is a diamond, contradicting the hypothesis.
+       \item If $s_a$ belongs to a pending-$P_4$ $\{u,v,w,z\}$ and $s_{a'}$ belongs to a terminal triangle, the anchor $z$ of the pending-$P_4$ cannot be the same as the anchor of the terminal triangle, as it would violate the requirement that $N(z)$ is an independent set.
+       This, however, makes it impossible for $a'$ to be adjacent to the neighborhood of $a$.
+       \item If both stars belong to terminal triangles, a similar analysis as the previous case follows.
+   \end{enumerate}
+   Finally, we conclude that at most one of the neighbors of a degree two vertex has another degree two neighbor.
+\end{proof}
+
+\begin{corollary}
+    Let $E_2(G) = \{uv \in E(G) \mid d_G(u) = 2\ \text{or}\ d_G(v) = 2\}$ be the set of edges incident to at least one degree two vertex of the star graph $G$. Unless $G$ is isomorphic to a diamond or a triangle $E_2(G) \leq \min\left\{|V(G)| - 1, \frac{4}{7}|E(G)|\right\}$.
+    The bounds are tight.
+\end{corollary}
+
+\begin{proof}
+    Let $V_2(G) = \{v \in V(G) \mid d_G(v) = 2\}$.
+    By the previous Lemma, we have that for each vertex of degree two there is another vertex non-adjacent to another degree two vertex.
+    As such, each pair of edges of $E_2(G)$ with a common endpoint is in one-to-one correspondence with a degree two vertex and its exclusive neighbor, i.e., $|E_2(G)| \leq 2|V_2(G)| \leq |V(G)| - 1$.
+    For the second case, for each degree two vertex $v$, its exclusive neighbor has at least two other edges, otherwise the non-exclusive neighbor would be a cut-vertex, but these edges may be between exclusive neighbors.
+    As such, we have that $|E_2(G)| + \frac{1}{2}|E_2(G)| + \frac{1}{4}|E_2(G)| \leq |E(G)|$, implying $|E_2(G)| \leq \frac{4}{7}|E(G)|$.
+    For the tightness of the bounds, the star graph of $P_7$, the gem, satisfies both conditions.
+\end{proof}
+
+We conclude this section with a result about the diameter of a star graph.
+In fact, when considering the iterated star operator, it appears that the diameter converges to either three or four, depending on the graph from which the process began, even though the graph itself does not seem to converge.
+We highlight that the bound of Theorem~\ref{thm:diameter} is tight, as shown by the example of Figure~\ref{fig:diameter}.
+
+
+\begin{figure}[!htb]
+        \centering
+        \begin{tikzpicture}[rotate = 0]
+                %\draw[help lines] (-5,-5) grid (5,5);
+            \GraphInit[unit=3,vstyle=Normal]
+            \SetVertexNormal[Shape=circle, FillColor = black, MinSize=3pt]
+            \tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+            \SetVertexNoLabel
+            \begin{scope}
+                \begin{scope}[shift={(-1.5, 0)}]
+                    \grComplete[RA=1, prefix=a]{3}
+                \end{scope}
+                \begin{scope}[shift={(1.5, 0)}]
+                    \begin{scope}[rotate=180]
+                        \grComplete[RA=1, prefix=b]{3}
+                    \end{scope}
+                \end{scope}
+                \Edge(b0)(a0)
+            \end{scope}
+            
+            \begin{scope}[shift={(5,0)}]
+                    \begin{scope}[rotate=-135]
+                        \grComplete[RA=1, prefix=c]{4}
+                    \end{scope}
+                    \Vertex[a=0, d=1.5]{y1}
+                    \Vertex[a=180, d=1.5]{y2}
+                    \Edge(y2)(c0)
+                    \Edge(y1)(c1)
+                    \Edge(y1)(c2)
+                    \Edge(y2)(c3)
+            \end{scope}
+                
+        \end{tikzpicture}
+        \caption{Problematic case of Theorem~\ref{thm:diameter}. The pre-image on the left and star graph on the right.\label{fig:diameter}}
+\end{figure}
+
+\begin{theorem}
+    \label{thm:diameter}
+    If $H$ is a graph with diameter $d$ and its star graph $G$ is not a clique, then it holds that the diameter of $G$ is at most $\floor{\frac{d}{2}} + 2$. 
+\end{theorem}
+
+\begin{proof}
+    Let $P_G = \{s_1, \dots, s_{k+1}\}$ be a diametrical path of $G$ and $P_G' = P_G \setminus \{s_1, s_{k+1}\}$.
+    For the following argumentation, we need to guarantee that the endpoints of the path in $G$ have at least two vertices in a shortest path between their corresponding centers in $H$.
+    Note that, in the case presented in Figure~\ref{fig:diameter}, neither of the degree two stars of the star graph satisfy the aforementioned condition.
+    Let $u = c(s_2)$, $v = c(s_k)$, $P_H$ be a shortest path between $u$ and $v$ with length, say $r$.
+    If $r \geq 2k - 3$, we are done, as we would certainly have a path in $G$ between $u$ and $v$ of length at least $\ceil{\frac{2k-3}{2}} = k-2$ and, by adding stars $s_1$ and $s_{k+1}$, we would have a path of length at least $k$.
+    Otherwise, $r < 2k - 3$, which directly implies that there is a path between $s_2$ and $s_k$ of length at most $k-3$, contradicting the hypothesis that $P_G$ is a diametrical path.
+\end{proof}
+
+\section{Small star graphs}
+
+
+By the observations made in Section~\ref{sec:prelim}, star graphs and square graphs are quite similar, and even coincide under specific conditions, which is the case when the pre~image is triangle-free.
+A natural question that thus arises is if the classes are actually the same.
+To see that there are star graphs which are not square graphs, Figure~\ref{fig:star_not_square} presents a small example of such a graph.
+
+\begin{figure}[!htb]
+        \centering
+        \begin{tikzpicture}[rotate = 0]
+                %\draw[help lines] (-5,-5) grid (5,5);
+            \GraphInit[unit=3,vstyle=Normal]
+            \SetVertexNormal[Shape=circle, FillColor = black, MinSize=3pt]
+            \tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+            \SetVertexNoLabel
+            \begin{scope}[shift={(-2, 0)}]
+                \grComplete[RA=1]{4}
+            \end{scope}
+            \begin{scope}[shift={(2, 0)}]
+                \begin{scope}[rotate=45]
+                    \grCycle[RA=1, prefix=t]{4}
+                \end{scope}
+                \Vertex[x=0, y=-0.3]{x}
+                \Vertex[x=0, y=0.3]{y}
+                \Edge(t0)(y)
+                \Edge(t1)(y)
+                \Edge(t2)(y)
+                \Edge(t3)(y)
+                \Edge(t0)(x)
+                \Edge(t1)(x)
+                \Edge(t2)(x)
+                \Edge(t3)(x)
+            \end{scope}
+                
+        \end{tikzpicture}
+        \caption{The star graph of $K_4$ is not a square graph.\label{fig:star_not_square}}
+\end{figure}
+
+Despite not coinciding for many classes of pre-images, it could be the case that every square graph also is a star graph, albeit for a different pre-image.
+The smallest example we found of a square graph which is not a star graph is shown in Figure~\ref{fig:square_not_star}: the square of the net.
+When attempting to show such a fact, without additional tools the combinatorial explosion of possible cases rapidly becomes intractable.
+At the same time, testing all graphs up to the bound given by Theorem~\ref{thm:bound} in search of a pre-image would be completely unfeasible, as we would need to test all connected graphs with up to \textit{51 vertices}.
+However, Theorem~\ref{thm:bound} presents what we believe is a very loose value for the size of a pre-image, a claim we support with Theorem~\ref{thm:monotonicity}, its corollary, and some experiments we performed.
+
+
+\begin{figure}[!htb]
+        \centering
+        \begin{tikzpicture}[rotate = 0]
+                %\draw[help lines] (-5,-5) grid (5,5);
+            \GraphInit[unit=3,vstyle=Normal]
+            \SetVertexNormal[Shape=circle, FillColor = black, MinSize=3pt]
+            \tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+            \SetVertexNoLabel
+            \begin{scope}[shift={(-2, 0)}]
+                \begin{scope}[rotate=90]
+                    \grComplete[RA=.7,prefix=c1]{3}
+                    \grEmptyCycle[RA=1.6, prefix=o1]{3}
+                    \foreach \i in {0,1,2} {
+                        \Edge(c1\i)(o1\i)
+                    }
+                \end{scope}
+            \end{scope}
+            \begin{scope}[shift={(2, 0)}]
+                \begin{scope}[rotate=90]
+                    \grComplete[RA=.7,prefix=c2]{3}
+                    \grEmptyCycle[RA=1.6, prefix=o2]{3}
+                    \foreach \i in {0,1,2} {
+                        \foreach \j in {0,1,2} {
+                            \Edge(c2\i)(o2\j)
+                        }
+                    }
+                \end{scope}
+            \end{scope}
+                
+        \end{tikzpicture}
+        \caption{The square of the net is not a star graph.\label{fig:square_not_star}}
+\end{figure}
+
+\begin{theorem}
+    \label{thm:monotonicity}
+    Let $H$ be an $n$-vertex graph, with $|\str(H)| = k$, and at least one non-star-critical vertex.
+    For any $H'$ with $n+1$ vertices such that $H$ is an induced subgraph of $H'$, at least one of the following holds:
+    \begin{enumerate}
+        \item $H'$ has non-star-critical vertices; or
+        \item $|\str(H')| \geq k+1$.
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    Since $H$ is a proper induced subgraph of $H'$, let $y$ be the vertex in $V(H') \setminus V(H)$.
+    If $y$ is non-simplicial, or $y$ is non-star-critical, or some vertex $x \in V(H)$ remains non-star-critical in $H'$, we are done.
+    The only cases that matter have $y$ as a simplicial.
+    Suppose that the statement is false, i.e. that every vertex of $H'$ is useful and $|\str(H')| = k$; in particular, the vertex $x$, which is non-star-critical on $H$, becomes  star-critical.
+    Before proceeding, note that if $yx \in E(H')$, at least one of $y$ or $x$ must be the center of a star containing this edge and, therefore, we have a new star in $H'$.
+    Moreover, $y$ is not a false twin of $x$, otherwise $y$ is non-star-critical.
+    For the remainder of the proof, let $H'' = H \setminus \{x\}$ and $H^* = H'' \cup \{y\}$.
+    \begin{enumerate}
+        \item The removal of $x$ from $H'$ causes the absorption of $s_a' \in \str(H')$, such that $s_a' \supseteq s_a \in \str(H)$; note that this last assertion is true, otherwise $s_a'$ is a new star generated by the addition of $y$.
+            \subitem(a) If $s_a \supseteq \{x, z, w\}$ (centered at $z$, only $w$ critical) we have that $(s_a \setminus \{x\}) \in \str(H'')$, because $x$ is non-star-critical, implying that $w$ and $z$ form a pair of true twins, otherwise $s_a \setminus \{x\}$ would be absorbed by a star centered at $w$ containing edge $wz$.
+            However, $(s_a \setminus \{x\}) \notin \str(H^*)$ and $y \notin s_a'$; to see that this is the case, $y \in s_a'$ implies that $yz \in E(H')$, $yx,yw \notin E(H')$, and, thus, that $x$ remains non-star-critical.
+            Therefore, $(s_a \cup \{y\} \setminus \{x\}) \in \str(H')$, implying that $yx \in E(H')$, a contradiction.
+            \subitem(b) If $s_a \supseteq \{x,z,w,\ell\}$ (centered at $z$, $w,\ell$ critical), we have that $(s_a \setminus \{x\}) \in \str(H'')$, but $(s_a \setminus \{x\}) \notin \str(H^*)$.
+            Since $s_a'$ has at least two useful vertices, whichever star absorbs $s_a'$ must be centered at $z$; moreover, $y$ must be in the star that absorbs $s_a' \setminus \{x\}$, otherwise, we would have that $s_a \setminus \{x\}$ is absorbed by a star that \textit{already existed} in $H''$; consequently, we have $yx \in E(H')$ and a new star is formed by the addition of $y$.
+        \item There are two stars $s_a', s_b' \in \str(H')$ such that $s_a' \cap s_b' = \{x\}$.
+        Note that, at least one of $s_a'$ and $s_b'$ contains $y$, say $s_b'$, and we have that $(s_b' \setminus \{y\}) \notin \str(H)$.
+        Therefore, $s_b'$ is a new star that depends on $y$ to exist and we have that $|\str(H')| \geq |\str(H)| + 1 = k + 1$.
+    \end{enumerate}
+\end{proof}
+
+To the best of our knowledge, analogous results to Theorem~\ref{thm:monotonicity} are not known for clique or biclique graphs.
+These types of monotonicity properties are particularly useful when looking for small examples; the following statement is a direct corollary.
+
+\begin{corollary}
+    Let $G$ be a $k$-vertex graph and $\mathcal{H}_n(k)$ be the set of all graphs on $n$ vertices that has $k$ maximal stars.
+    If $G$ is not isomorphic to the star graph of any star-critical $H \in \mathcal{H}_r(k)$, for any $r < n$ and every $H \in \mathcal{H}_n(k)$ is non-star-critical, then $G$ is not a star graph.
+\end{corollary}
+
+The above results allowed us to implement a procedure using McKay's Nauty package~\cite{nauty}.
+Instead of only looking for the square of the net graph, we generated every single star graph on $k \leq 8$ vertices.
+In fact, for each $k$, no graph in $\mathcal{H}_{2k+1}(k)$ was star-critical.
+Figures~\ref{fig:four_star}, \ref{fig:five_star}, and \ref{fig:six_star} present every star graph on four, five and six vertices, respectively.
+There are 46 star graphs on seven vertices, and 201 star graphs on eight vertices.
+Let $\mathcal{H}^*(k)$ denote the set of all star-critical pre-images for star graphs on $k$ vertices.
+Our procedure also listed $\mathcal{H}^*(k)$ for every $k \leq 8$.
+In particular, there are 190 graphs in $\mathcal{H}^*(4)$, 1056 in $\mathcal{H}^*(5)$, 8876 in $\mathcal{H}^*(6)$, 76320 in $\mathcal{H}^*(7)$, and 892170 in $\mathcal{H}^*(8)$.
+
+\begin{figure}
+    \centering
+    \begin{subfigure}{.5\textwidth}
+      \centering
+      \input{capitulos/secoes_star/tex_figs/fig1.tex}
+    \end{subfigure}%
+    \begin{subfigure}{.5\textwidth}
+      \centering
+      \input{capitulos/secoes_star/tex_figs/fig3.tex}
+    \end{subfigure}
+    \caption{The two four vertex star graphs. \label{fig:four_star}}
+\end{figure}
+
+
+\begin{figure}
+    \centering
+    \begin{subfigure}{.5\textwidth}
+      \centering
+      \input{capitulos/secoes_star/tex_figs/fig5.tex}
+    \end{subfigure}%
+    \begin{subfigure}{.5\textwidth}
+      \centering
+      \input{capitulos/secoes_star/tex_figs/fig7.tex}
+    \end{subfigure}
+    \par\bigskip
+    \begin{subfigure}{.5\textwidth}
+      \centering
+      \input{capitulos/secoes_star/tex_figs/fig9.tex}
+    \end{subfigure}%
+    \begin{subfigure}{.5\textwidth}
+      \centering
+      \input{capitulos/secoes_star/tex_figs/fig11.tex}
+    \end{subfigure}
+    \caption{The four five vertex star graphs.\label{fig:five_star}}
+\end{figure}
+
+
+
+\begin{figure}
+    \centering
+    \begin{subfigure}{.33\textwidth}
+      \centering
+      \input{capitulos/secoes_star/tex_figs/fig13.tex}
+    \end{subfigure}%
+    \begin{subfigure}{.33\textwidth}
+      \centering
+      \input{capitulos/secoes_star/tex_figs/fig15.tex}
+    \end{subfigure}
+    \begin{subfigure}{.33\textwidth}
+      \centering
+      \input{capitulos/secoes_star/tex_figs/fig17.tex}
+    \end{subfigure}
+    \par\bigskip
+    \begin{subfigure}{.33\textwidth}
+      \centering
+      \input{capitulos/secoes_star/tex_figs/fig19.tex}
+    \end{subfigure}%
+    \begin{subfigure}{.33\textwidth}
+      \centering
+      \input{capitulos/secoes_star/tex_figs/fig21.tex}
+    \end{subfigure}
+    \begin{subfigure}{.33\textwidth}
+      \centering
+      \input{capitulos/secoes_star/tex_figs/fig23.tex}
+    \end{subfigure}
+    \par\bigskip
+    \begin{subfigure}{.33\textwidth}
+      \centering
+      \input{capitulos/secoes_star/tex_figs/fig25.tex}
+    \end{subfigure}%
+    \begin{subfigure}{.33\textwidth}
+      \centering
+      \input{capitulos/secoes_star/tex_figs/fig27.tex}
+    \end{subfigure}
+    \begin{subfigure}{.33\textwidth}
+      \centering
+      \input{capitulos/secoes_star/tex_figs/fig29.tex}
+    \end{subfigure}
+    \par\bigskip
+    \begin{subfigure}{.33\textwidth}
+      \centering
+      \input{capitulos/secoes_star/tex_figs/fig31.tex}
+    \end{subfigure}%
+    \begin{subfigure}{.33\textwidth}
+      \centering
+      \input{capitulos/secoes_star/tex_figs/fig33.tex}
+    \end{subfigure}
+    \begin{subfigure}{.33\textwidth}
+      \centering
+      \input{capitulos/secoes_star/tex_figs/fig35.tex}
+    \end{subfigure}
+    \par\bigskip
+    \begin{subfigure}{.33\textwidth}
+      \centering
+      \input{capitulos/secoes_star/tex_figs/fig37.tex}
+    \end{subfigure}%
+    \begin{subfigure}{.33\textwidth}
+      \centering
+      \input{capitulos/secoes_star/tex_figs/fig39.tex}
+    \end{subfigure}
+    \caption{The fourteen six vertex star graphs.\label{fig:six_star}}
+\end{figure}

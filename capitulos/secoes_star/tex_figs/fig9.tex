@@ -1,0 +1,8 @@
+\begin{tikzpicture}[rotate=90]
+\GraphInit[unit=3,vstyle=Normal]
+\SetVertexNormal[Shape=circle, FillColor = black, MinSize=3pt]
+\tikzset{VertexStyle/.append style = {inner sep = \inners,outer sep = \outers}}
+\SetVertexNoLabel
+\grCycle[RA=1]{5}
+\Edges(a4,a2,a0,a3,a1)
+\end{tikzpicture}

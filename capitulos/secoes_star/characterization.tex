@@ -1,0 +1,324 @@
+\section{Characterization}
+
+
+Much of the following discussion will be about edge clique covers, a central piece on the characterization of many intersection graph classes.
+We denote this family of subgraphs of $G$ by $\mathcal{Q} = \{Q_1, \dots, Q_n\}$.
+The usual strategy in these constructions is to use each clique as a vertex of the pre-image; this is also our approach.
+Since each vertex $a \in V(G)$ must be a star in $H$, it is reasonable to partition each clique as $Q_i \sim \{Q_i^c, Q_i^f\}$, that is, the vertices $a \in Q_i^c$ correspond to the stars of $G$ with center in $v_i \in V(H)$, while the vertices $a \in Q_i^f$ correspond to the stars of $G$ where $v_i \in V(H)$ is a leaf.
+We call such an edge clique cover a \tdef{star-partitioned edge clique cover} of $\mathcal{Q}$.
+
+To simplify our notation, for each $a \in V(G)$, we denote its \tdef{center} by $c(a)$, i.e. $c(a)$ is the unique $i$ such that $a \in Q_i^c$, its \tdef{leaf set} by $F(a) = \{i \mid a \in Q_i^f\}$ and its \tdef{cover} by $Q(a) = F(a) \cup \{c(a)\}$. For each pair of cliques $Q_i, Q_j \in \mathcal{Q}$, their \tdef{leaf-leaf intersection} is given by $\ff(i,j) = Q_i^f \cap Q_j^f$ and its \tdef{center-leaf intersection} by $\cf(i,j) = \left(Q_i^c \cap Q_j^f\right) \cup \left(Q_i^f \cap Q_j^c\right)$.
+
+\begin{definition}[Star-compatibility]
+    Given a graph $G$ and a star-partitioned edge clique cover $\mathcal{Q}$ of $G$, we say that $\mathcal{Q}$ is \tdef{star-compatible} if, for every $a \in V(G)$, $|Q(a)| \geq 2$, $\exists!\ i$ such that $a \in Q_i^c$ and if, for every $Q_i, Q_j \in \mathcal{Q}$, if $Q_i \cap Q_j \neq \emptyset$, either $\cf(i,j) = \emptyset$ or $\ff(i,j) = \emptyset$.
+\end{definition}
+
+\begin{definition}[Star-differentiability]
+    \label{def:differentiability}
+    Given a graph $G$ and a star-partitioned edge clique cover $\mathcal{Q}$ of $G$, we say that $\mathcal{Q}$ is \tdef{star-differentiable} if for every $Q_i \in \mathcal{Q}$ and for every pair $\{a, a'\} \subseteq Q_i$ the following conditions hold:
+    \begin{enumerate}
+        \item If $\{a, a'\} \subseteq Q_i^c$, there exists $Q_j, Q_k \in \mathcal{Q}$ such that $a \in Q_j^f$, $a' \in Q_k^f$, $a \notin Q_k^f$, $a' \notin Q_j^f$ and $\cf(j,k) \neq \emptyset$. Moreover, if $Q_i^c \cap Q_j^f \cap Q_k^f = \emptyset$, $\cf(j,k) \neq \emptyset$.
+        \item If $a \in Q_i^c$, $a' \in Q_k^c$ and $a \notin Q_k^f$, then there is some $j \in F(a)$ with $\cf(j,k) \neq \emptyset$, $j \notin Q(a')$ and, for every $j' \in F(a)$ with $\cf(j',k) = \emptyset$, $Q_i^c \cap \bigcap_{j'} \ff(j',k) \neq \emptyset$.
+        \item If $a \in Q_i^c$, $a' \in Q_k^c$ and $a \in Q_k^f$, for every $j \in F(a) \setminus \{k\}$, $\cf(j,k) = \emptyset$.
+        \item If $\{a, a'\} \subseteq Q_i^f$ and $j = c(a) \neq c(a') = k$, then either $Q_i^c \cap \ff\left(j,k\right) \neq \emptyset$ or $\cf\left(j,k\right) \neq \emptyset$.
+    \end{enumerate}
+\end{definition}
+
+Figures~\ref{fig:diff_cases} and~\ref{fig:diff_cases2} show the four cases of Definition~\ref{def:differentiability} as seen on the pre-image of the star graph we shall build from $\mathcal{Q}$.
+
+\begin{figure}[!htb]
+    \centering
+            \begin{tikzpicture}[scale=\gscale]
+                %\draw[help lines] (-5,-5) grid (5,5);
+                \begin{scope}[shift={(0cm,1cm)}]
+                    \GraphInit[unit=3,vstyle=Normal]
+                    \SetVertexNormal[Shape=circle, FillColor=black, MinSize=2pt]
+                    \tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+                    \Vertex[Math,Ldist=3pt,Lpos=90,LabelOut,L={i},x=0,y=0]{i1}
+                    \Vertex[Math,Ldist=3pt,Lpos=180,LabelOut,L={j},a=150, d=2]{j1}
+                    \Vertex[Math,Ldist=3pt,Lpos=0,LabelOut,L={k},a=30, d=2]{k1}
+                    \node[] at (-0.6,-0.35) {$a$};
+                    \node[] at (0.6,-0.31) {$a'$};
+                    \Vertex[Math,x=0,y=-2,Ldist=3pt,Lpos=270,LabelOut,L={j'}]{r1};
+                    
+                    \Edge(i1)(j1)
+                    \Edge(i1)(r1)
+                    \Edge(i1)(k1)
+                    \Edge(j1)(k1)
+                    \Edge[style=dotted](j1)(r1)
+                    \Edge[style=dotted](k1)(r1)
+                \end{scope}
+            \end{tikzpicture}
+    \hfill
+            \begin{tikzpicture}[scale=\gscale]
+                %\draw[help lines] (-5,-5) grid (5,5);
+                \begin{scope}[shift={(0cm,0cm)}]
+                    
+                    \GraphInit[unit=3,vstyle=Normal]
+                    \SetVertexNormal[Shape=circle, FillColor=black, MinSize=2pt]
+                    \tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+                    \Vertex[Math,Ldist=3pt,Lpos=110,LabelOut,L={i},x=0,y=0]{i2}
+                    \Vertex[Math,Ldist=3pt,Lpos=180,LabelOut,L={j},a=150, d=2]{j2}
+                    \Vertex[Math,Ldist=3pt,Lpos=0,LabelOut,L={k},a=30, d=2]{k2}
+                    \node[] at (-0.6,-0.35) {$a$};
+                    \node[] at (1.23,1.50) {$a'$};
+                    \Vertex[Math,Ldist=3pt,Lpos=270,LabelOut,L={j'},x=0,y=-2]{j'2};
+                    \SetVertexNoLabel
+                    \Vertex[x=1.73,y=3]{r2}
+                    
+                    \Edge(i2)(j2)
+                    \Edge(i2)(j'2)
+                    \Edge(i2)(k2)
+                    \Edge(j2)(k2)
+                    \Edge(r2)(k2)
+                    \Edge[style=dotted](j2)(j'2)
+                    \Edge[style=dotted](k2)(j'2)
+                    \Edge[style=dotted](i2)(r2)
+                \end{scope}
+            \end{tikzpicture}
+    \hfill
+            \begin{tikzpicture}[rotate=180,scale=\gscale]
+                %\draw[help lines] (-5,-5) grid (5,5);
+                \begin{scope}[shift={(0cm,0cm)}]
+                    \GraphInit[unit=3,vstyle=Normal]
+                    \SetVertexNormal[Shape=circle, FillColor=black, MinSize=2pt]
+                    \tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+                    \Vertex[Math,Ldist=3pt,Lpos=90,LabelOut,L={i},x=0,y=0]{i3}
+                    \Vertex[Math,Ldist=3pt,Lpos=90,LabelOut,L={j},a=150, d=2]{j3}
+                    \Vertex[Math,Ldist=3pt,Lpos=90,LabelOut,L={k},a=30, d=2]{k3}
+                    \SetVertexNoLabel
+                    \Vertex[Math,Ldist=3pt,Lpos=0,LabelOut,L={k},a=30, d=4]{r3}
+                    \Vertex[Math,Ldist=3pt,Lpos=0,LabelOut,L={k},x=0, y=2]{l3}
+                    \node[] at (0,0.6) {$a$};
+                    \node[] at (1.73,1.6) {$a'$};
+                    
+                    \Edge(i3)(j3)
+                    \Edge(i3)(k3)
+                    \Edge[style=dotted](j3)(k3)
+                    \Edge(k3)(r3)
+                    \Edge(k3)(l3)
+                    \Edge[style=dotted](r3)(l3)
+                \end{scope}
+            \end{tikzpicture}
+    \hfill
+    
+    
+    
+    \caption{The first three cases of Definition~\ref{def:differentiability}. The first (left), second (center) and third (right).}
+    \label{fig:diff_cases}
+\end{figure}
+
+
+\begin{figure}[!htb]
+    \centering
+    
+        \begin{tikzpicture}[scale=\gscale]
+            
+            \begin{scope}[shift={(-4cm,-1cm)}, rotate=180]
+                \GraphInit[unit=3,vstyle=Normal]
+                \SetVertexNormal[Shape=circle, FillColor=black, MinSize=2pt]
+                \tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+                \Vertex[Math,Ldist=3pt,Lpos=90,LabelOut,L={i},x=0,y=0]{i4}
+                \Vertex[Math,Ldist=3pt,Lpos=90,LabelOut,L={k_1},a=150, d=2]{j4}
+                \Vertex[Math,Ldist=3pt,Lpos=90,LabelOut,L={j_1},a=30, d=2]{k4}
+                
+                
+                \SetVertexNoLabel
+                \Vertex[Math,Ldist=3pt,Lpos=0,LabelOut,L={k},a=30, d=4]{r4}
+                \Vertex[Math,Ldist=3pt,Lpos=0,LabelOut,L={k},x=0.4, y=2]{l4}
+                \Vertex[Math,Ldist=3pt,Lpos=0,LabelOut,L={k},a=150, d=4]{m4}
+                \Vertex[Math,Ldist=3pt,Lpos=0,LabelOut,L={k},x=-0.4, y=2]{n4}
+                
+                
+                \node[] at (-1.77,1.5) {$a_1'$};
+                \node[] at (1.77,1.5) {$a_1$};
+                
+                \Edge(i4)(j4)
+                \Edge(i4)(k4)
+                \Edge[style=dotted](j4)(k4)
+                \Edge(k4)(r4)
+                \Edge(k4)(l4)
+                \Edge[style=dotted](r4)(l4)
+                \Edge(j4)(n4)
+                \Edge(j4)(m4)
+                \Edge[style=dotted](m4)(n4)
+                
+                
+            \end{scope}
+        \end{tikzpicture}
+        \hfill
+        \begin{tikzpicture}[scale=\gscale]
+            \begin{scope}[shift={(4cm,1cm)}]
+                \GraphInit[unit=3,vstyle=Normal]
+                \SetVertexNormal[Shape=circle, FillColor=black, MinSize=2pt]
+                \tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+                \Vertex[Math,Ldist=3pt,Lpos=90,LabelOut,L={i},x=0,y=0]{i5}
+                \Vertex[Math,Ldist=3pt,Lpos=90,LabelOut,L={j_2},a=210, d=2]{j5}
+                \Vertex[Math,Ldist=3pt,Lpos=90,LabelOut,L={k_2},a=-30, d=2]{k5}
+                
+                
+                
+                \SetVertexNoLabel
+                
+                
+                \Vertex[Math,Ldist=3pt,Lpos=0,LabelOut,L={k},a=-30, d=4]{r5}
+                \Vertex[Math,Ldist=3pt,Lpos=0,LabelOut,L={k},x=0.4, y=-2]{l5}
+                \Vertex[Math,Ldist=3pt,Lpos=0,LabelOut,L={k},a=210, d=4]{m5}
+                \Vertex[Math,Ldist=3pt,Lpos=0,LabelOut,L={k},x=-0.4, y=-2]{n5}
+                
+                \node[] at (-1.77,-1.5) {$a_2$};
+                \node[] at (1.77,-1.5) {$a'_2$};
+                
+                
+                \Edge(i5)(j5)
+                \Edge(i5)(k5)
+                \Edge(j5)(k5)
+                \Edge(k5)(r5)
+                \Edge(k5)(l5)
+                \Edge[style=dotted](r5)(l5)
+                \Edge(j5)(n5)
+                \Edge(j5)(m5)
+                \Edge[style=dotted](m5)(n5)
+                
+            \end{scope}
+        \end{tikzpicture}
+    
+    
+    
+    \caption{The fourth case of Definition~\ref{def:differentiability}.}
+    \label{fig:diff_cases2}
+\end{figure}
+
+
+We emphasize that: (i) star-compatibility translates the structural properties of stars; and (ii) star-differentiability enumerates the possible ways that two stars that share at least one vertex are different.
+Note that, the \say{missing case}, where $\{a,a'\} \in Q_i^f$ and $c(a) = c(a') = k$ is exactly the same case as 1, but with $\{a,a'\} \in Q_k^c$ instead of $Q_i^c$.
+
+\begin{lemma}
+    \label{lem:star_maximality}
+    Let $G$ be a graph and $\mathcal{Q}$ a star-partitioned edge clique cover of $G$. If $\mathcal{Q}$ is star-compatible and star-differentiable then, for every pair $\{a, a'\} \subseteq V(G)$, $Q(a) \nsubseteq Q(a')$ and $Q(a') \nsubseteq Q(a)$.
+\end{lemma}
+
+\begin{tproof}
+    If $a$ and $a'$ do not share any clique, the result is trivial.
+    
+    Otherwise they do share some clique, say $Q_i$.
+    For properties 1, 2 and 4 of Definition~\ref{def:differentiability}, we conclude that $i \in Q(a) \cap Q(a')$ and that $j \in Q(a)$, $k \in Q(a')$ but $j \notin Q(a')$ and $k \notin Q(a)$, which implies $Q(a) \nsubseteq Q(a')$ and $Q(a') \nsubseteq Q(a)$.
+    
+    For property 3, however, we first conclude that there is some $j \in Q(a)$ but $j \notin Q(a')$, otherwise we would have $\cf(j,k) \neq \emptyset$ and $\ff(j,k) \neq \emptyset$.
+    Consequently, $Q(a) \nsubseteq Q(a')$.
+    For the converse, we note that $\{a, a'\} \subseteq Q_k$ and, following the same argument, we conclude that there is $j' \in Q(a')$ but $j' \notin Q(a)$ and, finally, that $Q(a') \nsubseteq Q(a)$.
+\end{tproof}
+
+We now present a Krausz-type characterization for the class of star graphs.
+
+\begin{theorem}
+    \label{thm:star_characterization}
+    An $n$-vertex graph $G$ is the star graph of some graph $H$ if and only if there is a star-compatible and star-differentiable star-partitioned edge clique cover $\mathcal{Q}$ of $G$ with at most $\frac{1}{2}(3n^2 - n)$ cliques.
+\end{theorem}
+
+\begin{tproof}
+    In this proof, we assume that $H$ has $m$ vertices ($v_i$). For simplicity, a star $s_a \in \str(H)$ corresponds to the vertex $a \in V(G)$.
+    
+    For the first direction of the statement, assume $H$ is a star-critical pre-image of $G$.
+    For each $v_i \in V(H)$, let $S(v_i) = \{s_a \in \str(H) \mid v_i \in s_a\}$, that is, the maximal stars of $H$ that contain $v_i$.
+    Clearly, we can partition these sets as $S(v_i) \sim \{S^c(v_i), S^f(v_i)\}$, that is, the stars where $v_i$ is the center and where it is a leaf, respectively.
+    Our goal is to show that $\mathcal{Q} = \{Q_1, \dots, Q_m\}$, with $Q_i^c = S^c(v_i)$ and $Q_i^f = S^f(v_i)$ is a star-partitioned edge clique cover of $G$ satisfying star-compatibility and star-differentiability which, by Theorem~\ref{thm:bound}, is all that remains is to be proven, since $|\mathcal{Q}| = |V(H)| \leq \frac{1}{2}(3n^2 - n)$.
+    
+    To verify that $\mathcal{Q}$ is a star-partitioned edge clique cover of $G$, first note that every $Q_i$ is a clique of $G$, since the corresponding stars share at least $v_i \in V(H)$.
+    For the coverage part, every $aa' \in E(G)$ has two corresponding stars $s_a, s_{a'} \in \str(H)$, which share at least one vertex, say $v_i \in V(H)$, since $G \simeq \K{S}(H)$.
+    By the construction of $\mathcal{Q}$, there is some $Q_i \in \mathcal{Q}$ which corresponds to every maximal star that contains $v_i$; this guarantees that $aa'$ is covered by at least one clique of $\mathcal{Q}$.
+    
+    For the other properties, first take two vertices $v_i,v_j \in V(H)$ with $v_iv_j \notin E(H)$ but $S(v_i) \cap S(v_j) \neq \emptyset$.
+    Clearly, no star in $S(v_i) \cap S(v_j)$ may have $v_i$ and $v_j$ in different sides of its bipartition, thus $S(v_i) \cap S(v_j) = S^f(v_i) \cap S^f(v_j)$.
+    Now, suppose that $v_iv_j \in E(H)$; since they are adjacent, any star in $S(v_i) \cap S(v_j)$ must have $v_i$ and $v_j$ in opposite sides of the bipartition and, thus, we have that $S(v_i) \cap S(v_j) = \left(S^c(v_i) \cap S^f(v_j)\right) \cup \left(S^f(v_i) \cap S^c(v_j)\right)$.
+    Since each star has a single center, the above analysis shows that $\mathcal{Q}$ satisfies star-compatibility.
+    
+    For star-differentiability, let $\{s_a, s_{a'}\} \subseteq S(v_i)$. We break our analysis in the same order as the one given in Definition~\ref{def:differentiability}.
+    \begin{enumerate}
+        \item If $\{s_a, s_{a'}\} \subseteq S^c(v_i)$ there must be at least one leaf in each star, say $v_j$ and $v_k$, respectively, not in the other and these leaves must be adjacent to each other, otherwise at least one of the stars would not be maximal.
+        That is, $\{a, a'\} \in Q_i^c$ imply that there is $Q_j,Q_k \in \mathcal{Q}$ with $a \in Q_j^f$, $a' \in Q_k^f$, $a \notin Q_k^f$, $a \notin Q_j^f$ and $\cf(j,k) \neq \emptyset$.
+        \item If $s_a \in S(v_i)^c$, $s_{a'} \in S(v_k)^c$ and $s_a \notin S(v_k)^f$, $v_iv_k \in E(H)$ and to keep $v_k$ from being a leaf of $s_a$, one leaf of $s_a$, say $v_j$, must also be adjacent to $v_k$ and not a leaf of $s_{a'}$, since $v_i$ is.
+        Now, for every $v_{j'} \in s_a$ and not adjacent to $v_k$, there is a clear $P_3 = v_kv_iv_{j'}$, which must be part of some maximal star.
+        Moreover, the set of all $v_{j'}$ non-adjacent to $v_k$ will form a maximal star centered around $v_i$ along with $v_k$.
+        Thus, $a \in Q_i^c$, $a' \in Q_k^c$ and $a \notin Q_k^f$, imply that there is some $j \in F(a)$ with $\cf(j,k) \neq \emptyset$, $j \notin Q(a')$ and, for $j' \in F(a)$ with $\cf(j', k) = \emptyset$, $Q_i^c \cap \bigcap_{j'} \ff(j',k) \neq \emptyset$.
+        \item If $s_a \in S(v_i)^c$, $s_{a'} \in S(v_k)^c$ and $s_a \in S(v_k)^f$, we know that $s_a = \{v_i\}\{v_k, \dots\}$ and, since $v_k$ is not adjacent to any other leaf $v_j$ of $s_a$, we know that $S(v_j) \cap S(v_k) = S^f(v_j) \cap S^f(v_k)$ and, since $v_k$ is the center of $s_{a'}$, $v_j$ is not one of its leaves.
+        Therefore, $a \in Q_i^c$, $a' \in Q_k^c$ and $a \in Q_k^f$, implies that for every $j \in F(a) \setminus \{k\}$, $\cf(j,k) = \emptyset$.
+        \item If $\{s_a, s_{a'}\} \subseteq Q_i^f$ and $s_a \in S^c(v_j)$, $s_{a'} \in S^c(v_k)$, either $v_jv_k \notin E(H)$, which induces the existence a star $\{v_i\}\{v_j, v_k, \dots\}$, or $v_jv_k \in E(H)$, which must be part of a star with either $v_j$ or $v_k$ as center and the other as a leaf.
+        Hence, $\{a, a'\} \subseteq Q_i^f$ and $j = c(a) \neq c(a') = k$, implies that either $Q_i^c \cap \ff\left(j,k\right) \neq \emptyset$ or $\cf\left(j,k\right) \neq \emptyset$.
+    \end{enumerate}
+    The above shows that $\mathcal{Q}$ is also star-differentiable, which completes this part of the proof.
+    
+    For the converse, take $\mathcal{Q}$ a star-partitioned edge clique cover of $G$ satisfying star-compatibility and star-differentiability  of size at most $\frac{1}{2}(3n^2 - n)$ and let $H$ be a graph with $V(H) = \{v_i \mid Q_i \in \mathcal{Q}\}$ and $E(H) = \{v_iv_j \mid \cf(i,j) \neq \emptyset\}$ and let us prove that $G \simeq \K{S}(H)$.
+    
+    Take $a \in V(G)$ with $c(a) = i$.
+    Due to star-compatibility and the construction of $H$, we know that $H[\{v_j \mid j \in F(a)\}]$ is an independent set of $H$ and that $s_a = \{v_i\}\{v_j \mid j \in F(a)\}$ is a star of $H$.
+    Suppose, however, that $s_a$ is not maximal, that is, there is some $v_k \in V(H)$ such that $v_iv_k \in E(H)$ and $s_b = s_a \cup \{v_k\}$ is a star of $H$.
+    By the construction of $H$, either there is some $a' \in V(G)$ such that $Q(a) \subseteq Q(a')$, which is impossible due to Lemma~\ref{lem:star_maximality}, or some $a' \in \cf(i,k)$, which we analyze below.
+    The following is based on the first two cases of Definition~\ref{def:differentiability}; the other two are impossible, since $k \notin Q(a)$ and $a \in Q_i^c$.
+    
+    \begin{enumerate}
+        \item If $a' \in Q_i^c$, there is some $Q_j \in \mathcal{Q}$ such that $a \in Q_j^f$ and $\cf(j,k) \neq \emptyset$, which implies that $v_jv_k \in E(H)$ and $s_b$ is not a star of $H$. 
+        \item If $a' \in Q_k^c$ and $a \notin Q_k^f$, at least one $j \in F(a)$ satisfies $\cf(j,k) \neq \emptyset$ and $j \notin Q(a')$.
+        This gives us that $v_jv_k \in E(H)$ and $s_b$ is not a star of $H$.
+    \end{enumerate}
+    
+    Therefore, we conclude that $a'$ cannot exist, that $s_a$ is maximal and, consequently that $V(G) \subseteq V(\K{S}(H))$.
+    
+    To show that $V(\K{S}(H)) \subseteq V(G)$, take $s = \{v_i\}L$, with $s \in \str(H)$, and suppose that there is some $j,k \in L$ and that for every pair $a \in \cf(i,j)$ and $a' \in \cf(i,k)$, $a \notin Q_k$ and $a' \notin Q_j$.
+    That is, $Q_i \cap Q_j \cap Q_k = \emptyset$, due to star-compatibility and the hypothesis that $jk \notin E(H)$.
+    Once again, we analyze the possibilities in terms of Definition~\ref{def:differentiability}.
+    
+    \begin{enumerate}
+        \item If $c(a) = c(a') = i$, we have that $\cf(j,k)  \neq \emptyset$, implying that $v_jv_k \in E(H)$, contradicting the hypothesis that $s$ exists.
+        \item If $c(a) = i$ and $c(a') = k$, there is some $j' \in Q(a)$ with $\cf(j,k) \neq \emptyset$. To conclude that $j = j'$, we note that, if $j \neq j'$, it would be required that $Q_i^c \cap \ff(j,k) \neq \emptyset$, which is impossible since $Q_i \cap Q_j \cap Q_k = \emptyset$.
+        Once again, contradicting the hypothesis that such an $s$ exists.
+        \item Trivially impossible since $Q_i \cap Q_j \cap Q_k = \emptyset$.
+        \item If $j = c(a) \neq c(a') = k$, either $Q_i^c \cap \ff(j,k) \neq \emptyset$, which is impossible since $Q_i \cap Q_j \cap Q_k = \emptyset$, or $\cf(j,k) \neq \emptyset$, implies that $v_jv_k \in E(H)$ and that $s$ is not a star.
+    \end{enumerate}
+    
+    The above allows us to conclude that there is no $s \in \str(H)$ generated by cliques not pairwise intersecting.
+    Such intersection has a unique vertex of $G$ in it due to Lemma~\ref{lem:star_maximality}, which allows us to conclude $V(\K{S}(H)) \subseteq V(G)$ and, consequently, that $V(\K{S}(H)) = V(G)$.
+    
+    To show that $E(G) \subseteq E(\K{S}(H))$, we first take an edge $ab \in E(G)$.
+    Since $\mathcal{Q}$ is a star-partitioned edge clique cover of $G$, there is some $i$ such that $\{a,b\} \subseteq Q_i$ and, because $V(G) = V(\K{S}(H))$ and the construction of $H$, there are corresponding stars $s_a, s_b \in \str(H)$ with $v_i \in s_a \cap s_b$ which guarantee that $ab \in E(\K{S}(H))$.
+    For $E(\K{S}(H)) \subseteq E(G)$, take two intersecting stars $s_a,s_b \in \str(H)$ and note that, since $a,b \in \K{S}(H) = V(G)$ and $\mathcal{Q}$ is a star-partitioned edge clique cover of $G$, $ab \in E(G)$ and we conclude that $E(G) = E(\K{S}(H))$, completing the proof.
+\end{tproof}
+
+We now pose a version of the decision problem for star graph recognition, which we call \textsc{star graph}, and will be the subject of further study.
+We will further require that the output for any algorithm for \textsc{star graph} is already star-partitioned.
+
+\problem{Star Graph}{A graph $G$.}{Is there a star-partitioned edge clique cover $\mathcal{Q}$ of $G$ satisfying star-compatibility and star-differentiability?}
+
+Theorem~\ref{thm:star_characterization} provides a straightforward verification algorithm to check if a star-partitioned edge clique cover is star-compatible and star-differentiable.
+
+\begin{theorem}
+    \label{thm:verification_alg}
+    Given a graph $G$ of order $n$, there is an $\bigO{\max\{n^2m, m^2\}n^2m}$ algorithm to decide if a star-partitioned family $\mathcal{Q} \subseteq 2^{V(G)}$ of size $m$ is an edge clique cover of $G$ satisfying star-compatibility and star-differentiability. 
+\end{theorem}
+
+\begin{tproof}
+    The first task is to determine whether or not $\mathcal{Q}$ is a star-partitioned edge clique cover of $G$.
+    The usual $n^2$ algorithm that tests if each $Q_i$ is a clique suffices.
+    To check if $\mathcal{Q}$ is an edge clique cover, for each of the $\bigO{n^2}$ edges, we test if one of the $n$ cliques contains it. 
+    This simple test takes $\bigO{n^2m}$ time.
+    
+    To check for star-compatibility: first, for each vertex $a$ of $G$ and each clique $Q_i$, verify if there is a single $i$ such that $a \in Q_i^c$ and at least one $j$ with $a \in Q_j^f$;
+    afterwards, for each pair of intersecting cliques $Q_i, Q_j$, test if $\cf(i,j) = \emptyset$ or $\ff(i,j) = \emptyset$.
+    The entire process takes $\bigO{nm^2}$ time.
+    
+    For star-differentiability, we assume that every pairwise intersection of $\mathcal{Q}$ has already been computed in time $\bigO{nm^2}$, and each query $\cf(j,k)$ and $\ff(j,k)$ takes $\bigO{1}$ time.
+    Now, for each clique $Q_i$ and for each pair of vertices $\{a, a'\} \in Q_i$, we must check one of the four conditions as follows.
+    \begin{enumerate}
+        \item If $c(a) = c(a') = i$, for each pair $j \in Q(a)$, $k \in Q(a')$, check if $a' \notin Q_j^f$, $a \notin Q_k^f$ and $\cf(j,k) \neq \emptyset$; this case takes $\bigO{n^2}$.
+        \item If $c(a) = i, c(a') = k$ and $a \notin Q_k^f$, for each $j \in F(a)$, check if either $\cf(j,k) \neq \emptyset$ and $j \notin Q(a')$ or $\cf(j,k) = \emptyset$ and $Q_i^c \cap \ff(j,k) \neq \emptyset$; this case takes $\bigO{n^2m}$ time.
+        \item If $c(a) = i, c(a') = k$ and $a \in Q_k^f$, check for each $j \in F(a) \setminus \{k\}$, if $\cf(j,k) = \emptyset$, taking $\bigO{n}$ time.
+        \item If $j = c(a) \neq c(a') = k$, we check if $Q_i^c \cap \ff(j,k) \neq \emptyset$ in $\bigO{n}$ time, and if $\cf(j,k)$ in $\bigO{1}$ time.
+    \end{enumerate}
+    In the worst case scenario, we will spend $\bigO{\max{n^2m, m^2}}$ time for each $Q_i$ and each pair $\{a, a'\} \subseteq Q_i$, of which there are $\bigO{n^2m}$ combinations, and conclude that the whole algorithm takes no more than $\bigO{\max\{n^2m, m^2\}n^2m}$ time.
+\end{tproof}
+
+Together with Theorem~\ref{thm:bound}, Theorem~\ref{thm:verification_alg} implies that deciding whether or not a graph is a star graph is in $\mathsf{NP}$, as we summarize in the following statement.
+
+\begin{theorem}
+    \textsc{Star Graph} is in $\mathsf{NP}$.
+\end{theorem}
