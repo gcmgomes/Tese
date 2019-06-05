@@ -61,8 +61,6 @@
 \theoremstyle{named}
 \newtheorem{class_definition*}{}
 
-\theoremstyle{definition}
-\newtheorem{definition}{Definition}
 
 \theoremstyle{plain}
 \newtheorem{theorem}{Theorem}
@@ -75,6 +73,8 @@
 \newtheorem{conjecture}{Conjecture}
 \newtheorem*{conjecture*}{Conjecture}
 \newtheorem{rrule}{Reduction Rule}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
 
 \newcommand{\mc}[1]{\mathcal{#1}}
 
@@ -281,13 +281,13 @@
 
 %\input{capitulos/preliminares}
 
-%\input{capitulos/coloring}
+\input{capitulos/coloring}
 
 %\input{capitulos/clique_biclique}
 
 \input{capitulos/dcut}
 
-%\input{capitulos/star}
+\input{capitulos/star}
 
 %\input{capitulos/conclusao}
 

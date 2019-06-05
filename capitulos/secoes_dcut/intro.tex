@@ -3,7 +3,10 @@
 A \tdef{cut} of a graph $G = (V, E)$ is a bipartition of its vertex set $V(G)$ into two non-empty sets, denoted by $(A,B)$.
 The set of all edges with one endpoint in $A$ and the other in $B$ is the \tdef{edge cut}, or the set of \tdef{crossing edges}, of $(A,B)$.
 A \tdef{matching cut} is a (possibly empty) edge cut that is a matching, that is, such that its edges are pairwise vertex-disjoint. Equivalently, $(A, B)$ is a matching cut of $G$ if and only if every vertex is incident to at most one crossing edge of $(A, B)$~\citep{matching_cut_graham, chvatal_matching_cut}, that is, it has at most one neighbor across the cut.
+The \pname{Matching Cut} problem is, thus, the task of deciding whether a graph admits a matching cut.
 Figure~\ref{fig:matching_cut} gives an example of a graph with a matching cut.
+
+\problem{Matching Cut}{A graph $G$.}{Does $G$ have a matching cut?}
 
 
 \begin{figure}[!htb]

@@ -55,15 +55,15 @@ The following is a summary of the topics and results discussed in this thesis.
     The first exact exponential time algorithm for biclique coloring, which builds upon ideas used for clique coloring, is presented.
     Then, kernelization algorithms for clique and biclique coloring when parameterized by neighborhood diversity are given; using results on covering problems, an $\FPT$ algorithm under the same parameterization is obtained for clique coloring, which has optimal running time, up to the base of the exponent, unless the Exponential Time Hypothesis fails.
     For biclique coloring, an \FPT\ algorithm is given, but when parameterized by maximum number of colors and neighborhood diversity.
-    \item Chapter~\ref{ch:cuts} presents a generalization of the matching cut problem.
-    The chapter opens up with a discussion on possible generalizations of the matching cut problem and some crucial differences found when approaching them.
-    After this initial digression, the focus shifts exclusively to the $d$-cut problem.
+    \item Chapter~\ref{ch:cuts} discusses generalizations of the matching cut problem.
+    Most of the chapter is devoted to the study of the  $d$-cut problem.
     Among the presented results are included an \NP-\Hness\ proof for $(2d+2)$-regular graphs -- which has an important connection to a conjecture on the context of internal partitions -- as well as a polynomial time algorithm for graphs of maximum degree $d + 2$.
     \FPT\ algorithms for several parameters are then given; namely: the maximum number of edges crossing the cut, treewidth, distance to cluster, and distance to co-cluster.
     The algorithm parameterized by treewidth improves upon the running time of the best known algorithm for \pname{Matching Cut}.
     Afterwards, building on techniques employed for \pname{Matching Cut}, a polynomial kernel for \pname{$d$-Cut} for every positive integer $d$, parameterized by the distance to a cluster graph is shown.
     The existence of polynomial kernels when parameterizing simultaneously by the number of edges crossing the cut, the treewidth, and the maximum degree is ruled out.
-    Finally, an exact exponential algorithm slightly faster than the naive brute force approach is described.
+    Also, an exact exponential algorithm slightly faster than the naive brute force approach is described.
+    We conclude the chapter with some remarks on two other generalizations of \pname{Matching Cut}, with some results in another version, which we called \pname{$\ell$-Nested Matching Cut}, and a brief discussion on a much harder problem, namely \pname{$p$-Way Matching Cut}.
     \item Chapter~\ref{ch:star_graph} deals with star graphs, the intersection graph of the maximal stars of a graph, and with star-critical graphs which are minimal with respect to the star graph they generate.
     The chapter begins with a bound on the number of vertices of star-critical graphs by a quadratic function of the size of its set of maximal stars.
     Afterwards, a Krausz-type characterization is given; both results are combined to show that the recognition problem belongs to \NP.

@@ -10,7 +10,7 @@ Some research has been dedicated to this topic under the name of \pname{Multicut
 Aside from constraints on which vertices are separated or the size of the separation, some cutting problems impose restrictions on the ``shape" of the edges crossing the cut.
 Such is the case of \pname{Matching Cut} and the generalizations we discuss further on.
 
-After some additional definitions and related work, we open the discussion of this chapter with a brief digression on possible generalization directions for \pname{Matching Cut}; our main goal, however, is at generalizing several results for the \pname{$d$-Cut} problem, which, to the best of our knowledge, we are the firsts to formally describe and investigate.
+After some additional definitions and related work, we generalize several results for the \pname{$d$-Cut} problem, which, to the best of our knowledge, we are the firsts to formally describe and investigate.
 First, by using a reduction inspired by Chvátal's~\citep{chvatal_matching_cut}, we show that for every $d \geq 1$, \pname{$d$-Cut} is \NP-hard even when restricted to $(2d+2)$-regular graphs and that, if $\Delta(G) \leq d+2$, finding a $d$-cut can be done in polynomial time. The degree bound in the \NP-hardness result is unlikely to be improved: if we had an \NP-hardness result for \pname{$d$-Cut} restricted to $(2d+1)$-regular graphs, this would disprove the conjecture about the existence of internal partitions on $r$-regular graphs~\citep{DeVos09,internal_partition_regular6,internal_partition_regular3_4} for $r$ odd, unless every problem in $\NP$ could be solved in \textit{constant} time.
 Afterwards, we present a simple exact exponential algorithm that, for every $d \geq 1$, runs in time $\bigOs{c_d^n}$ for some constant $c_d < 2$, hence improving over the trivial brute-force algorithm running in time $\bigOs{2^n}$.
 
@@ -21,9 +21,10 @@ By employing the cross-composition framework of \cite{cross_composition}, and us
 We then present a polynomial kernel and an $\FPT$ algorithm when parameterizing by the distance to cluster.
 This polynomial kernel is our main technical contribution, and it is strongly inspired by the technique presented by \cite{matching_cut_ipec} for \pname{Matching Cut}. Finally, we give an $\FPT$ algorithm parameterized by the distance to co-cluster, denoted by $\dcc(G)$.
 These results imply fixed-parameter tractability for \pname{$d$-Cut} parameterized by $\tau(G)$.
+Finally, we conclude with an exact exponential algorithm for another generalization of \pname{Matching Cut} and a brief discussion on a third related problem of interest.
 
 \input{capitulos/secoes_dcut/intro.tex}
-\input{capitulos/secoes_dcut/generalizations.tex}
 \input{capitulos/secoes_dcut/np.tex}
 \input{capitulos/secoes_dcut/param.tex}
-\input{capitulos/secoes_dcut/conclusion.tex}
+\input{capitulos/secoes_dcut/generalizations.tex}
+%\input{capitulos/secoes_dcut/conclusion.tex}

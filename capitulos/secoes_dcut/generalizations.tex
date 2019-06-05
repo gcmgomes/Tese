@@ -1,17 +1,411 @@
-\section{Generalizations for \pname{Matching Cut}}
+\section{Other Generalizations for \pname{Matching Cut}}
 
-We have already discussed \pname{$d$-Cut}, so this section will detail some other venues we have attempted to explore.
-In the definition of a matching cut, we would like each vertex of the graph, on the cut $(A,B)$, to have at most one neighbor across the cut.
+In this section, we describe two other generalizations of \pname{Matching Cut} that we have investigated.
+For the first, \pname{$\ell$-Nested Matching Cut}, we present an exponential time algorithm and an attempt at using algorithms for \pname{Matching Cut} as a black box for this problem.
+Most results given for \pname{$d$-Cut} and \pname{Matching Cut} can be adapted for this problem, but the arguments are very similar and do not appear to provide additional insights on the problem.
+The second problem we discuss here has been dubbed as \pname{$p$-way Matching Cut}.
+Unlike \pname{$d$-Cut} and \pname{$\ell$-Nested Matching Cut}, this version is much more challenging, and we limit ourselves to some attempts on tackling the problem.
+
+\subsection{Nested Cuts}
+
+We have already discussed \pname{$d$-Cut} at length throughout this chapter, so this section will detail some other directions we attempted to explore.
+Recall the definition of a matching cut: we would like each vertex of the graph, on the cut $(A,B)$, to have at most one neighbor across the cut.
 This can be rephrased to the following: a cut $(A,B)$ is a matching cut if and only if each vertex has at most one neighbor \textit{outside} of its part.
 Through this perspective, there is nothing special about the number of parts we want to partition our graph into.
 A cut on $\ell$ parts satisfying the above is called an \textit{$\ell$-nested matching cut}, and the decision problem for this generalization is dubbed the \pname{$\ell$-Nested Matching Cut} problem.
 
 \problem{$\ell$-Nested Matching Cut}{A graph $G$.}{Does $G$ admit an $\ell$-nested matching cut?}
 
-Let $\varphi = \{\varphi_1, \dots, \varphi_\ell\}$ be a partition of $V(G)$ and $\border(\varphi_i)$ be the vertices of $\varphi_i$ with one neighbor outside of $\varphi_i$.
-The following observation gives some intuition as to the structure of the positive instances of \pname{$\ell$-Nested Matching Cut}
+Let $\varphi = (A_1, \dots, A_\ell)$ be a partition of $V(G)$ and $\border(A_i)$ be the vertices of $A_i$ with one neighbor outside of $A_i$.
+The following observation gives some intuition as to the structure of the positive instances of \pname{$\ell$-Nested Matching Cut}.
 
 \begin{observation}
-    Let $G$ be a graph and $\ell \geq 2$ an integer.
-    $G$ admits an $\ell$-nested matching cut if and only if there is a an ($\ell-1$)-nested matching cut
+	\label{obs:nested_cut}
+    Let $G$ be a graph and $\ell \geq 3$ an integer.
+    $G$ admits an $\ell$-nested matching cut $\varphi$ if and only if there is an ($\ell-1$)-nested matching cut $\varphi' = \{A'_1, \dots, A'_{\ell - 1})\}$ with one $A'_i$ such that the subgraph induced by the vertices in $A'_i$ admits a matching cut $(B_1, B_2)$ where, for every $v \in \border(A'_i)$, it holds that $N[v] \subseteq B_1$ or $N[v] \subseteq B_2$.
 \end{observation}
+
+\begin{proof}
+	We shall build $\varphi'$ from $\varphi$ as follows: for every $i \in [\ell - 2]$, $A'_i = A_i$, and $\varphi'_{\ell - 1} = \varphi_{\ell - 1} \cup \varphi_\ell$.
+	That $\varphi'$ is an $(\ell - 1)$-nested matching cut of $G$ and the subgraph induced by the vertices of $\varphi'_{\ell - 1}$ has a matching cut is a straightforward observation.
+	Now, for each $v \in \border(\varphi'_{\ell - 1})$, note that $v \in \border(\varphi_{\ell - 1}) \cup \border(\varphi_\ell)$.
+	Consequently, every neighbor of $v$ is in either the same side of the cut $(\varphi_{\ell - 1}, \varphi_\ell)$ as $v$, as we wanted.
+	
+	For the converse, it suffices to note that $\border(A') \cap \border(\varphi'_i) = \emptyset$ and $\border(B') \cap \border(\varphi'_i) = \emptyset$ precisely because of the constraint that $N[v] \subseteq A'$ or $N[v] \subseteq B'$.
+	As such, we can construct the desired $\ell$-nested matching cut as $\varphi = \{\varphi'_1, \dots, \varphi'_{\ell - 2}, A', B'\}$.
+\end{proof}
+
+Observation~\ref{obs:nested_cut} is a first step towards an algorithm for \pname{$\ell$-Nested Matching Cut}.
+Ideally,  we would use the algorithms for \pname{Matching Cut} as a black box, and then choose one of the available parts of the cut and repeat the process.
+What is problematic is that there may be multiple possible matching cuts at a given step, and testing all of them would be quite expensive.
+As such, since we still do not know how to exploit Observation~\ref{obs:nested_cut}, we turn our attention to an exact exponential algorithm, through a similar approach used by \cite{matching_cut_ipec}.
+Our algorithm consists of four stopping rules, seven reduction and nine branching rules.
+At every step of the algorithm we have the sets $\{A_1, \dots, A_\ell, F\}$ such that $\varphi = (A_1, \dots, A_\ell)$ (unless rule R3 applies) is a $\ell$-nested matching cut of the vertices of $V(G) \setminus F$.
+For simplicity, we assume that $\delta(G) \geq 2$.
+Most of the arguments presented here work with slight modifications to graphs of minimum degree one, but they would unnecessarily complicate the description of the algorithm.
+
+\begin{itemize}
+	\item[S1] If there is some $v \in F$ and $i,j \in [\ell]$ such that $\deg_{A_i}(v) \geq 2$ and $\deg_{A_j}(v) \geq 2$, STOP: there is no $\ell$-nested matching cut extending $\varphi$.
+	\item[S2] If there is a vertex $v \in F$ with neighbors in three different parts of $\varphi$, STOP: there is no $\ell$-nested matching cut extending $\varphi$.
+	\item[S3] If there is an edge $uv$ with $u \in A_i$ and $v \in A_j$ such that $N(u) \cap N(v) \cap F \neq \emptyset$, STOP: there is no $\ell$-nested matching cut extending $\varphi$.
+	\item[S4] If there is some $v \in A_i$ with two neighbors outside of $A_i \cup F$, STOP: there is no $\ell$-nested matching cut extending $\varphi$.
+\end{itemize}
+
+\begin{itemize}
+	\item[R1] If there exists some $v \in A_i$ such that $N(v) \supseteq \{x,y\}$ and $x,y \in F$ and $xy \in E(G)$, add $x,y$ to $A_i$.
+	\item[R2] If there exists $v \in F$ and an unique $i \in [\ell]$ with $\deg_{A_i}(v) \geq 2$, add $v$ to $A_i$.
+	\item[R3] For every edge $uv$ with $u \in A_i$ and $v \in A_j$, add $N(u) \cap F$ to $A_i$ and $N(v) \cap F$ to $A_j$.
+	\item[R4] If there is a pair $u,v \in F$ with $N(u) = N(v) = \{x, y\}$ with $x \in A_i$ and $y \in A_j$, add $u$ to $A_i$ and $v$ to $A_j$.
+	\item[R5] If there is a pair $u,v \in F$ with $N(u) = N(v) = \{x, y\}$ with $x \in A_i$ and $y \in F$, add $x$ to $A_i$.
+	\item[R6] If there is a vertex $v \in F$ with $N(v) = \{x,y\}$, $x \in A_i$, $y \in A_j$, $N(x) \subseteq A_i \cup \{v\}$, and $N(y) \subseteq A_j \cup \{v\}$, add $v$ to $A_i$.
+	\item[R7] If there are vertices $u,v,w \in F$ with $\deg(u) = \deg(v) = \deg(w)$ arranged as in Figure~\ref{fig:r7}, add $\{u,v\}$ to $A_i$ and $w$ to $A_j$.
+	
+	\begin{figure}[!htb]
+		\centering
+		\begin{tikzpicture}[scale=0.5]
+		%\draw[help lines] (-5,-5) grid (5,5);
+		\GraphInit[unit=3,vstyle=Normal]
+		\SetVertexNormal[Shape=circle, FillColor=black, MinSize=2pt]
+		\tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+		\Vertex[x=0, y=0, LabelOut, Lpos=180, Math]{u}
+		\SetVertexNoLabel
+		\foreach \y in {-1, 1} {
+			\foreach \x in {0,1,2} {
+				\pgfmathsetmacro{\xp}{1.5+1.5*\x}
+				\Vertex[x=\xp, y=\y, LabelOut, Lpos=90]{v\y\x}
+			}
+			\foreach \x in {0,1} {
+				\pgfmathtruncatemacro{\xp}{1+\x}
+				\Edge(v\y\x)(v\y\xp)
+			}
+			\Edge(u)(v\y0)
+		}
+		\tikzset{AssignStyle/.append style = {above=4pt}}
+		\AssignVertexLabel{v1}{$v$,$A_i$,$v'$}
+		\tikzset{AssignStyle/.append style = {below=8pt}}
+		\AssignVertexLabel{v-1}{$w$,$A_j$,$w'$}
+		\end{tikzpicture}
+		\caption{\label{fig:r7} Rule 7 configuration.}
+	\end{figure}
+\end{itemize}
+
+For our branching rules, we follow the configurations given by Figure~\ref{fig:nested_branches}, and always branch on vertex $v_1$.
+We set the size of the instance as the size of the set $F$, that is, how many free vertices are assigned to one of the parts.
+
+\begin{itemize}
+	\item[B1] If we put $v_1$ in $A_j$, $j \neq i$, we infer that $v_3$, and $v_4$ must also be added to $A_j$, and that $v_2$ must be added to $A_i$.
+	Otherwise, $v_1$ is in $A_i$, which does not given us any additional information.
+	Our branching vector is, thus, of the form $\{1\} \times \{4\}^{\ell-1}$.
+	
+	\item[B2] Note that $v_1$ must be placed in either $A_i$ or $A_j$.
+	For the first case, we conclude that $v_4$ must also be in $A_i$, while for the later, $v_4$ must be added to $A_j$ and $v_2$ to $A_i$, yielding the branching vector $(2, 3)$ and the branching factor $1.3247$.
+	
+	\item[B3] Again, $v_1$ is in either $A_i$ or $A_j$.
+	In either case, we conclude that $v_2$ must be in the same part as $v_1$, resulting in the branching vector $(2,2)$, which has a branching factor of $\sqrt{2}$.
+	
+	\item[B4 and B4'] By adding $v_1$ to $A_i$, we conclude that $v_2$ must also be placed in $A_i$; a similar analysis is performed when $v_1$ is added to $A_j$.
+	Otherwise, if we add $v_1$ to $A_k$, at most one of $v_2$ and $v_3$ may be added to a set different from $A_k$.
+	If both are in $A_k$, we have that $v_2'$ belongs in $A_i$ and $v_3'$ in $A_j$.
+	Otherwise, if $v_2$ is added to $A_i$, we conclude that $v_3,v_4$ belong in $A_k$ and that $v_3'$ belongs in $A_j$; similarly if $v_3$ is assigned to $A_j$.
+	This results in a branching vector of the form $\{2\}^2 \times \{5\}^{3\ell-6}$, with unique positive real root of the polynomial associated with it satisfying $\alpha_\ell \leq \sqrt[\leftroot{2} 3]{\ell}$.
+	Rule B4' clearly has a better branching factor than B4, but rule B4 dominates the running time of B4'.
+	
+	\item[B5] In case we assign $v_1$ to $A_i$, we have that both $v_2$, and $v_3$ must also be in $A_i$;
+	if $v_1$ is assigned to $A_j$, nothing else can be inferred;
+	for all other $A_k$, we have that both $v_2$ and $v_3$ must be assigned to $A_k$, and that $v_2'$ and $v_3'$ belong in $A_i$.
+	The branching vector for this rule is given by $\{1\} \times \{3\} \times \{5\}^{\ell-2}$, which, for large values of $\ell$, has a branching factor of at most $\sqrt[\leftroot{2} 3]{\ell}$.
+	Again, it can be verified that, for each $\ell$, it holds that the branching factor for this rule is $\leq \sqrt[\leftroot{2} 3]{\ell}$.
+	
+	\item[B6] If $v_1$ is assigned to $A_i$ (resp. $A_j$), we have that both $v_2$, and $v_3$ (resp. $v_4$, and $v_5$) must also be assigned to $A_i$ (resp. $A_j$);
+	otherwise, for every other $A_k$, either $\{v_{p}\}_{p \in [5]}$ belongs to $A_k$, in which case the vertices $\{v'_{p}\}_{p \in \{2,3,4,5\}}$ are assigned to the same set as their neighbor, or at most one $v_p \in \{v_2, v_3, v_4, v_5\}$ is not assigned to $A_k$, in which case the set to which $v'_p$ should be assigned is not determined.
+	This rule produces a branching vector of the form $\{3\}^2 \times \{8\}^{4\ell - 8} \times \{9\}^{\ell - 2}$, 
+	
+	\item[B7] Once again, we only have two options for $v_1$.
+	So, if $v_1$ is added to $A_i$, we have that $v_3$ must be added to $A_j$, otherwise $v_1$ is added to $A_j$ and $v_2$ to $A_i$.
+	This rule's branching vector is $(2, 2)$, with factor equal to $\sqrt{2}$.
+	
+	\item[B8] If $v_1$ is assigned to $A_i$, we are done; otherwise, if $v_1$ is assigned to $A_k$, with $k \neq i$, we have that $v_2$ belongs in $A_i$ and $v_3$ in $A_i$.
+	This yields the branching vector $\{1\} \times \{3\}^{\ell-1}$, and branching factor $\sqrt[\leftroot{2} 3]{\ell} \leq \alpha_\ell \leq \sqrt{\ell}$.
+\end{itemize}
+
+\begin{figure}[!htb]
+	\centering
+	\begin{tikzpicture}[scale=0.5]
+	%\draw[help lines] (-5,-5) grid (5,5);
+	\GraphInit[unit=3,vstyle=Normal]
+	\SetVertexNormal[Shape=circle, FillColor=black, MinSize=2pt]
+	\tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+	\SetVertexLabelOut
+	
+	\newcommand{\brule}{1}
+	\begin{scope}[shift={(-10,5)}]
+	\Vertex[x=0,y=0,Lpos=90, Math, L={v_1}]{v_1\brule}
+	\Vertex[x=-1.5, y=0,Lpos=90, Math, L={A_i}]{a_i\brule}
+	\Vertex[x=-3, y=0,Lpos=90, Math, L={v_2}]{v_2\brule}
+	\Vertex[x=1.5, y=1,Lpos=0, Math, L={v_3}]{v_3\brule}
+	\Vertex[x=1.5, y=-1,Lpos=0, Math, L={v_4}]{v_4\brule}
+	\Edge(v_1\brule)(a_i\brule)
+	\Edge(v_1\brule)(v_3\brule)
+	\Edge(v_1\brule)(v_4\brule)
+	\Edge(a_i\brule)(v_2\brule)
+	\node at (-0.5,-1) {(B\brule)};
+	\end{scope}
+	
+	\renewcommand{\brule}{2}
+	\begin{scope}[shift={(0,5)}]
+	\Vertex[x=0,y=0,Lpos=90, Math, L={v_1}]{v_1\brule}
+	\Vertex[x=-1.5, y=0,Lpos=90, Math, L={A_i}]{a_i\brule}
+	\Vertex[x=-3, y=0,Lpos=90, Math, L={v_2}]{v_2\brule}
+	\Vertex[x=1.5, y=1,Lpos=0, Math, L={A_j}]{a_j\brule}
+	\Vertex[x=1.5, y=-1,Lpos=0, Math, L={v_4}]{v_4\brule}
+	\Edge(v_1\brule)(a_i\brule)
+	\Edge(v_1\brule)(a_j\brule)
+	\Edge(v_1\brule)(v_4\brule)
+	\Edge(a_i\brule)(v_2\brule)
+	\node at (-0.5,-1) {(B\brule)};
+	\end{scope}
+	
+	\renewcommand{\brule}{3}
+	\begin{scope}[shift={(8,5)}]
+	\Vertex[x=0,y=0,Lpos=90, Math, L={v_1}]{v_1\brule}
+	\Vertex[x=-1.5, y=0,Lpos=90, Math, L={v_2}]{v_2\brule}
+	\Vertex[x=1.5, y=1,Lpos=0, Math, L={A_i}]{a_i\brule}
+	\Vertex[x=1.5, y=-1,Lpos=0, Math, L={A_j}]{a_j\brule}
+	\Edge(v_1\brule)(a_i\brule)
+	\Edge(v_1\brule)(a_j\brule)
+	\Edge(v_1\brule)(v_2\brule)
+	\node at (0,-1) {(B\brule)};
+	\end{scope}
+	
+	\renewcommand{\brule}{4}
+	\begin{scope}[shift={(-8.5,0)}]
+	\Vertex[x=0,y=0,Lpos=90, Math, L={v_1}]{v_1\brule}
+	\Vertex[x=1.5,y=0,Lpos=0, Math, L={v_4}]{v_4\brule}
+	\Vertex[x=-1.5, y=1, Lpos=90, Math, L={v_2}]{v_2\brule}
+	\Vertex[x=-3, y=1, Lpos=90, Math, L={A_i}]{a_i\brule}
+	\Vertex[x=-4.5, y=1, Lpos=90, Math, L={v_2'}]{v_2p\brule}
+	\Vertex[x=-1.5, y=-1, Lpos=270, Math, L={v_3}]{v_3\brule}
+	\Vertex[x=-3, y=-1, Lpos=270, Math, L={A_j}]{a_j\brule}
+	\Vertex[x=-4.5, y=-1, Lpos=270, Math, L={v_3'}]{v_3p\brule}
+	
+	\node at (0.5,-1) {(B\brule)};
+	\Edge(v_1\brule)(v_4\brule) \Edges(v_2p\brule,a_i\brule,v_2\brule,v_1\brule,v_3\brule,a_j\brule,v_3p\brule)
+	\end{scope}
+	
+	\renewcommand{\brule}{5}
+	\begin{scope}[shift={(0,0)}]
+	\Vertex[x=0,y=0,Lpos=90, Math, L={v_1}]{v_1\brule}
+	\Vertex[x=1.5,y=0,Lpos=0, Math, L={A_j}]{a_j\brule}
+	\Vertex[x=-1.5, y=1, Lpos=90, Math, L={v_2}]{v_2\brule}
+	\Vertex[x=-3, y=1, Lpos=90, Math, L={A_i}]{a_i\brule}
+	\Vertex[x=-4.5, y=1, Lpos=90, Math, L={v_2'}]{v_2p\brule}
+	\Vertex[x=-1.5, y=-1, Lpos=270, Math, L={v_3}]{v_3\brule}
+	\Vertex[x=-3, y=-1, Lpos=270, Math, L={A_i}]{a_ip\brule}
+	\Vertex[x=-4.5, y=-1, Lpos=270, Math, L={v_3'}]{v_3p\brule}
+	
+	\node at (0.5,-1) {(B\brule)};
+	\Edge(v_1\brule)(a_j\brule) \Edges(v_2p\brule,a_i\brule,v_2\brule,v_1\brule,v_3\brule,a_ip\brule,v_3p\brule)
+	\end{scope}
+	
+	\renewcommand{\brule}{6}
+	\begin{scope}[shift={(8.5,0)}]
+	\Vertex[x=0,y=0,Lpos=90, Math, L={v_1}]{v_1\brule}
+	
+	\Vertex[x=-1.5, y=1, Lpos=90, Math, L={v_2}]{v_2\brule}
+	\Vertex[x=-3, y=1, Lpos=90, Math, L={A_i}]{a_i\brule}
+	\Vertex[x=-4.5, y=1, Lpos=90, Math, L={v_2'}]{v_2p\brule}
+	\Vertex[x=-1.5, y=-1, Lpos=270, Math, L={v_3}]{v_3\brule}
+	\Vertex[x=-3, y=-1, Lpos=270, Math, L={A_i}]{a_ip\brule}
+	\Vertex[x=-4.5, y=-1, Lpos=270, Math, L={v_3'}]{v_3p\brule}
+	
+	
+	\Vertex[x=1.5, y=1, Lpos=90, Math, L={v_4}]{v_4\brule}
+	\Vertex[x=3, y=1, Lpos=90, Math, L={A_j}]{a_j\brule}
+	\Vertex[x=4.5, y=1, Lpos=90, Math, L={v_4'}]{v_4p\brule}
+	\Vertex[x=1.5, y=-1, Lpos=270, Math, L={v_5}]{v_5\brule}
+	\Vertex[x=3, y=-1, Lpos=270, Math, L={A_j}]{a_jp\brule}
+	\Vertex[x=4.5, y=-1, Lpos=270, Math, L={v_5'}]{v_5p\brule}
+	
+	\node at (0,-1) {(B\brule)}; \Edges(v_2p\brule,a_i\brule,v_2\brule,v_1\brule,v_3\brule,a_ip\brule,v_3p\brule) \Edges(v_4p\brule,a_j\brule,v_4\brule,v_1\brule,v_5\brule,a_jp\brule,v_5p\brule)
+	\end{scope}
+	
+	\renewcommand{\brule}{4}
+	\begin{scope}[shift={(-8.5,-6)}]
+	\Vertex[x=0,y=0,Lpos=90, Math, L={v_1}]{v_1\brule}
+	\Vertex[x=1.5,y=0,Lpos=0, Math, L={v_4}]{v_4\brule}
+	\Vertex[x=-1.5, y=1, Lpos=90, Math, L={v_2}]{v_2\brule}
+	\Vertex[x=-3, y=1, Lpos=90, Math, L={A_i}]{a_i\brule}
+	\Vertex[x=-4.5, y=1, Lpos=90, Math, L={v_2'}]{v_2p\brule}
+	\Vertex[x=-1.5, y=-1, Lpos=270, Math, L={v_3}]{v_3\brule}
+	\Vertex[x=-3, y=-1, Lpos=270, Math, L={A_i}]{a_j\brule}
+	\Vertex[x=-4.5, y=-1, Lpos=270, Math, L={v_3'}]{v_3p\brule}
+	
+	\node at (0.5,-1) {(B\brule')};
+	\Edge(v_1\brule)(v_4\brule) \Edges(v_2p\brule,a_i\brule,v_2\brule,v_1\brule,v_3\brule,a_j\brule,v_3p\brule)
+	\end{scope}
+	
+	\renewcommand{\brule}{7}
+	\begin{scope}[shift={(-1,-6)}]
+	\Vertex[x=0,y=0,Lpos=90, Math, L={v_1}]{v_1\brule}
+	\Vertex[x=-1.5, y=0,Lpos=90, Math, L={A_i}]{a_i\brule}
+	\Vertex[x=1.5, y=0,Lpos=90, Math, L={A_j}]{a_j\brule}
+	\Vertex[x=-2.5, y=-1,Lpos=270, Math, L={v_2}]{v_2\brule}
+	\Vertex[x=2.5, y=-1,Lpos=270, Math, L={v_3}]{v_3\brule}
+	\node at (0,-1) {(B\brule)};
+	\Edge(v_1\brule)(a_i\brule)
+	\Edge(v_1\brule)(a_j\brule)
+	\Edge(v_2\brule)(a_i\brule)
+	\Edge(v_3\brule)(a_j\brule)
+	\end{scope}
+	
+	\renewcommand{\brule}{8}
+	\begin{scope}[shift={(8.5,-6)}]
+	\Vertex[x=0,y=0,Lpos=90, Math, L={v_1}]{v_1\brule}
+	\Vertex[x=-1.5, y=0,Lpos=90, Math, L={A_i}]{a_i\brule}
+	\Vertex[x=1.5, y=0,Lpos=90, Math, L={v_3}]{v_3\brule}
+	\Vertex[x=-2.5, y=-1,Lpos=270, Math, L={v_2}]{v_2\brule}
+	\Vertex[x=2.5, y=-1,Lpos=270, Math, L={A_j}]{a_j\brule}
+	\node at (0,-1) {(B\brule)};
+	\Edge(v_1\brule)(a_i\brule)
+	\Edge(v_1\brule)(v_3\brule)
+	\Edge(v_2\brule)(a_i\brule)
+	\Edge(a_j\brule)(v_3\brule)
+	\end{scope}
+	\end{tikzpicture}
+	\caption{\label{fig:nested_branches} Branching configurations for \pname{$\ell$-Nested Matching Cut}.}
+\end{figure}
+
+Given all of the above rules, we must show that, if none of them are applicable, we have an $\ell$-nested matching cut.
+In order to do so, we require some additional definitions: let $A_i' = \{v \in A_i \mid \deg_F(v) \geq 2\}$,  $F_i' = F \cap N(A_i')$, $F_i'' = \{v \in F \mid \deg_{F_i'}(v) \geq 2\}$, and $F^* = F \setminus \bigcup_{i \in \ell} (F_i' \cup F_i'')$.
+Also, we say that $A_i$ is \tdef{final} if, for all $v \in F_i'$, $\deg(v) = 2$.
+
+\begin{lemma}
+	If there is some $A_i$ of $\varphi$ which is not final and no Stopping/ Reduction Rule is applicable, then configurations B1, or B2 exist in the partitioned graph.
+\end{lemma}
+
+\begin{proof}
+	Let $v_1$ be a degree three vertex of $F_i'$, $a_i$ its neighbor in $A_i'$ and $v_2$ the other neighbor of $A_i'$ in $F$.
+	We know that $vv' \notin E(G)$, otherwise rule R1 would be applicable.
+	Now, let $v_3,v_4$ be two of the other neighbors of $v$.
+	If both are in $F$, we have a configuration B1; otherwise at most one of them is not in $F \cup A_i$, say $v_3$, since we would have applied rule S2 or rule R2 if this observation did not hold, implying that a configuration B2 is present.
+\end{proof}
+
+We may now assume that every $A_i$ is final, and that no reduction or stopping rule is applicable.
+Our goal is to show that, if none of our branching configurations exist, then $\varphi^* = (A_1 \cup F'_1 \cup F''_1, \dots, A_{\ell - 1} \cup F'_{\ell - 1} \cup F''_{\ell - 1}, A_\ell \cup F'_\ell \cup  F''_\ell \cup F^* )$ is an $\ell$-nested matching cut of $G$.
+Before proving that, however, we have to guarantee that the sets $F'_i, F''_i$ are a partition of $F$.
+
+\begin{lemma}
+	If there exists $i,j \in [\ell]$ with $F'_i \cap F'_j \neq \emptyset$, then rule B7 is applicable.
+\end{lemma}
+
+\begin{proof}
+	Let $v_1 \in F'_i \cap F'_j$; since $A'_i$ and $A'_j$ are final, $\deg(v_1) = 2$ and its two neighbors, $a_i, a_j$, have one extra neighbor each, say $v_2$ and $v_3$.
+	If $v_2 = v_3$, however, $v_2 \in F'_i$, and has degree equal to two; but this implies that $N(v_1) = N(v_2) = \{a_i, a_j\}$, and rule R4 could have been applied.
+	All that remains now is the case where $v_2 \neq v_3$, but this is precisely configuration B7, as desired.
+\end{proof}
+
+\begin{lemma}
+	If $A_i$ and $A_j$ are final, $F'_i \cap F''_j = \emptyset$.
+\end{lemma}
+
+\begin{proof}
+	Suppose that there is some $v \in F'_i \cap F''_j$.
+	By the definitions of $F_i'$ and $F''_j$, $v$ has degree two, one neighbor in $A_i$, and \textit{two} neighbors in $F'_j$, a contradiction.
+\end{proof}
+
+\begin{lemma}
+	If there exists $i,j \in [\ell]$ with $F''_i \cap F''_j \neq \emptyset$, rule B6 is applicable.	
+\end{lemma}
+
+\begin{proof}
+	Let $v_1$ a vertex of $F''_i \cap F''_j$.
+	By the previous lemma and the definition of $F''_i$, it is straightforward to check that $v_1$ has four distinct neighbors: $v_2, v_3, v_4, v_5$, such that $v_2, v_3 \subseteq F'_i$ and $v_4, v_5 \subseteq F'_j$.
+	Let $a_i$ be the neighbor of $v_2$ in $A_i$, $v_2'$ the other neighbor of $a_i$ in $F$.
+	Define $a_i'$ and $v_3'$ similarly for $v_3$; $a_j$ and $v_4'$ for $v_4$; and $a_j'$ and $v_5'$ for $v_5$.
+	Note that $v'_2 \neq v'_3$ (resp. $v'_4 \neq v'_5$), or rule R2 would be applicable.
+	Consequently, $\{v_1, v_2, a_i, v_2', v_3, a'_i, v'_3, v_4, a_j, v'_4, v_5, a'_j, v'_5\}$ form a configuration B6.
+\end{proof}
+
+These last few results prove that $\varphi^*$ is a partition of $V(G)$.
+Define $A_i^* = A_i \cup F'_i \cup F''_i$ and $A_\ell^* = A_\ell \cup F'_\ell \cup F''_\ell \cup F^*$.
+What remains to be shown is that it is, in fact, an $\ell$-nested matching cut of $G$.
+
+\begin{lemma}
+	If no more branching rules are applicable, then for every $i$ and every $v \in A_i$, $\deg_{V(G) \setminus A_i^*}(v) \leq 1$. 
+\end{lemma}
+
+\begin{proof}
+	First, $v$ has at most one neighbor in $\bigcup_ {j \neq i} A_j$, otherwise rule S4 would have stopped the algorithm.
+	The case where $v$ has one neighbor in $A_j$ and one neighbor $u \in F$, since rule S3 is not applicable, by rule R3, $u$ must have been added to $A_i$, and so $u$ does not exist.
+	Thus, the only possibility is that $v$ has more than one neighbor in $F$, implying $N_F(v) \subseteq F'_i$, but $F'_i$ is in the same part as $v$.
+\end{proof}
+
+\begin{lemma}
+	If no more branching rules are applicable, then for every $i$ and every $v \in F'_i$, $\deg_{V(G) \setminus A_i^*}(v) \leq 1$. 
+\end{lemma}
+
+\begin{proof}
+	Trivial due to the hypothesis that $F'_i$ is final.
+\end{proof}
+
+
+\begin{lemma}
+	If no more branching rules are applicable, then for every $i$ and every $v \in F''_i$, $\deg_{V(G) \setminus A_i^*}(v) \leq 1$. 
+\end{lemma}
+
+
+\begin{proof}
+	If $v$ has a neighbor in $A_j$, rule B5 is applicable, since $v \in F''_i$.
+	On the other hand, if $v$ has a neighbor in $F$, we can apply rule B4' with $v = v_1$.
+\end{proof}
+
+\begin{lemma}
+	If no more branching rules are applicable, then for every $v \in F^*$, $\deg_{V(G) \setminus A^*_\ell}(v) \leq 1$. 
+\end{lemma}
+
+\begin{proof}
+	We know that $v$ does not have two neighbors in some $A_j$, but it could be the case that $v$ has neighbors $a_i \in A_i$, $a_j \in A_j$.
+	Note that if $v$ $a_i$ cannot have a second  neighbor in $F$, otherwise $v$ would be in $F'_i$.
+	As such, if $\deg(v) = 2$, we can still apply rule R6.
+	Otherwise, if $\deg(v) \geq 3$, configuration B3 shows up with $v = v_1$.
+	This allows us to conclude that $v$ does not have a neighbor in more than one $A_i$.
+	Suppose now that $u \in F \setminus F^*$ is a neighbor of $v$, and $a_j \in A_j \cap N(v)$.
+	If $u \in F'_i$ ($i$ may be equal to $j$), it follows that rule B8 is applicable with $v = v_3$ and $u = v_1$.
+	If, on the other hand, $u \in F''_i$, we have configuration B4' where $u = v_1$ and $v = v_4$.
+	Consequently, $v$ has no neighbor in $A_j$, for $j \neq \ell$.
+	
+	Now, it must be the case that both neighbors $x,y$ of $v$ are in $F \setminus F^*$.
+	Note that $\{x,y\} \nsubseteq F'_i$, otherwise $v \in F''_i$.
+	For now, suppose that $x \in F'_i$ and $y \in F'_j$.
+	If $\deg(v) = 2$, rule R7 may be applied (with $u$ = $v$); so $\deg(v) \geq 3$ and we have configuration B4, again, with $v = v_1$.
+	Suppose, then that $x$ is actually in $F''_i$; by the exact same argument, it holds that B4' is applicable with $v = v_4$ and $x = v_1$.
+	The case where $x$ and $y$ are in $F''_i$ and $F''_j$, respectively, is identical.
+\end{proof}
+
+\begin{theorem}
+	If no Stopping, Reduction, or Branching rule is applicable, $\varphi^*$ is an $\ell$-nested matching cut of $G$.
+	Moreover, \pname{$\ell$-Nested Matching Cut} can be solved in $\bigOs{\alpha_\ell^n}$, with $\alpha_\ell \leq \sqrt{\ell}$ for a graph on $n$ vertices.
+\end{theorem}
+
+
+
+\subsection{Multiway Cuts}
+
+The previous section dealt with partitions $\varphi$ such that each vertex has at most one neighbor in another part.
+We may relax this constraint, and ask that each vertex has at most one neighbor in \textit{each part other than its own}.
+Equivalently, given the integer $p \geq 2$, we want an $p$-partition of the vertices of the graph such that $(A_i, A_j)$ is a matching cut of $G[A_i \cup A_j]$.
+A cut that satisfies this property is called a \tdef{$p$-Way matching cut}, with the problem of deciding whether or not a graph admits such a partition defined below.
+
+\problem{$p$-Way Matching Cut}{A graph $G$}{Does $G$ admit a $p$-Way matching cut?}
+
+It is not hard to adapt either of the reductions given by~\cite{matching_cut_chvatal} or us to this generalization, although a bit more of care must be taken when designing color selection gadgets.
+The hard part, however, is finding an \FPT\ algorithm for \pname{$p$-Way Matching Cut} when parameterized by the number of edges crossing the cut.
+The powerful machinery provided by~\cite{marx_treewidth_reduction} does not appear to be capable of handling the constraint of each pair of parts is a matching cut.
+Whenever we attempted to give a graph class that captured this notion, we were either unable to reconstruct the cut on the original graph, or we found counter-examples that the treewidth reduction technique could return that did not represent a $p$-way matching cut of the graph.
+Adapting the exact exponential algorithm of~\cite{matching_cut_ipec} also seems a challenging task; while we were successful for nested cuts, the structures used as branching rules appear to explode rapidly with the growth of $p$, a similar phenomenon is observed when trying to devise a kernelization algorithm
+Aside from these challenging questions, most parameterized algorithms for \pname{Matching Cut} can be adapted for \pname{$p$-Way Matching Cut}, such as the ones parameterized by treewidth or distance to cluster, without much difficulty.
+
+
+
+
+
