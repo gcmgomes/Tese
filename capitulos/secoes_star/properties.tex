@@ -204,6 +204,10 @@ We highlight that the bound of Theorem~\ref{thm:diameter} is tight, as shown by 
     Otherwise, $r < 2k - 3$, which directly implies that there is a path between $s_2$ and $s_k$ of length at most $k-3$, contradicting the hypothesis that $P_G$ is a diametrical path.
 \end{proof}
 
+\begin{corollary}
+	If $H$ is a graph of diameter $d$ and $G_k = \K{S}^k(H)$, for every $k \geq \ceil{\log (d + 4)}$, the diameter of $G_k$ is either three or four, unless $G_{k-1}$ is a clique, in which case the diameter of $G$ is one.
+\end{corollary}
+
 \section{Small star graphs}
 
 
@@ -279,7 +283,8 @@ However, Theorem~\ref{thm:bound} presents what we believe is a very loose value 
             \end{scope}
                 
         \end{tikzpicture}
-        \caption{The square of the net is not a star graph.\label{fig:square_not_star}}
+        \caption{The square of the net is not a star graph.}
+        \label{fig:square_not_star}
 \end{figure}
 
 \begin{theorem}
@@ -329,6 +334,10 @@ There are 46 star graphs on seven vertices, and 201 star graphs on eight vertice
 Let $\mathcal{H}^*(k)$ denote the set of all star-critical pre-images for star graphs on $k$ vertices.
 Our procedure also listed $\mathcal{H}^*(k)$ for every $k \leq 8$.
 In particular, there are 190 graphs in $\mathcal{H}^*(4)$, 1056 in $\mathcal{H}^*(5)$, 8876 in $\mathcal{H}^*(6)$, 76320 in $\mathcal{H}^*(7)$, and 892170 in $\mathcal{H}^*(8)$.
+
+\begin{corollary}
+	There are square graphs which are not star graphs (e.g. the square of the net), and there are star graphs which are not square graphs (e.g. the star graph of $K_4$).
+\end{corollary}
 
 \begin{figure}
     \centering
@@ -430,5 +439,6 @@ In particular, there are 190 graphs in $\mathcal{H}^*(4)$, 1056 in $\mathcal{H}^
       \centering
       \input{capitulos/secoes_star/tex_figs/fig39.tex}
     \end{subfigure}
-    \caption{The fourteen six vertex star graphs.\label{fig:six_star}}
+    \caption{The fourteen six vertex star graphs.}
+    \label{fig:six_star}
 \end{figure}

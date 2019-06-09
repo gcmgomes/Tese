@@ -37,7 +37,6 @@
 \usepackage{algorithmic}
 
 
-
 \usetikzlibrary{decorations,arrows,shapes}
 
 \usepackage[
@@ -189,7 +188,10 @@
 
 
 \NewEnviron{sproof}[1] {
-  \begin{proof}[Proof of safeness of Rule~#1]\BODY\end{proof}
+	\iftoggle{proof_toggle} {%
+		\begin{proof}[Proof of safeness of Rule~#1]\BODY\end{proof}}
+	{%
+	}
 }
 
 
@@ -202,6 +204,8 @@
 
 \newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
 \newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+
+\counterwithout{table}{chapter}
 
 %\font\ninerm=cmr10
 %\textwidth  17 cm 
@@ -233,7 +237,8 @@
   cutter={C667h},
   cdu={123},
   university={Universidade Federal de Minas Gerais},
-  course={Ciência da Computação},
+  portuguesecourse={Ciência da Computação},
+  course={Computer Science},
   portuguesetitle={Algoritmos, Parâmetros e Complexidade para Problemas de partição em Grafos},
 %  portugueseuniversity={Universidade Federal de Minas Gerais},
 %  portuguesecourse={Cincia da Computao},
@@ -241,7 +246,7 @@
   date={2019-05},
   keywords={Vertex Coloring, Equitable Coloring, Clique Coloring, Biclique Coloring, Block Graphs, Biclique Graph, Star Graph, Exact Algorithms, Parameterized Algorithms},
   advisor={Vinícius Fernandes dos Santos},
-  %coadvisor={Carlos Vinícius Gomes Costa Lima},
+  coadvisor={Carlos Vinícius Gomes Costa Lima},
   %approval={},
   abstract=[brazil]{Resumo}{resumos/resumo},
   abstract={Abstract}{resumos/abstract},
@@ -249,7 +254,7 @@
   dedication={firula/dedicatoria},
   %ack=[Acknowledgments]{},
   ack=[Acknowledgments]{firula/agradecimentos},
-  epigraphtext={There is no struggle too vast,\\no odds too overwhelming,\\for even should we fail\\--- should we fall ---\\we will know that we have lived.}{Steven Erikson},
+  epigraphtext={There is no struggle too vast,\\no odds too overwhelming,\\for even should we fail--\\ should we fall -- we will know \\that we have lived.}{Steven Erikson},
 }
 
 % Um exemplo para documentos em ingls  apresentado a seguir (lembre-se de
@@ -277,19 +282,21 @@
 %  epigraphtext={Truth and lie are opposite things.}{Unknown},
 %}
 
+\counterwithout{figure}{chapter}
+\counterwithout{table}{chapter}
 \input{capitulos/introducao}
 
 %\input{capitulos/preliminares}
 
-%\input{capitulos/coloring}
+\input{capitulos/coloring}
 
 %\input{capitulos/clique_biclique}
 
-%\input{capitulos/dcut}
+\input{capitulos/dcut}
 
 \input{capitulos/star}
 
-%\input{capitulos/conclusao}
+\input{capitulos/conclusao}
 
 % Aqui vem a parte da bibliografia: use o comando \ufmgbibliography indicando
 % apenas o nome do arquivo .bib (sem a extenso).

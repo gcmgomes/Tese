@@ -398,12 +398,12 @@ A cut that satisfies this property is called a \tdef{$p$-Way matching cut}, with
 
 \problem{$p$-Way Matching Cut}{A graph $G$}{Does $G$ admit a $p$-Way matching cut?}
 
-It is not hard to adapt either of the reductions given by~\cite{matching_cut_chvatal} or us to this generalization, although a bit more of care must be taken when designing color selection gadgets.
+It is not hard to adapt either of the reductions given by~\cite{chvatal_matching_cut} or us to this generalization, although a bit more of care must be taken when designing color selection gadgets.
 The hard part, however, is finding an \FPT\ algorithm for \pname{$p$-Way Matching Cut} when parameterized by the number of edges crossing the cut.
 The powerful machinery provided by~\cite{marx_treewidth_reduction} does not appear to be capable of handling the constraint of each pair of parts is a matching cut.
-Whenever we attempted to give a graph class that captured this notion, we were either unable to reconstruct the cut on the original graph, or we found counter-examples that the treewidth reduction technique could return that did not represent a $p$-way matching cut of the graph.
+Whenever we attempted to give a graph class that captured this notion, we were either unable to reconstruct the cut on the original graph, or we found counter-examples that the treewidth reduction technique could produce that did not represent a $p$-way matching cut of the graph.
 Adapting the exact exponential algorithm of~\cite{matching_cut_ipec} also seems a challenging task; while we were successful for nested cuts, the structures used as branching rules appear to explode rapidly with the growth of $p$, a similar phenomenon is observed when trying to devise a kernelization algorithm
-Aside from these challenging questions, most parameterized algorithms for \pname{Matching Cut} can be adapted for \pname{$p$-Way Matching Cut}, such as the ones parameterized by treewidth or distance to cluster, without much difficulty.
+Aside from these challenging questions, most parameterized algorithms for \pname{Matching Cut} can be adapted for \pname{$p$-Way Matching Cut}, such as the ones parameterized by treewidth or distance to cluster, without much difficulty, but, much like \pname{$d$-Cut} all such algorithms have exponential dependencies on $p$, and asserting whether this is necessary or not would be nice. 
 
 
 

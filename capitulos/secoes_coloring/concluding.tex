@@ -1,0 +1,20 @@
+\section{Concluding Remarks}
+
+In this chapter, we investigated three partitioning problems that belong to the class of coloring problems.
+Namely, \pname{Equitable Coloring}, \pname{Clique Coloring}, \pname{Biclique Coloring}.
+For \pname{Equitable Coloring}, we developed novel parameterized reductions from \pname{Bin Packing}, which is $\W[1]$-$\Hard$ when parameterized by number of bins.
+These reductions showed that \pname{Equitable Coloring} is $\W[1]-\Hard$ in three more cases: (i) if we restrict the problem to block graphs and parameterize by the number of colors, treewidth and diameter; (ii) on the disjoint union of split graphs, a case where the connected case is polynomial; (iii) \pname{equitable coloring} of $K_{1,r}$ interval graphs, for any $r \geq 4$, remains hard even if we parameterize by the number of colors, treewidth and maximum degree.
+This, along with a previous result by~\cite{claw_free_de_werra}, establishes a dichotomy based on the size of the largest induced star: for $K_{1,r}$-free graphs, the problem is solvable in polynomial time if $r \leq 2$, otherwise it is $\W[1]-\Hard$.
+These results significantly improve the ones by~\cite{colorful_treewidth} through much simpler proofs and in very restricted graph classes.
+Since the problem remains hard even for many natural parameterizations, we resorted to a more exotic one -- the treewidth of the complement graph.
+By applying standard dynamic programming techniques on tree decompositions and the fast subset convolution machinery of~\cite{fourier_mobius}, we obtain an $\FPT$ algorithm when parameterized by the treewidth of the complement graph.
+We also presented an \XP\ algorithm parameterized by number of colors when the input graph is known to be chordal.
+Natural future research directions include the identification and study of other uncommon parameters that may aid in the design of other $\FPT$ algorithms.
+Revisiting \pname{Clique Partitioning} when parameterized by $k$ and $r$ is also of interest, since its a related problem to \pname{Equitable Coloring} and the complexity of its natural parameterization is yet unknown.
+
+As to the other problems, we showed that, much like \pname{Clique Coloring}, \pname{Biclique Coloring} can be solved in $\bigOs{2^{n}}$-time using the inclusion-exclusion principle.
+Also of interest is the nice behavior \pname{Clique Coloring} presents when parameterized by neighborhood diversity, which enabled us to apply very simple reduction rules and obtain an $\bigOs{2^{2d}}$-time \FPT algorithm.
+Moreover, said algorithm has optimal running time, assuming that \ETH\ holds.
+For \pname{Biclique Coloring}, however, we were unable to provide an \FPT\ algorithm when considering solely neighborhood diversity and had to include the size of the largest true twin class -- which is a lower bound to the biclique chromatic number -- to obtain a parameterized algorithm. 
+As such, we are led to believe that \pname{Biclique Coloring} parameterized by neighborhood diversity is not in $\FPT$.
+Much of the exploratory work on different graph classes and parameters remains to be done for \pname{Biclique Coloring}, and it may be an interesting venue for future work.

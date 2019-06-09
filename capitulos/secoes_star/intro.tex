@@ -95,16 +95,268 @@ Another common line of investigation on intersection graphs is the behaviour of 
 For instance, \cite{clique_iterated}, and \cite{clique_divergent} study iterated applications of the clique operator.
 Biclique graphs -- the intersection graph of the maximal induced complete bipartite graphs of a graph -- were first characterized and studied by \cite{biclique_graph}.
 Their results, however, are not very useful from the algorithmic point of view, and appear to not yield many insights on the recognition problem.
-Nevertheless, they study the behaviour of biclique graphs, showing that every edge is contained either in a diamond or a 3-fan and specialize their general characterization for biclique graphs of bipartite graphs.
+Nevertheless, they study the behavior of biclique graphs, showing that every edge is contained either in a diamond or a 3-fan and specialize their general characterization for biclique graphs of bipartite graphs.
 As was done for clique graphs, the iterated biclique operator has also been studied by Groshaus et al. in multiple papers~\citep{biclique_iterated, almost_all_biclique}, with results ranging from characterizations of divergence, divergence type verification algorithms, and other structural results.
+
+For other classical results in the area we point to~\citep{intersection_graphs}, from where most of the given definitions come from.
+
+\subsection{Maximal Stars}
 
 Regarding stars, previous work handled the intersection graphs of (not necessarily maximal) substars of a tree~\citep{substar_graph} and of a star~\citep{starlike_graph}.
 For the first, a minimal infinite family of forbidden induced subgraphs was given, while, for the latter, a series of characterizations were shown (including a finite family of forbidden induced subgraphs).
 Stars are a particular case of bicliques, and both the biclique graph and star graph coincide for $C_4$-free graphs.
 In fact, this relationship was successfully applied to determine the complexity of biclique coloring~\citep{biclique_coloring_complexity}, using a reduction from \pname{QSAT}$_2$ to star coloring (a coloring of the vertices of a graph such that no maximal star is monochromatic).
 To the best of our knowledge, these are the main topics discussed in the literature that involve maximal stars in some way.
-However, star graphs appear to be natural generalizations of square graphs~\cite{murty} in the sense that, when applying the squaring operation, for each vertex $v$ only the largest, non-induced star centered at $v$ is selected, and the intersection graph of these stars is generated.
+
+
+The \tdef{star operator} $\K{S}$ applied on $H$ is the intersection graph of the induced maximal stars of $H$.
+The result of $\K{S}$ is called the \tdef{image graph}, or simply \tdef{image}.
+A graph $G$ is a \textit{star graph} if there is some graph $H$ such that $G \simeq \K{S}(H)$. 
+Given a star graph $G$, any $H$ such that $\K{S}(H) \simeq G$ is called a \tdef{pre-image} of $G$.
+The \tdef{center} of a star $s = K_{1,n}$ is the vertex of the partition of size one.
+A \tdef{leaf} of a star $K_{1,n}$ is one of the vertices of degree one.
+We say that star $s_a$ \textit{absorbs} star $s_b$ if, by removing one leaf of $s_b$, it becomes a substar of $s_a$.
+The \textit{iterated star operator} $\K{S}^i$ is defined as $\K{S}^1(G) = \K{S}^1(G)$ and $\K{S}^i(G) = \K{S}(\K{S}^{i-1}(G))$.
+
+A vertex $v$ is said to be \tdef{star-critical} if its removal changes the resulting star graph; that is, the star graph of $H$ and the star graph of $H \setminus \{v\}$ are not isomorphic.
+Similarly to clique-critical graphs~\citep{clique_critical_toft,clique_critical_alcon}, a graph is \textit{star-critical} if all of its vertices are star-critical.
+It is not hard to see that the only vertices which may be non-star-critical are simplicial vertices; for example, if there is a class of false twin simplicial vertices, all but one of them are certainly non-star-critical.
+
+When detailing which vertices belong to a star, we shall describe it by $\{v_1\}\{v_2, \dots, v_{n+1}\}$, with $v_1$ being its center and the other $n$ vertices its leaves.
+If the star is a single edge, choose one of the vertices to be the center and the other to be the leaf arbitrarily.
+Unless noted, $G$ will be our star graph and $H$ the pre-image of $G$.
+The family of all maximal stars of $G$ is denoted by $\str(G)$.
+For the entirety of this work, we assume that all of our graphs are connected.
+
+
+
+\begin{figure}[!htb]
+	\centering
+	
+	\begin{tikzpicture}[rotate=45,scale=\gscale]
+	
+	\GraphInit[unit=3,vstyle=Normal]
+	%\draw[help lines] (-5,-5) grid (5,5);
+	\SetVertexNormal[Shape=circle, FillColor=black, MinSize=2pt]
+	\tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+	\begin{scope}[shift={(-2.41cm, 0cm)}]
+	\SetVertexNoLabel
+	\grEmptyCycle[RA=1.41,prefix=a]{4}
+	\Edges(a0,a1,a2,a3,a0)
+	\Vertex[x=0,y=2.41]{1a}
+	%\Vertex[y=0,x=-2.41]{2a}
+	\Vertex[x=0,y=-2.41]{3a}
+	\Edge(1a)(a1)
+	%\Edge(2a)(a2)
+	\Edge(3a)(a3)
+	\end{scope}
+	\begin{scope}[shift={(2.41cm, 0cm)}]
+	\SetVertexNoLabel
+	\grEmptyCycle[RA=1.41,prefix=b]{4}
+	\Edges(b0,b1,b2,b3,b0)
+	\Vertex[x=0,y=2.41]{1b}
+	%\Vertex[y=0,x=2.41]{0b}
+	\Vertex[x=0,y=-2.41]{3b}
+	\Edge(1b)(b1)
+	%\Edge(0b)(b0)
+	\Edge(3b)(b3)
+	\end{scope}
+	\Edge(a0)(b2)
+	\end{tikzpicture}
+	\hfill
+	\begin{tikzpicture}[rotate=45,scale=\gscale]
+	
+	\GraphInit[unit=3,vstyle=Normal]
+	%\draw[help lines] (-5,-5) grid (5,5);
+	\SetVertexNormal[Shape=circle, FillColor=black, MinSize=2pt]
+	\tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+	\begin{scope}[shift={(-2.41cm, 0cm)}]
+	\SetVertexNoLabel
+	\grEmptyCycle[RA=1.41,prefix=a]{4}
+	\Edges(a0,a1,a2,a3,a0)
+	\Vertex[x=0,y=2.41]{1a}
+	%\Vertex[y=0,x=-2.41]{2a}
+	\Vertex[x=0,y=-2.41]{3a}
+	\Edge(1a)(a1)
+	%\Edge(2a)(a2)
+	\Edge(3a)(a3)
+	
+	\Edge(a0)(a2)
+	\Edge(a1)(a3)
+	
+	\Edge(1a)(a2)
+	\Edge(3a)(a2)
+	\Edge(1a)(a0)
+	\Edge(3a)(a0)
+	%\Edge(2a)(a1)
+	%\Edge(2a)(a3)
+	\end{scope}
+	\begin{scope}[shift={(2.41cm, 0cm)}]
+	\SetVertexNoLabel
+	\grEmptyCycle[RA=1.41,prefix=b]{4}
+	\Edges(b0,b1,b2,b3,b0)
+	\Vertex[x=0,y=2.41]{1b}
+	%\Vertex[y=0,x=2.41]{0b}
+	\Vertex[x=0,y=-2.41]{3b}
+	\Edge(1b)(b1)
+	%\Edge(0b)(b0)
+	\Edge(3b)(b3)
+	
+	\Edge(b0)(b2)
+	\Edge(b1)(b3)
+	
+	\Edge(1b)(b2)
+	\Edge(3b)(b2)
+	\Edge(1b)(b0)
+	\Edge(3b)(b0)
+	%\Edge(0b)(b1)
+	%\Edge(0b)(b3)
+	\end{scope}
+	\Edge(a0)(b2)
+	\Edge(a0)(b1)
+	\Edge(a0)(b3)
+	\Edge(b2)(a1)
+	\Edge(b2)(a3)
+	\end{tikzpicture}
+	\hfill
+	\begin{tikzpicture}[shift={(1.41cm,0cm)},rotate=45,scale=\gscale]
+	
+	\GraphInit[unit=3,vstyle=Normal]
+	%\draw[help lines] (-5,-5) grid (5,5);
+	\SetVertexNormal[Shape=circle, FillColor=black, MinSize=2pt]
+	\tikzset{VertexStyle/.append style = {inner sep = \inners, outer sep = \outers}}
+	\begin{scope}[shift={(-2.41cm, 0cm)}]
+	\SetVertexNoLabel
+	\grEmptyCycle[RA=1.41,prefix=a]{4}
+	\Edges(a0,a1,a2,a3,a0)
+	\Edge(a0)(a2)
+	\Edge(a1)(a3)
+	\end{scope}
+	\begin{scope}[shift={(2.41cm, 0cm)}]
+	\SetVertexNoLabel
+	\grEmptyCycle[RA=1.41,prefix=b]{4}
+	\Edges(b0,b1,b2,b3,b0)
+	\Edge(b0)(b2)
+	\Edge(b1)(b3)
+	\end{scope}
+	\Edge(a0)(b2)
+	\Edge(a0)(b1)
+	\Edge(a0)(b3)
+	\Edge(b2)(a1)
+	\Edge(b2)(a3)
+	\end{tikzpicture}
+	\hfill
+	
+	
+	
+	\caption{A triangle-free graph (left), its square (center) and its star graph (right).}
+	\label{fig:tri_star}
+\end{figure}
+
+Before proceeding to the main results of this chapter, we make the following remark.
+
+\begin{observation}
+	Every vertex of degree at least two in a triangle free graph is the center of exactly one maximal star.
+\end{observation}
+
+The above observation immediately leads us to the property that every star graph of a triangle-free graph is closely related to the square of one of its induced subgraphs.
+
+\begin{observation}
+	If $H$ is a $K_3$-free graph with at least 3 vertices, $D$ are its vertices of degree at least 2 and $G = \K{S}(H)$, it holds that $G \simeq H[D]^2$.
+\end{observation}
+
+As such, every hardness result or polynomial time algorithm for the recognition of squares of triangle-free graphs immediately applies to the class of star graphs of triangle-free graphs.
+For an illustration of the previous observation, we refer to Figure~\ref{fig:tri_star}.
+For a far more complicated star graph, we refer to Figure~\ref{fig:star_example}.
+
+
+
+\begin{figure}[!tb]
+	\centering
+	\begin{tikzpicture}
+	\GraphInit[unit=3,vstyle=Normal]
+	\SetVertexNormal[Shape=circle, FillColor = black, MinSize=3pt]
+	\tikzset{VertexStyle/.append style = {inner sep = \inners,outer sep = \outers}}
+	\SetVertexNoLabel
+	\begin{scope}[rotate=45]
+	\grComplete[RA=1]{4}
+	\end{scope}
+	\Vertex[x=0, y=-2]{x4}
+	\Vertex[x=0, y=-4]{x3}
+	\Vertex[x=0, y=-6]{x2}
+	\Vertex[x=-1, y=-6]{x1}
+	\Edges(a3,x4,a2)
+	\Edges(x4,x3,x2,x1)
+	\end{tikzpicture}
+	\hfill
+	\begin{tikzpicture}
+	\GraphInit[unit=3,vstyle=Normal]
+	\SetVertexNormal[Shape=circle, FillColor = black, MinSize=3pt]
+	\tikzset{VertexStyle/.append style = {inner sep = \inners,outer sep = \outers}}
+	\SetVertexNoLabel
+	\Vertex[x = 0, y = 0.707]{v78}
+	\Vertex[x = 2, y = -0.707]{v854}
+	\Vertex[x = 1, y = -0.707]{v754}
+	
+	\Vertex[x = -1, y = -0.707]{v764}
+	\Vertex[x = -2, y = -0.707]{v864}
+	\Vertex[x = 0, y = 0]{v65}
+	
+	\Vertex[x = 1, y = -2]{v543}
+	
+	\Vertex[x = -1, y = -2]{v643}
+	
+	\Vertex[x = 0, y = -4]{v432}
+	
+	\Vertex[x = 0, y = -6]{v321}
+	
+	
+	
+	\Edge(v65)(v764)
+	\Edge(v643)(v854)
+	\Edge(v643)(v864)
+	\Edge(v321)(v432)
+	\Edge(v754)(v854)
+	\Edge(v643)(v754)
+	\Edge(v543)(v65)
+	\Edge(v764)(v78)
+	\Edge(v864)(v78)
+	\Edge(v543)(v854)
+	\Edge(v764)(v754)
+	\Edge(v764)(v864)
+	\Edge(v432)(v764)
+	\Edge(v643)(v65)
+	\Edge(v65)(v754)
+	\Edge[style = bend right](v864)(v854)
+	\Edge(v432)(v643)
+	\Edge(v321)(v543)
+	\Edge(v643)(v764)
+	\Edge(v643)(v543)
+	\Edge(v864)(v754)
+	\Edge(v754)(v78)
+	\Edge(v854)(v78)
+	\Edge(v543)(v864)
+	\Edge(v543)(v764)
+	\Edge(v321)(v643)
+	\Edge(v432)(v543)
+	\Edge(v65)(v854)
+	\Edge(v543)(v754)
+	\Edge(v764)(v854)
+	\Edge[style=bend right](v432)(v854)
+	\Edge[style=bend left](v432)(v864)
+	\Edge(v432)(v754)
+	\Edge(v65)(v864)
+	\end{tikzpicture}
+	\hfill
+	
+	
+	
+	\caption{A graph (left) and its star graph (right).}
+	\label{fig:star_example}
+\end{figure}
+
+However, star graphs appear to be natural generalizations of square graphs~\citep{murty} in the sense that, when applying the squaring operation, for each vertex $v$ only the largest, non-induced star centered at $v$ is selected, and the intersection graph of these stars is generated.
 On the other hand, for star graphs, every \textit{induced} maximal star is used in the construction of the intersection graph.
 Despite the classes of star graphs and biclique graphs being equivalent when restricting the  pre-image domain to $C_4$-free graphs, we were unable to deepen the study biclique graphs; our efforts were hindered by some of the questions posed and developed upon in this work.
 
-For other classical results in the area we point to~\citep{intersection_graphs}, from where most of the given definitions come from.
+

@@ -51,7 +51,7 @@ There are polynomial time algorithms for a myriad of different classes, includin
 More generally, there are known polynomial time algorithms for \tdef{perfect graphs}~\citep{perfect_polynomial}, which is a superclass of the aforementioned ones.
 $G$ is perfect if for every induced subgraph $G'$ of $G$, $\chi(G') = \omega(G')$.
 
-More particular cases for \pname{Vertex Coloring} have also been analyzed. For instance, \citep{coloring_art} presents some results for graph classes that have two connected five-vertex forbidden induced subgraphs. There are some surveys on the subject, as such we point to~\citep{coloring_survey} and \citep{coloring_survey2} for more on the classic \pname{Vertex Coloring} problem, since it is not the focus of this thesis.
+More particular cases for \pname{Vertex Coloring} have also been analyzed. For instance, \cite{coloring_art} present some results for graph classes that have two connected five-vertex forbidden induced subgraphs. There are some surveys on the subject, as such we point to~\citep{coloring_survey} and~\citep{coloring_survey2} for more on the classic \pname{Vertex Coloring} problem, since it is not the focus of this thesis.
 
 
 \subsection{Equitable Coloring}
@@ -111,7 +111,7 @@ In terms of the equitable chromatic threshold, however, we have the \tdef{Hajnal
     Any graph $G$ is equitably $k$-colorable if $k \geq \Delta(G) + 1$. Equivalently, $\CN{=}^*(G) \leq \Delta(G) + 1$.
 \end{theorem*}
 
-\citep{e_delta_cc} suggest that a stronger result than the Hajnal-Szmerédi theorem may be achievable, presenting some classes where the \tdef{Equitable $\Delta$-coloring conjecture} (E$\Delta$CC) holds.
+\cite{e_delta_cc} suggest that a stronger result than the Hajnal-Szmerédi theorem may be achievable, presenting some classes where the \tdef{Equitable $\Delta$-coloring conjecture} (E$\Delta$CC) holds.
 Moreover, they prove that if E$\Delta$CC holds for every regular graph, then it holds for every graph.
 
 \begin{conjecture*}[E$\Delta$CC]
@@ -119,11 +119,8 @@ Moreover, they prove that if E$\Delta$CC holds for every regular graph, then it 
 \end{conjecture*}
 
 Quite a lot of effort was put into finding classes where E$\Delta$CC holds, even with the knowledge that only proofs for regular graphs are required.
-A result given by~\citep{claw_free_de_werra}, combined with Brooks' Theorem, implies that every claw-free graph is equitably $k$-colorable for every $k \geq \chi(G)$.
-Unfortunately, we were unable to verify whether this result is algorithmic and, in the affirmative, the algorithm's complexity.
-However, due to the broadness of the class, we believe that, even if it exists, the algorithm has a higher complexity than the ones we describe.
-
-A very extensive survey on the subject was conducted by~\citep{equitable_survey}, where many of the results of the past 50 years were assembled.
+A result given by~\cite{claw_free_de_werra}, combined with Brooks' Theorem, implies that every claw-free graph is equitably $k$-colorable for every $k \geq \chi(G)$.
+A very extensive survey on the subject was conducted by~\cite{equitable_survey}, where many of the results of the past 50 years were assembled.
 Among the many reported results, the E$\Delta$CC is known to hold for:
 bipartite graphs (with the obvious exceptions, where the ECC holds),
 trees,
@@ -137,7 +134,7 @@ random graphs and
 some forms of graph products.
 For the exact results please refer to the survey.
 
-Almost all complexity results for \pname{Equitable Coloring} arise from a related problem, known as \pname{Bounded Coloring}, an observation given by~\citep{equitable_treewidth}.
+Almost all complexity results for \pname{Equitable Coloring} arise from a related problem, known as \pname{Bounded Coloring}, an observation given by~\cite{equitable_treewidth}.
 A $k$-coloring is said to be \tdef{$l$-bounded} if for every color class $\varphi_i$, $|\varphi_i| \leq l$.
 $G$ is \tdef{l-bounded k-colorable} if it admits an $l$-bounded $k$-coloring.
 
@@ -155,8 +152,8 @@ For cographs, we have a polynomial time algorithm when $k$ is fixed, otherwise t
 A consequence of the hardness result for cographs is that \pname{Equitable Coloring} is $\NPc$ for graphs of bounded cliquewidth.
 
 On complements of \tdef{comparability graphs} (graphs representing a valid partial ordering) however, even if we fix $l$, \pname{Bounded Coloring} is still $\NPc$~\citep{chain_antichain}.
-\citep{colorful_treewidth} show that, when parameterized by treewidth, \pname{Equitable Coloring} is $\W[1]\text{-}\Hard$.
-Also in terms of treewidth, \citep{equitable_treewidth} give a polynomial time algorithm for graphs of bounded treewidth.
+\cite{colorful_treewidth} show that, when parameterized by treewidth, \pname{Equitable Coloring} is $\W[1]\text{-}\Hard$.
+Also in terms of treewidth, \cite{equitable_treewidth} give a polynomial time algorithm for graphs of bounded treewidth.
 Note that for all of the mentioned classes, \pname{Vertex Coloring} is polynomially solvable.
 
 A summary of the known complexities is available in Table~\ref{tab:equitable_complexity}.
@@ -174,7 +171,7 @@ A summary of the known complexities is available in Table~\ref{tab:equitable_com
        Bipartite            &  $\NPc$           & $\NPc$                \\
        Co-bipartite         &  $\P$             & $\P$                  \\
        Cographs             &  $\P$             & $\NPc$                \\
-       Bounded Cliquewidth  &  ?                & $\NPc$                \\
+       Bounded Cliquewidth  &  $\NPc$                & $\NPc$                \\
        Bounded Treewidth    &  $\P$             & $\P$                  \\
        Chordal              &  $\P^*$           & $\NPc$                \\
        Block                &  $\P^*$           & $\NPc^*$              \\
@@ -218,18 +215,18 @@ Research on the topic is much more recent than what was done for \pname{Vertex C
 Even when $k$ is fixed, \pname{Clique Coloring} is known to be $\SiP{2}\text{-}\Complete$, as shown by~\cite{clique_coloring_complexity}, with an $\bigOs{2^n}$ algorithm being proposed by~\cite{clique_color_algorithm}.
 
 As with \pname{Vertex Coloring}, \pname{Clique Coloring} has been studied when restricting the input graph to certain graph classes.
-\cite{weakly_clique_color} investigated 2-clique-coloring in terms of \tdef{weakly chordal graphs} (graphs free of any hole or anti-hole with more than 4 vertices), giving a series of results for the general case ($\SiP{2}\text{-}\Complete$) and showing that, for some nested subclasses, there are $\NPc$ and $\P$ instances of the problem.
+\cite{weakly_clique_color} investigate 2-clique-coloring in terms of \tdef{weakly chordal graphs} (graphs free of any hole or anti-hole with more than 4 vertices), giving a series of results for the general case ($\SiP{2}\text{-}\Complete$) and showing that, for some nested subclasses, there are $\NPc$ and $\P$ instances of the problem.
 When dealing with \tdef{unichord-free} graphs (graphs that contain no induced cycle with a unique chord), the problem is solvable in polynomial time~\citep{unichord_coloring}.
 
 \tdef{Circular-arc} graphs (intersection graphs of a set of arcs of a circle) are always 3-clique-colorable, with a polynomial time algorithm to determine if the input is 2-clique-colorable~\citep{clique_circular_arc}.
 When the given graph is \tdef{odd-hole-free}, it is $\SiP{2}\text{-}\Complete$ to decide whether it is 2-clique-colorable or not~\citep{clique_oddhole}.
 \cite{clique_coloring_few_p4} give a series of bounds on graphs that, in some sense, contain few $P_4$'s, showing that most them are either 2 or 3-clique-colorable.
 
-For \tdef{planar graphs} (graphs that can be drawn on a plane with no crossing edges), \citep{clique_coloring_planar} show that they are 3-clique-colorable, and \citep{clique_color_perfect_np_complete} present a polynomial time algorithm to decide whether a planar graph is 2-clique-colorable or not.
+For \tdef{planar graphs} (graphs that can be drawn on a plane with no crossing edges), \cite{clique_coloring_planar} show that they are 3-clique-colorable, and \cite{clique_color_perfect_np_complete} present a polynomial time algorithm to decide whether a planar graph is 2-clique-colorable or not.
 
 Some of these classes are subclasses of perfect graphs, and a conjecture suggests that every perfect graph is 3-clique-colorable~\citep{maximal_clique_coloring}.
-Also in terms of perfect graphs, it is $\NPc$ to decide whether a perfect graph is 2-clique-colorable (\cite{clique_color_perfect_np_complete}).
-\citep{clique_oddhole} also give the observation that every \tdef{strongly perfect graph} (see~\citep{strongly_perfect}) is 2-clique-colorable, a superclass of both chordal graphs and cographs.
+Also in terms of perfect graphs, it is $\NPc$ to decide whether a perfect graph is 2-clique-colorable~\citep{clique_color_perfect_np_complete}.
+\cite{clique_oddhole} also give the observation that every \tdef{strongly perfect graph}~\citep{strongly_perfect} is 2-clique-colorable, a superclass of both chordal graphs and cographs.
 For a summary of the mentioned results, please refer to Table~\ref{tab:clique_color_complexity}.
 
 \begin{table}[!htb]
@@ -282,12 +279,12 @@ Much like \pname{Clique Coloring}, there is a natural decision problem associate
 \end{figure}
 
 
-\pname{Biclique Coloring} is an even more recent research topic than \pname{Clique Coloring}, with the first results being a $\SiP{2}\text{-}\Cness$ proof due to~\citep{biclique_coloring_complexity} and the confirmation that verifying a solution to the problem is a $\coNP\text{-}\Complete$ task (\cite{biclique_coloring_verification}).
+\pname{Biclique Coloring} is an even more recent research topic than \pname{Clique Coloring}, with the first results being a $\SiP{2}\text{-}\Cness$ proof due to~\cite{biclique_coloring_complexity} and the confirmation that verifying a solution to the problem is a $\coNP\text{-}\Complete$ task~\citep{biclique_coloring_verification}.
 
 In terms of complexity results, very little is known about \pname{Biclique Coloring}.
-For unichord-free graphs, \citep{unichord_coloring} give a polynomial time algorithm to compute $\CN{B}$ and show that the biclique chromatic number of unichord-free graphs is either equal to or one greater than the size of the largest true twin class.
-\citep{biclique_coloring_verification} present a polynomial time algorithm for powers of cycles and powers of paths.
-Finally, \citep{biclique_coloring_complexity} give complexity results for $H$-free graphs, for every $H$ on three vertices, being polynomial for $H \in \{K_3, P_3, \overline{P_3}\}$ and $\NPc$ for $\overline{K_3}$-free graphs;
+For unichord-free graphs, \cite{unichord_coloring} give a polynomial time algorithm to compute $\CN{B}$ and show that the biclique chromatic number of unichord-free graphs is either equal to or one greater than the size of the largest true twin class.
+\cite{biclique_coloring_verification} present a polynomial time algorithm for powers of cycles and powers of paths.
+Finally, \cite{biclique_coloring_complexity} give complexity results for $H$-free graphs, for every $H$ on three vertices, being polynomial for $H \in \{K_3, P_3, \overline{P_3}\}$ and $\NPc$ for $\overline{K_3}$-free graphs;
 moreover they show that the problem is $\NPc$ for diamond ($C_4$ plus one chord) free graphs and split graphs, and polynomial for \tdef{threshold graphs} (\{$2K_2,P_4,C_4$\}-free).
 We summarize the presented results in Table~\ref{tab:biclique_color_complexity}.
 

@@ -1,8 +1,35 @@
-\chapter{Star Graph}
+\chapter{On the intersection graph of maximal stars}
 \label{ch:star_graph}
+
+
+Intersection graphs form the basis for much of the theory on graph classes.
+For instance, the class of chordal graphs, which is one of the most fundamental and broadly studied classes~\cite{classes_survey}, can be defined as precisely the family of intersection graphs of all subtrees of some tree.
+Interval graphs, in turn, are defined as the family of intersection graphs of subpaths of some path.
+Line graphs are the intersection graphs of the edges of some graph.
+Unlike chordal graphs, there are known characterizations for line graphs that make use of a finite family of forbidden induced subgraphs~\citep{line_nich}.
+Moreover, line graphs were one of the first classes to be characterized in terms of edge clique covers that satisfy some properties pertinent to the intersection definition; results of this form are known as \tdef{Krausz-type characterizations}.
+
+All of the aforementioned classes are easily recognizable in polynomial time~\cite{classes_survey,line_naor}.
+The complexity of recognizing clique graphs -- the intersection graphs of the maximal cliques of some graph -- was an open problem for decades, with a very complicated argument, due to~\cite{clique_recognition}, showing that the problem is $\NPc$.
+Many other aspects of clique graphs have been investigated in the literature.
+Such is the case for, clique-critical graphs -- graphs whose clique graph is different from the clique graph of all of its proper induced subgraphs.
+This graph class has its own characterizations~\cite{clique_critical_toft} and bounds~\cite{clique_critical_alcon} which were central in the proof of the complexity of the clique graph recognition problem.
+Another common line of investigation on intersection graphs is the study of iterated intersection graphs, i.e., of the behavior of a graph that undergoes the operation multiple consecutive times.
+Results of this flavor usually come in the form of convergence, divergence, and periodicity theorems, relating properties of the input graph to the behavior of the limit graph (after applying the operator an infinite number of times).
+A closely related intersection class to star graphs is that of biclique graphs -- the intersection graph of the maximal induced complete bipartite graphs of a graph.
+The introductory paper by~\cite{biclique_graph} gives a Krausz-type characterization of the class and some properties of its members; these results, however, are not very useful from the algorithmic point of view, and appear to not yield many insights on the recognition problem.
+
+Star graphs and biclique graphs coincide for $C_4$-free graphs and our initial hope was that results on the former would yield advancements on the latter.
+While we were unable to achieve our original goal, we present an introductory study of the intersection graphs of maximal stars, providing answers to some difficulties we encountered when working with the class.
+After some standard definitions of the theory of intersection graphs, we begin the discussion with a bound on the number of vertices of star-critical graphs by a quadratic function of the size of its set of maximal stars.
+Afterwards, we give a Krausz-type characterization, which, when combined to the previous result, shows that the recognition problem belongs to \NP.
+We then shift the focus, to properties of star graphs.
+In particular, we show that they are biconnected, that every edge belongs to at least one triangle, we characterize the structures that the pre-image must have in order to generate degree two vertices, and bound the diameter of the star graph with respect to the diameter of its pre-image is given.
+Finally, we give a monotonicity theorem, which is used to generate all star graphs on no more than eight vertices and prove that the class of star graphs and square graphs are not properly contained in each other.
 
 
 \input{capitulos/secoes_star/intro}
 \input{capitulos/secoes_star/bound}
 \input{capitulos/secoes_star/characterization}
 \input{capitulos/secoes_star/properties}
+\input{capitulos/secoes/star/concluding.tex}
