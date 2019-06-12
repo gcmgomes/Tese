@@ -534,7 +534,7 @@ Our next result is a natural generalization of Chvátal's algorithm~\cite{chvata
 \begin{proof}
     We may assume that $G$ is connected, as otherwise it always admits a $d$-cut. If $G$ is a tree, any edge is a cut edge and, consequently, a $d$-cut is easily found.
     So let $C$ be a shortest cycle of $G$.
-    If $d = 1$ we use Chvátal's result~\cite{chvatal_matching_cut} together with the size bound of eight observed by Moshi~\cite{matching_cut_moshi}; hence, we may assume that $d \geq 2$.
+    If $d = 1$ we use Chvátal's result~\citep{chvatal_matching_cut} together with the size bound of eight observed by \cite{matching_cut_moshi}; hence, we may assume that $d \geq 2$.
     In the case that $V(G) = C$, we may pick any vertex $v$ and note that $(\{v\}, C \setminus \{v\})$ is a $d$-cut.
 
    % \ig{I restructured the distinction of cases}
@@ -554,7 +554,7 @@ Our next result is a natural generalization of Chvátal's algorithm~\cite{chvata
 
 Theorems~\ref{thm:regular_nph} and~\ref{thm:small_deg_poly} present a ``quasi-dichotomy'' for $d$-cut on graphs of bounded maximum degree.
 Specifically, for $\Delta(G) \in \{d+3, \dots, 2d+1\}$, the complexity of the problem remains unknown.
-However, we believe that most, if not all, of these open cases can be solved in polynomial time; see the discussion in Section~\ref{sec:concl}.
+However, we believe that most, if not all, of these open cases can be solved in polynomial time; see the discussion in Section~\ref{sec:cuts_concl}.
 
 
 \subsection{Exact exponential algorithm}

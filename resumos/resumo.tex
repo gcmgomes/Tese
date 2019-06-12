@@ -1,10 +1,14 @@
+Problemas de partição em grafos modelam diferentes tarefas do mundo real, como aloção de recursos ou design de redes tolerantes a falhas.
+Geralmente, esse problemas são NP-difíceis, e projetar algoritmos cuja complexidade dependa apenas do tamanho do grafo de entrada levam a tempos de exacução impraticáveis.
+A complexidade parametrizada aborda esse desafio por meio do projeto de algoritmos que funcionam bem em apenas algumas instancias do problem.
 Nesta tese, cinco problemas em teoria dos grafos foram estudados do ponto de vista da complexidade computacional: coloração equilibrada, clique coloração, biclique coloração, $d$-corte, e reconhecimento de grafos estrela.
 
 Coloração equilibrada foi investigada em termos de grafos cordais, grafos bloco e algumas subclasses.
-Resultados incluem um algoritmo polinomial para grafos cordais quando o número de cores é fixo, um algoritmo linear para grafos bloco livres de rede e garra, um algortimo de complexidade quadrática para grafos bloco livres de garra e um algoritmo de complexidade cúbica para cordais livres de garra.
-Uma prova de $\NPct$ para grafos bloco livres de rede que também são cografos é apresentada.
-Investigações futuras incluem a determinação de classes onde, mesmo para um número fixo de cores, coloração equilibrada continua sendo um problema difícil e para grafos livres de garra com largura arbórea limitada.
-
+Foi provado que coloração equilibrada  é
+$\mathsf{W[1]\text{-}difícil}$ para grafos bloco de diametro limitado e para a união disjunta de grafos split, quando parametrizado pelo número de cores e treewidth; e
+$\mathsf{W[1]\text{-}difícil}$ para grafos de intervalo livros de $K_{1,4}$ quando parametrizado por treewidth, número de cores e grau máximo, generalizando os resultados Fellows et al. (2014) por meio de reduções muito mais simples.
+Usando resultados alteriores de Werra (1985), uma dicotomia para a complexidade de coloração equilibrada de grafos cordais baseada na maior estrela induzida foi estabelecida.
+Finalmente, é demonstrado que o problema de coloração equilibrada é $\mathsf{FPT}$ quando parametrizada pelo treewidth do grafo complementar.
 É apresentado o primeiro algoritmo $\bigOs{2^n}$ para biclique coloração, que faz uso de propriedades associadas ao hipergrafo biclique e do princípio da inclusão exclusão.
 Algoritmos parametrizados por diversidade de vizinhança são discutidos para os problemas de clique e biclique coloração, sendo esses os primeiros algoritmos parametrizados para esses problemas.
 Biclique coloração foi apenas recentemente introduzida na literatura, e muito do trabalho exploratório em diferentes classes de grafos ainda deve ser feito.

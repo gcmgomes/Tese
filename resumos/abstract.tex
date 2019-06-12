@@ -1,10 +1,15 @@
+Graph partitioning problems are used to model many different real world tasks, such as the allocation of resources or designing fault tolerant networks.
+Usually, however, they are \NP-\Hard\ problems, and designing algorithms with complexity solely dependent on the size of the input graph leads to impractical running times.
+Parameterized complexity approaches this challenge by designing algorithms that work well for some instances of the problem.
 In this thesis, five graph theoretical problems were studied from the complexity point of view: equitable coloring, clique coloring, biclique coloring, $d$-cut, and star graph recognition.
 
 Equitable coloring was investigated in terms of chordal graphs, block graphs and some of its subclasses.
-Results include a polynomial time algorithm for chordal graphs when the number of colors is fixed, a linear time algorithm for \{net, claw\}-free blocks graphs and a polynomial time algorithm for claw-free block graphs and another for claw-free chordal graphs.
-A proof of $\NPcness$ for net-free blocks graphs which are also cographs was given.
-Further investigations include the discovery of classes where, even for a fixed number of colors, equitable coloring is hard, and the complexity of equitably coloring claw-free graphs with bounded treewidth.
-
+It is proved that \textsc{Equitable Coloring} is  
+$\mathsf{W[1]\text{-}hard}$ for block graphs of bounded degree and for disjoint union of split graphs when parameterized by the number of colors and treewidth; and %$\W[1]$-$\Hard$
+$\mathsf{W[1]\text{-}hard}$ for $K_{1,4}$-free interval graphs when parameterized by treewidth, number of colors and maximum degree, generalizing a result by Fellows et al. (2014) through a much simpler reduction.
+Using a previous result due to Dominique de Werra (1985), a dichotomy for the complexity of equitable coloring of chordal graphs based on the size of the largest induced star is established.
+Finally, it is shown that 
+\textsc{Equitable Coloring} is $\mathsf{FPT}$ when parameterized by the treewidth of the complement graph.
 The first $\bigOs{2^n}$ time exact algorithm for biclique coloring was presented, which makes use of properties of the associated biclique hypergraph and the powerful inclusion-exclusion principle.
 Algorithms parameterized by neighbourhood diversity were discussed for both clique and biclique coloring, being the first parameterized algorithms for these problems.
 Biclique coloring was only recently introduced in the literature, and much of the exploratory work on different graph classes remains to be done.
@@ -12,9 +17,14 @@ Biclique coloring was only recently introduced in the literature, and much of th
 A natural generalization of the \textsc{Matching Cut} problem, called \textsc{$d$-Cut} is defined and investigated.
 Namely, an \NP-hardness reduction for \textsc{$d$-Cut} on $(2d+2)$-regular graphs is given, followed by a polynomial time algorithm for graphs of maximum degree at most $d+2$.
 The degree bound in the hardness result is unlikely to be improved, as it would disprove a long-standing conjecture in the context of internal partitions.
-\FPT algorithms for several parameters are given: the maximum number of edges crossing the cut, treewidth, distance to cluster, and distance to co-cluster. In particular, the treewidth algorithm improves upon the running time of the best known algorithm for \textsc{Matching Cut}. Our main technical contribution is a polynomial kernel for \textsc{$d$-Cut} for every positive integer $d$, parameterized by the distance to a cluster graph. The existence of polynomial kernels when parameterizing simultaneously by the number of edges crossing the cut, the treewidth, and the maximum degree is also ruled out.
-An exact exponential algorithm slightly faster than the naive brute force approach running in time $\bigOs{2^n}$ is provided
+\FPT algorithms for several parameters are given: the maximum number of edges crossing the cut, treewidth, distance to cluster, and distance to co-cluster.
+In particular, the treewidth algorithm improves upon the running time of the best known algorithm for \textsc{Matching Cut}.
+Our main technical contribution is a polynomial kernel for \textsc{$d$-Cut} for every positive integer $d$, parameterized by the distance to a cluster graph.
+The existence of polynomial kernels when parameterizing simultaneously by the number of edges crossing the cut, the treewidth, and the maximum degree is also ruled out.
+An exact exponential algorithm slightly faster than the naive brute force approach running in time $\bigOs{2^n}$ is provided.
+We also discuss two other generalizations of \textsc{Matching Cut} which appear to be considerably more challenging than \textsc{$d$-Cut}.
 
 Finally, star graphs - intersection graph of maximal stars of a graph - were first discussed and defined in terms of a characteristic edge clique cover, in the hope that they could be a useful tool on the investigation of biclique graphs.
 A bound on the size of minimal pre-images by a quadratic function on the number of vertices of the star graph is presented, then a Krausz-type characterization for this graph class is described; the combination of these results yields membership of the recognition problem in \textsf{NP}.
-Some properties of star graphs are presented. In particular, it is shown that all graphs in this class are biconnected, that every edge belongs to at least one triangle, a characterization of the structures the pre-image must have in order to generate degree two vertices, and the diameter of the star graph is bounded by a function of the diameter of its pre-image. Finally, a monotonicity theorem is provided.
+Some properties of star graphs are presented. In particular, it is shown that all graphs in this class are biconnected, that every edge belongs to at least one triangle, a characterization of the structures the pre-image must have in order to generate degree two vertices, and the diameter of the star graph is bounded by a function of the diameter of its pre-image.
+Finally, a monotonicity theorem is provided, which we apply to generate all star graphs on at most eight vertices and prove that the classes of star graphs and square graphs are not properly contained in each other.
