@@ -1,8 +1,10 @@
-\section{Definitions and Related Work}
+\section{Definitions and related work}
 
 A \tdef{cut} of a graph $G = (V, E)$ is a bipartition of its vertex set $V(G)$ into two non-empty sets, denoted by $(A,B)$.
 The set of all edges with one endpoint in $A$ and the other in $B$ is the \tdef{edge cut}, or the set of \tdef{crossing edges}, of $(A,B)$.
-A \tdef{matching cut} is a (possibly empty) edge cut that is a matching, that is, such that its edges are pairwise vertex-disjoint. Equivalently, $(A, B)$ is a matching cut of $G$ if and only if every vertex is incident to at most one crossing edge of $(A, B)$~\citep{matching_cut_graham, chvatal_matching_cut}, that is, it has at most one neighbor across the cut.
+In a slight abuse of notation, we also denote the set of crossing edges by $(A,B)$.
+A \tdef{matching cut} is a (possibly empty) edge cut that is a matching, i.e., its edges are pairwise vertex-disjoint.
+Equivalently, $(A, B)$ is a matching cut of $G$ if and only if every vertex is incident to at most one crossing edge of $(A, B)$~\citep{matching_cut_graham, chvatal_matching_cut}, that is, it has at most one neighbor across the cut.
 The \pname{Matching Cut} problem is, thus, the task of deciding whether a graph admits a matching cut.
 Figure~\ref{fig:matching_cut} gives an example of a graph with a matching cut.
 
@@ -36,8 +38,8 @@ Figure~\ref{fig:matching_cut} gives an example of a graph with a matching cut.
     \end{figure}
 
 
-Motivated by an open question posed by \cite{matching_cut_ipec} during the presentation of their article,  we investigate a natural generalization that arises from this alternative definition
-For a positive integer $d \geq 1$, a \tdef{$d$-cut} is a a cut $(A, B)$ such that each vertex has at most $d$ neighbors across the partition, that is, every vertex in $A$ has at most $d$ neighbors in $B$, and vice-versa. Note that a $1$-cut is a matching cut.
+Motivated by an open question posed by \cite{matching_cut_ipec} during the presentation of their article,  we investigate a natural generalization that arises from this alternative definition.
+For a positive integer $d \geq 1$, a \tdef{$d$-cut} is a cut $(A, B)$ such that each vertex has at most $d$ neighbors across the partition, that is, every vertex in $A$ has at most $d$ neighbors in $B$, and vice-versa. Note that a $1$-cut is a matching cut.
 As expected, not every graph admits a $d$-cut, and the \pname{$d$-Cut} problem is the problem of, for a fixed integer $d \geq 1$, deciding whether or not an input graph $G$ has a $d$-cut.
 
 \problem{$d$-Cut}{A graph $G$.}{Does $G$ admit a $d$-cut?}
@@ -54,7 +56,7 @@ Beyond planar graphs, \cite{matching_cut_planar} also proves that the matching c
 
 \cite{matching_cut_tcs} noted that Chv\'atal's original reduction also shows that, unless the Exponential Time Hypothesis fails, there is no algorithm solving \pname{Matching Cut} in time $2^{o(n)}$ on $n$-vertex input graphs.
 Also in~\citep{matching_cut_tcs}, the authors provide a first branching algorithm, running in time $\bigOs{2^{n/2}}$, a single-exponential $\FPT$ algorithm when parameterized by the vertex cover number $\tau(G)$, and an algorithm generalizing the polynomial cases of line graphs~\citep{matching_cut_moshi} and claw-free graphs~\citep{matching_cut_planar}.
-\cite{matching_cut_tcs} also asked for the existence a single-exponential algorithm parameterized by treewidth.
+\cite{matching_cut_tcs} also asked for the existence of a single-exponential algorithm parameterized by treewidth.
 In response, \cite{matching_cut_structural} provided a $\bigOs{12^{\tw(G)}}$ algorithm for \pname{Matching Cut} using nice tree decompositions, along with $\FPT$ algorithms for other structural parameters, namely neighborhood diversity, twin-cover, and distance to split graph.
 
 The natural parameter -- the number of edges crossing the cut -- has also been considered.

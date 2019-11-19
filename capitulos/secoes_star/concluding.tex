@@ -1,0 +1,16 @@
+\section{Concluding remarks}
+
+This chapter introduced the class of star graphs -- the intersection graphs of the induced maximal stars of some graph.
+We presented various results, such as a Krausz-type characterization for the class, a quadratic bound on the size of potential pre-images, membership of the recognition problem in \textsf{NP} and a monotonicity theorem for graphs which are not star-critical.
+We also presented a series of properties the members of the class must satisfy, such as being biconnected and that every edge must belong to some triangle.
+We leave two main open question.
+The first, and perhaps more challenging of the two, is the complexity of the recognition problem; for example, the complexity of the clique graph recognition problem was left open for many decades, only being settled recently~\cite{clique_recognition} through a series of non-intuitive gadgets and other novel characterizations.
+The second is a complete characterization of both star-critical and non-star-critical vertices; in particular, non-star-critical vertices seem the biggest obstacle one must overcome to achieve a linear bound on the size of star-critical pre-images.
+
+Despite our special interests in the above questions, many other directions are available for investigation.
+In terms of the class of all star graphs, our best membership checking tool at the moment is generating pre-image candidates and apply Corollary~\ref{cor:frontier} of Theorem~\ref{thm:monotonicity} to prune the search space; if our hypothesis that the recognition problem is \textsf{NP-hard} is indeed true, and thus unlikely solvable in polynomial time, then what is the best way to verify membership?
+In a more general context, is there a polynomial delay algorithm that generates all star graphs of a certain order?
+We have also only begun the study of the iterated star operator, and various inquiries can be made about its properties, such as convergence/divergence criteria or other structural parameters, like maximum/minimum degree and connectivity.
+A strongly related but significantly different open topic is that of edge-star graphs, i.e., the edge-intersection graph of the maximal stars.
+Edge-biclique graphs have very recently been studied by Legay and Montero~\cite{edge_biclique} and present significant differences from the vertex-intersection biclique graph of Groshaus et al.~\cite{biclique_graph};
+Perhaps the interplay between the edge-star and edge-biclique graphs can yield useful observations for both classes.

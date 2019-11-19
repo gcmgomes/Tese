@@ -1,7 +1,7 @@
-\subsection{Algorithms Parameterized by Neighbourhood Diversity}
+\subsection{Algorithms parameterized by neighborhood diversity}
 
-\begin{definition}[Neighbourhood Diversity]
-    A graph $G = (V,E)$ has neighbourhood diversity $\nd(G) = d$ if it can be $d$-partitioned in $\{D_1, \dots, D_d\}$, with each $D_i$ being a type class of $G$.
+\begin{definition}[Neighborhood diversity]
+    A graph $G = (V,E)$ has neighborhood diversity $\nd(G) = d$ if it can be $d$-partitioned in $\{D_1, \dots, D_d\}$, with each $D_i$ being a type class of $G$.
 \end{definition}
 
 As previously discussed, a type is a maximal set of vertices that are either true or false twins to each other.
@@ -9,7 +9,7 @@ If $D_i$ is composed of true twins, we say that it is a \tdef{true twin class} $
 Similarly, if $D_i$ is composed of false twins, it is a \tdef{false twin class} $F_i$ and $G[D_i]$ is an independent set.
 When $|D_i| = 1$, we treat the class differently depending on the problem.
 
-\subsubsection{Biclique Coloring}
+\subsubsection{Biclique coloring}
 
 For \textsc{biclique coloring}, if there is some $D_i$ with a single vertex, we shall treat it as a true twin class.
 
@@ -183,7 +183,7 @@ Note that the size of the largest true twin class is exactly the largest coverag
         Afterwards, solve the corresponding \textsc{set multicover} instance in $\bigOs{(k+2)^{2d}}$ time using Theorem~\ref{thm:set_multicover} and lift the multicover using the construction described in the proof of Theorem~\ref{thm:lifted_multicover} in $\bigO{n}$.
 \end{tproof}
 
-\subsubsection{Clique Coloring}
+\subsubsection{Clique coloring}
 
 For \textsc{clique coloring}, a type class with a single vertex is treated as a false twin class.
 Unlike \textsc{biclique coloring}, both true and false twin classes are well behaved, one of the reasons we get a much better algorithm for this problem.
@@ -234,7 +234,7 @@ However, they still rely on the fact that a type has a constant bound on the num
 \end{definition}
 
 \begin{definition}[C-Projected Graph]
-    The C-projected graph $H$ of $G$ is defined as $V(H) = \Proj{C}(V(G))$ and $v'_iv'_j \in E(H)$ if and only if $\Lift{C}(v'_i)$ and $\Lift{C}(v'_j)$ are neighbours in $G$. Moreover, $H$ is an induced subgraph of $G$.
+    The C-projected graph $H$ of $G$ is defined as $V(H) = \Proj{C}(V(G))$ and $v'_iv'_j \in E(H)$ if and only if $\Lift{C}(v'_i)$ and $\Lift{C}(v'_j)$ are neighbors in $G$. Moreover, $H$ is an induced subgraph of $G$.
 \end{definition}
 
 \begin{figure}[!htb]

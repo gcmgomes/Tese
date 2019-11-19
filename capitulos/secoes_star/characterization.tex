@@ -1,9 +1,7 @@
 \section{Characterization}
 
-
-Much of the following discussion will be about edge clique covers, a central piece on the characterization of many intersection graph classes.
-We denote this family of subgraphs of $G$ by $\mathcal{Q} = \{Q_1, \dots, Q_n\}$.
-The usual strategy in these constructions is to use each clique as a vertex of the pre-image; this is also our approach.
+Throughout this section, we shall denote an edge clique cover of $G$ by $\mathcal{Q} = \{Q_1, \dots, Q_n\}$.
+The usual strategy in a Krausz-type characterization is to use each clique as a vertex of the pre-image; this is also our approach.
 Since each vertex $a \in V(G)$ must be a star in $H$, it is reasonable to partition each clique as $Q_i \sim \{Q_i^c, Q_i^f\}$, that is, the vertices $a \in Q_i^c$ correspond to the stars of $G$ with center in $v_i \in V(H)$, while the vertices $a \in Q_i^f$ correspond to the stars of $G$ where $v_i \in V(H)$ is a leaf.
 We call such an edge clique cover a \tdef{star-partitioned edge clique cover} of $\mathcal{Q}$.
 
@@ -24,7 +22,7 @@ To simplify our notation, for each $a \in V(G)$, we denote its \tdef{center} by 
     \end{enumerate}
 \end{definition}
 
-Figures~\ref{fig:diff_cases} and~\ref{fig:diff_cases2} show the four cases of Definition~\ref{def:differentiability} as seen on the pre-image of the star graph we shall build from $\mathcal{Q}$.
+Figures~\ref{fig:diff_cases} and~\ref{fig:diff_cases2} show the four cases of Definition~\ref{def:differentiability} as seen on the pre-image of the star graph we build from $\mathcal{Q}$ during the proof of Theorem~\ref{thm:star_characterization}.
 
 \begin{figure}[!htb]
     \centering
@@ -104,7 +102,7 @@ Figures~\ref{fig:diff_cases} and~\ref{fig:diff_cases2} show the four cases of De
     
     
     
-    \caption{The first three cases of Definition~\ref{def:differentiability}. The first (left), second (center) and third (right).}
+    \caption{The first three cases of Definition~\ref{def:differentiability}, from left (first) to right (third).}
     \label{fig:diff_cases}
 \end{figure}
 
@@ -199,14 +197,13 @@ Note that, the \say{missing case}, where $\{a,a'\} \in Q_i^f$ and $c(a) = c(a') 
 \end{lemma}
 
 \begin{tproof}
-    If $a$ and $a'$ do not share any clique, the result is trivial.
-    
+    If $a$ and $a'$ do not share any clique, the statement holds.
     Otherwise they do share some clique, say $Q_i$.
-    For properties 1, 2 and 4 of Definition~\ref{def:differentiability}, we conclude that $i \in Q(a) \cap Q(a')$ and that $j \in Q(a)$, $k \in Q(a')$ but $j \notin Q(a')$ and $k \notin Q(a)$, which implies $Q(a) \nsubseteq Q(a')$ and $Q(a') \nsubseteq Q(a)$.
+    If the pair $a,a'$ satisfies properties 1, 2, or 4 of Definition~\ref{def:differentiability}, since $i \in Q(a) \cap Q(a')$, we conclude that there exists $j \in Q(a)$, $k \in Q(a')$ but $j \notin Q(a')$ and $k \notin Q(a)$, implying $Q(a) \nsubseteq Q(a')$ and $Q(a') \nsubseteq Q(a)$.
     
     For property 3, however, we first conclude that there is some $j \in Q(a)$ but $j \notin Q(a')$, otherwise we would have $\cf(j,k) \neq \emptyset$ and $\ff(j,k) \neq \emptyset$.
     Consequently, $Q(a) \nsubseteq Q(a')$.
-    For the converse, we note that $\{a, a'\} \subseteq Q_k$ and, following the same argument, we conclude that there is $j' \in Q(a')$ but $j' \notin Q(a)$ and, finally, that $Q(a') \nsubseteq Q(a)$.
+    To see that $Q(a') \nsubseteq Q(a)$, note that $\{a, a'\} \subseteq Q_k$ and, following the same argument, we conclude that there is some $j' \in Q(a')$ but $j' \notin Q(a)$, completing the proof.
 \end{tproof}
 
 We now present a Krausz-type characterization for the class of star graphs.
@@ -217,12 +214,13 @@ We now present a Krausz-type characterization for the class of star graphs.
 \end{theorem}
 
 \begin{tproof}
-    In this proof, we assume that $H$ has $m$ vertices ($v_i$). For simplicity, a star $s_a \in \str(H)$ corresponds to the vertex $a \in V(G)$.
+    In this proof, we assume that $H$ has $m$ vertices, denoted by $v_i$, and that star $s_a \in \str(H)$ corresponds to the vertex $a \in V(G)$.
     
     For the first direction of the statement, assume $H$ is a star-critical pre-image of $G$.
     For each $v_i \in V(H)$, let $S(v_i) = \{s_a \in \str(H) \mid v_i \in s_a\}$, that is, the maximal stars of $H$ that contain $v_i$.
     Clearly, we can partition these sets as $S(v_i) \sim \{S^c(v_i), S^f(v_i)\}$, that is, the stars where $v_i$ is the center and where it is a leaf, respectively.
-    Our goal is to show that $\mathcal{Q} = \{Q_1, \dots, Q_m\}$, with $Q_i^c = S^c(v_i)$ and $Q_i^f = S^f(v_i)$ is a star-partitioned edge clique cover of $G$ satisfying star-compatibility and star-differentiability which, by Theorem~\ref{thm:bound}, is all that remains is to be proven, since $|\mathcal{Q}| = |V(H)| \leq \frac{1}{2}(3n^2 - n)$.
+    Our goal is to show that $\mathcal{Q} = \{Q_1, \dots, Q_m\}$, with $Q_i^c = S^c(v_i)$ and $Q_i^f = S^f(v_i)$ is a star-partitioned edge clique cover of $G$ satisfying star-compatibility and star-differentiability which.
+    By Theorem~\ref{thm:bound}, this is all that remains is to be proven, since $|\mathcal{Q}| = |V(H)| \leq \frac{1}{2}(3n^2 - n)$.
     
     To verify that $\mathcal{Q}$ is a star-partitioned edge clique cover of $G$, first note that every $Q_i$ is a clique of $G$, since the corresponding stars share at least $v_i \in V(H)$.
     For the coverage part, every $aa' \in E(G)$ has two corresponding stars $s_a, s_{a'} \in \str(H)$, which share at least one vertex, say $v_i \in V(H)$, since $G \simeq \K{S}(H)$.
@@ -284,12 +282,12 @@ We now present a Krausz-type characterization for the class of star graphs.
     For $E(\K{S}(H)) \subseteq E(G)$, take two intersecting stars $s_a,s_b \in \str(H)$ and note that, since $a,b \in \K{S}(H) = V(G)$ and $\mathcal{Q}$ is a star-partitioned edge clique cover of $G$, $ab \in E(G)$ and we conclude that $E(G) = E(\K{S}(H))$, completing the proof.
 \end{tproof}
 
-We now pose a version of the decision problem for star graph recognition, which we call \textsc{star graph}, and will be the subject of further study.
-We will further require that the output for any algorithm for \textsc{star graph} is already star-partitioned.
+We now pose a version of the decision problem for star graph recognition, which we call \textsc{Star Graph Recognition}.
+We will further require that the output for any algorithm for \textsc{Star Graph Recognition} is already star-partitioned.
 
-\problem{Star Graph}{A graph $G$.}{Is there a star-partitioned edge clique cover $\mathcal{Q}$ of $G$ satisfying star-compatibility and star-differentiability?}
+\problem{Star Graph Recognition}{A graph $G$.}{Is there a star-partitioned edge clique cover $\mathcal{Q}$ of $G$ satisfying star-compatibility and star-differentiability?}
 
-Theorem~\ref{thm:star_characterization} provides a straightforward verification algorithm to check if a star-partitioned edge clique cover is star-compatible and star-differentiable.
+Theorem~\ref{thm:verification_alg} provides a straightforward verification algorithm to check if a star-partitioned edge clique cover is star-compatible and star-differentiable.
 
 \begin{theorem}
     \label{thm:verification_alg}
@@ -317,8 +315,8 @@ Theorem~\ref{thm:star_characterization} provides a straightforward verification 
     In the worst case scenario, we will spend $\bigO{\max{n^2m, m^2}}$ time for each $Q_i$ and each pair $\{a, a'\} \subseteq Q_i$, of which there are $\bigO{n^2m}$ combinations, and conclude that the whole algorithm takes no more than $\bigO{\max\{n^2m, m^2\}n^2m}$ time.
 \end{tproof}
 
-Together with Theorem~\ref{thm:bound}, Theorem~\ref{thm:verification_alg} implies that deciding whether or not a graph is a star graph is in $\mathsf{NP}$, as we summarize in the following statement.
+Together with Theorems~\ref{thm:bound} and~\ref{thm:star_characterization}, Theorem~\ref{thm:verification_alg} implies that deciding whether or not a graph is a star graph is in $\mathsf{NP}$.
 
 \begin{theorem}
-    \textsc{Star Graph} is in $\mathsf{NP}$.
+    \textsc{Star Graph Recognition} is in $\mathsf{NP}$.
 \end{theorem}

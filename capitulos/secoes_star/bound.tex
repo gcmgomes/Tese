@@ -1,30 +1,31 @@
 \section{A bound for star-critical pre-images}
 
-Our first results shows an upper bound on the number of vertices of a star-critical graph in terms of its number of maximal stars.
-For an arbitrary graph $H$ the difference $|V(H)| - |\str(H)|$ could be arbitrarily big, but some vertices of $H$ would have to be non-star-critical for such a property to occur (e.g. if $H \simeq K_{1,r}$ there are $r-1$ non-star-critical vertices).
-In a sense, star-critical graphs are minimal with respect to the star graph obtained with the application of the star operator $\K{S}$.
-Recall that maximal star $s_a$ absorbs maximal star $s_b$ if, by removing one leaf of $s_b$, it becomes a substar of $s_a$.
+Our first result is an upper bound on the number of vertices of a star-critical graph in terms of its number of maximal stars.
+For a graph $H$ the difference $|V(H)| - |\str(H)|$ could be arbitrarily large, but some vertices of $H$ would have to be non-star-critical for such a property to occur (e.g. if $H \simeq K_{1,r}$ there are $r-1$ non-star-critical vertices).
+In a sense, star-critical graphs are minimal with respect to the star graph obtained with the application of the star operator.
+Recall that a maximal star $s_a$ absorbs a maximal star $s_b$ if, by removing one leaf of $s_b$, it becomes a substar of $s_a$.
 
 \begin{theorem}
     \label{thm:bound}
-    If $H$ is a $n$-vertex star-critical graph, $n \leq \frac{1}{2}\left(3|\str(H)|^2 - |\str(H)|\right)$.
+    If $H$ is an $n$-vertex star-critical graph, $n \leq \frac{1}{2}\left(3|\str(H)|^2 - |\str(H)|\right)$.
 \end{theorem}
 
 \begin{proof}
-    We begin by partitioning $V(H)$ in $K = \{v \in V(H) \mid \exists s_a \in \str(H), v = c(s_a)\}$, which contains the center of every maximal star of $H$; and $I = V(H) \setminus K$, which is a subset of its simplicial vertices.
+    We begin by partitioning $V(H)$ in $K = \bigcup_{s_a \in \str(H)} \{c(s_a)\}$ and $I = V(H) \setminus K$, which is a subset of its simplicial vertices.
     Note that $I$ is an independent set of $H$, otherwise there would be an edge with endpoints $\{u,v\} \subseteq I$ and either $u$ or $v$ would be in $K$.
-    $I$ is partitioned in $I_A, I_E$: the removal of a vertex in $I_A$ cause the absorption of at least one star, the removal of a vertex in $I_E$ causes the disappearance of some edge of the star graph.
+    $I$ is further partitioned in $I_A$ and $I_E$: a vertex is in $I_A$ if its removal causes the absorption of at least one star, while the removal of a vertex in $I_E$ causes the disappearance of at least one edge of the star graph.
     
-    $|K| \leq |\str(H)|$ since each maximal star has a center.
-    To bound $|I|$, we divide the analysis in the two possible cases for a vertex to be star-critical.
-    \begin{itemize}
+    Note that $|K| \leq |\str(H)|$ holds because each maximal star has a center.
+    To bound $|I|$, we divide the analysis in the two situations where a vertex is star-critical.
+    \begin{enumerate}
         \item Suppose that the removal of some $z \in I_A$ causes $s_a$, with $u = c(s_a)$, to be absorbed by $s_b$.
-        One of two possibilities arise: if $z$ has only one neighbor then $z$ is the only neighbour of $u$ with this property; therefore there are at most $|K|$ such vertices.
-        Otherwise, if $z$ has at least two neighbors, there must be some $v \in N(z) \cap N(u)$ with $v \in s_b \setminus s_a$. However, since $I$ is an independent set, $v \in K$. Therefore, for each maximal star $s_a$, since $H$ is star-critical, there is at most one different $z \in I_A$ for each $v \in (N(u) \cap N(z) \cap K) \setminus s_a$ preventing $v$ from being added to $s_a$.
+        One of two possibilities arise: if $z$ has only one neighbor then $z$ is the only neighbor of $u$ with this property; therefore there are at most $|K|$ such vertices.
+        Otherwise, if $z$ has at least two neighbors, there is some $v \in N(z) \cap N(u)$ with $v \in s_b \setminus s_a$. However, since $I$ is an independent set, $v \in K$ and, moreover, $u,z$ are the only neighbors of $v$ in $s_a$, otherwise $s_a \setminus \{z\}$ cannot be a substar of $s_b$. Therefore, for each maximal star $s_a$, since $H$ is star-critical, there is at most one different $z \in I_A$ for each $v \in (N(u) \cap N(z) \cap K) \setminus s_a \subseteq K$ preventing $v$ from being added to $s_a$.
         This implies that the number of vertices required to avoid absorption is at most $|\str(H)|(|K \setminus \{u\}|) \leq 2\binom{|\str(H)|}{2}$.
-        \item For the other condition, each $z \in I_E$ could be responsible for the intersection of a different pair of stars of $H$; i.e., $\exists s_a,s_b \in \str(H)$ such that $s_a \cap s_b = \{z\}$. Since we have $\binom{|\str(H)|}{2}$ pairs, we may have as many vertices in $I$.
-    \end{itemize}
-    Summing both cases, we have $|I| \leq \frac{3}{2}\binom{|\str(H)|}{2}$ and since $n = |K| + |I|$, it holds that $n \leq \frac{3|\str(H)|^2 - |\str(H)|}{2}$.
+        \item For the other condition, each $z \in I_E$ could be responsible for the intersection of a different pair of stars of $H$; i.e., there exists $s_a,s_b \in \str(H)$ such that $s_a \cap s_b = \{z\}$.
+        Since we have $\binom{|\str(H)|}{2}$ pairs, we may have as many vertices in $I_E$.
+    \end{enumerate}
+    Summing both cases, we have $|I| \leq 3\binom{|\str(H)|}{2}$ and since $n = |K| + |I|$, it holds that $n \leq \frac{3|\str(H)|^2 - |\str(H)|}{2}$.
 \end{proof}
 
 \begin{corollary}
@@ -32,18 +33,19 @@ Recall that maximal star $s_a$ absorbs maximal star $s_b$ if, by removing one le
     If the only simplicial vertices of $H$ are leaves, $|V(H)| \leq 2|\str(H)|$.
 \end{corollary}
 
+\begin{proof}
+    The first statement follows directly from the case where $|I|$ is empty in the proof of Theorem~\ref{thm:bound}.
+    The second statement is a consequence of the hypothesis that every vertex of $I_A$ has degree one and $I_E = \emptyset$.
+\end{proof}
+
 Improvements to the bound given by Theorem~\ref{thm:bound} appear to require a complete characterization of non-star-critical vertices.
 Also, a better understanding of vertices that are required only for the intersection of some stars to be non-empty seems necessary in order to approach the problem through induction.
-We believe that a reasonable bound would be of the form $|V(H)| \leq 2|V(G)| + \sqrt{|E(G)|}$, where $G \simeq \K{S}(H)$.
+We believe that the bound on the size of the pre-image is actually linear, however our current analysis falls short of it.
+In fact, we conjecture that the constant is actually two, as formalized below.
 
 \begin{conjecture}
-    For every star-critical graph $H$ and its star graph $G$, it holds that $|V(H)| \leq 2|V(G)| + \sqrt{|E(G)|}$.
+    If $H$ is an $n$-vertex star-critical graph, then $n \leq 2|\str(H)|$.
 \end{conjecture}
 
 If this result indeed holds, it would configure an important difference from other intersection graphs.
-For instance, there are clique-critical graphs which require a quadratic number of vertices on the pre-image~\cite{clique_critical_alcon}.
-However, we conjecture an even stronger result, which we back with the experiments we describe later in this chapter.
-
-\begin{conjecture}
-	For every star-critical graph $H$ and its star graph $G$, it holds that $|V(H)| \leq 2|V(G)|$.
-\end{conjecture}
+For instance, there are clique graphs which require a clique-critical pre-image with a quadratic number of vertices~\cite{clique_critical_alcon}.

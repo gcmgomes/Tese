@@ -1,27 +1,27 @@
 Problemas de partição em grafos modelam diferentes tarefas do mundo real, como aloção de recursos ou design de redes tolerantes a falhas.
-Geralmente, esse problemas são NP-difíceis, e projetar algoritmos cuja complexidade dependa apenas do tamanho do grafo de entrada levam a tempos de exacução impraticáveis.
-A complexidade parametrizada aborda esse desafio por meio do projeto de algoritmos que funcionam bem em apenas algumas instancias do problem.
+Geralmente, esse problemas são NP-difíceis, e projetar algoritmos cuja complexidade dependa apenas do tamanho do grafo de entrada levam a tempos de execução impraticáveis.
+A complexidade parametrizada aborda esse desafio por meio do projeto de algoritmos que funcionam bem em apenas algumas instâncias do problema.
 Nesta tese, cinco problemas em teoria dos grafos foram estudados do ponto de vista da complexidade computacional: coloração equilibrada, clique coloração, biclique coloração, $d$-corte, e reconhecimento de grafos estrela.
 
 Coloração equilibrada foi investigada em termos de grafos cordais, grafos bloco e algumas subclasses.
 Foi provado que coloração equilibrada  é
-$\mathsf{W[1]\text{-}difícil}$ para grafos bloco de diametro limitado e para a união disjunta de grafos split, quando parametrizado pelo número de cores e treewidth; e
-$\mathsf{W[1]\text{-}difícil}$ para grafos de intervalo livros de $K_{1,4}$ quando parametrizado por treewidth, número de cores e grau máximo, generalizando os resultados Fellows et al. (2014) por meio de reduções muito mais simples.
-Usando resultados alteriores de Werra (1985), uma dicotomia para a complexidade de coloração equilibrada de grafos cordais baseada na maior estrela induzida foi estabelecida.
+\textsf{W[1]-difícil} para grafos bloco de diâmetro limitado e para a união disjunta de grafos split, quando parametrizado pelo número de cores e treewidth; e
+\textsf{W[1]-difícil} para grafos de intervalo livres de $K_{1,4}$ quando parametrizado por treewidth, número de cores e grau máximo, generalizando os resultados de Fellows et al. (2011) por meio de reduções muito mais simples.
+Usando resultados anteriores de Werra (1985), uma dicotomia para a complexidade de coloração equilibrada de grafos cordais baseada no tamanho da maior estrela induzida foi estabelecida.
 Finalmente, é demonstrado que o problema de coloração equilibrada é $\mathsf{FPT}$ quando parametrizada pelo treewidth do grafo complementar.
+
 É apresentado o primeiro algoritmo $\bigOs{2^n}$ para biclique coloração, que faz uso de propriedades associadas ao hipergrafo biclique e do princípio da inclusão exclusão.
 Algoritmos parametrizados por diversidade de vizinhança são discutidos para os problemas de clique e biclique coloração, sendo esses os primeiros algoritmos parametrizados para esses problemas.
 Biclique coloração foi apenas recentemente introduzida na literatura, e muito do trabalho exploratório em diferentes classes de grafos ainda deve ser feito.
 
 Foi definido e investigado o problema $d$-corte, uma generalização natural do problema de corte emparelhado.
 São generalizados e, em alguns casos, melhorados, vários resultados do estado-da-arte para corte emparelhado.
-Em particular, são apresentados reduções de \NP dificuldade para $d$-corte em grafos $(2d+2)$-regulares, um algoritmo polinomial para grafos de grau máximo $d + 2$, e um algoritmo exato exponencial marginalmente mais eficiente que a estratégia ingênua por força bruta, cuja complexidade é $\bigOs{2^n}$.
-Em seguida, são dados algoritmos \FPT para diversos parâmetros: número máximo de arestas cruzando o corte, treewidth, distância para cluster e distância para co-cluster.
+Em particular, são apresentados reduções de \textsf{NP-dificuldade} para $d$-corte em grafos $(2d+2)$-regulares, um algoritmo polinomial para grafos de grau máximo $d + 2$, e um algoritmo exato exponencial marginalmente mais eficiente que a estratégia ingênua por força bruta, cuja complexidade é $\bigOs{2^n}$.
+Em seguida, são dados algoritmos \FPT\ para diversos parâmetros: número máximo de arestas cruzando o corte, treewidth, distância para cluster e distância para co-cluster.
 A principal contribuição é um kernel polinomial para $d$-corte quando parametrizado pela distância para cluster; ao mesmo tempo, descartamos a existência de um kernel polinomial quando parametrizado simultaneamente por treewidth, grau máximo e número máximo de arestas cruzando o corte.
 
-Por fim, grafos estrela - grafos de interseção das estrelas maximais de um grafo - foram discutidos e definidos em termos de uma cobertura de arestas por cliques, com o intuito de que tal class possa ser uma ferramenta útil na investigação de grafos biclique.
-O problema natural de reconhecimento foi apresentado e, apesar de não termos uma prova concreta de seu pertencimento em $\NP$, um algoritmo de verificação que faz uso da cobertura de arestas por cliques característica é apresentado.
-De interesse, vale destacar a conexão entre grafos estrela e o quadrado de grafos livres de triangulo.
-Essa relação é explorada para demonstrar a $\NPct$ do reconhecimento de grafos estrela de grafos com cintura exatamente 4.
-Próximos objetivos incluem a determinação de pertencimento (ou não) do problema, no caso geral, em $\NP$.
-Instâncias particulares de grafos biclique podem render conexões semelhantes com outros problemas; tal exploração configura entre trabalhos futuros nesse tópico.
+Por fim, grafos estrela - grafos de interseção das estrelas maximais de um grafo - foram discutidos e definidos em termos de uma cobertura de arestas por cliques, com o intuito de que tal classe possa ser uma ferramenta útil na investigação de grafos biclique.
+Uma cota superior para o tamanho de pré-imagens minimais por uma função quadrática do número de vertices do grafo estrela é apresentada, em seguida uma caracterização de Krausz para essa classe de grafos é descrita; a combinação esses resultados mostra o pertencimento do problema de reconhecimento em \NP.
+Em seguida, alguma propriedades de grafos estrela são apresentadas.
+Em particular, é mostrado que todos os grafos dessa classe são biconexos e que toda aresta pertence a pelo menos um triângulo; também são mostrados uma caracterização para as estruturas que devem existir na pré-imagem para que o grafo estrela tenha vertices de grau dois, e que o diâmetro de um grafo estrela é limitado por uma função do diâmetro de sua pré-imagem.
+Por fim, um teorema de monotonicidade é apresentado, o qual é aplicado para gerar todos os grafos estrela de até oito vértices e provar que a classe de grafos estrela e quadrados de grafos não estão propriamente contidas uma na outra.

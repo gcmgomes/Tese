@@ -1,11 +1,11 @@
-\chapter{Equitable, Clique, and Biclique Coloring}
+\chapter{Equitable, Clique, and Biclique coloring}
 \label{ch:coloring}
 
 In a coloring problem, the goal is to partition (i.e. color) the vertices (or edges) of a graph such that each set (color class) of the partition, individually, satisfies some condition.
 For the classical \pname{Vertex Coloring} problem, the goal is to partition the graph's vertex set such that, inside each member of the partition there are no two adjacent vertices.
 Multiple additional constraints or properties may be added to the desired partition.
 By further imposing that the size of each partition member be as close as possible to each other, the \pname{Equitable Coloring} problem, which appears to be much harder to solve even for graph classes where classical vertex coloring is efficiently solvable, is generated.
-Another possible modification to \pname{Vertex Coloring} generates the \pname{B-Coloring} problem~\citep{b_coloring}, where a coloring of the vertices such that each color class has at least one vertex with one neighbor in each of the other classes is sought.
+Another possible modification to \pname{Vertex Coloring} generates the b\pname{-Coloring} problem~\citep{b_coloring}, where a coloring of the vertices such that each color class has at least one vertex with one neighbor in each of the other classes is sought.
 Much like \pname{Equitable Coloring} appears to be considerably harder than \pname{Vertex Coloring}, \pname{List Coloring} also exhibits a similar behavior; in this problem each vertex has a list of admissible colors, and the goal is to color the graph respecting these restrictions.
 \pname{List Assignment}, however, takes things to a whole different level.
 It asks if for a given graph, for every possible choice of list with exactly $k$ colors to each vertex of the graph, it is possible to find a list-coloring.
@@ -18,7 +18,7 @@ We first formalize of many of the concepts we use in our proofs, as well as pres
 We then proceed in earnest to our results.
 For \pname{Equitable Coloring}, our first results are \W[1]-\Hness\ proofs for some subclasses of chordal graphs; namely, for block graphs of bounded diameter when parameterized by treewidth and maximum number of colors, for $K_{1,4}$-free interval graphs when parameterized by treewidth, maximum number of colors and maximum degree, and for disjoint union of split graphs (which are also complete multipartite) when parameterized by treewidth and maximum number of colors.
 We close the subject of \pname{Equitable Coloring} with some algorithms.
-We show that the problem admits an \XP\ algorithm for chordal graphs when a parameterized by the maximum number of colors, a constructive polynomial time algorithm to equitably color claw-free chordal graphs, and an \FPT\ algorithm parameterized by the treewidth of the complement graph.
+We show that the problem admits an \XP\ algorithm for chordal graphs when parameterized by the maximum number of colors, a constructive polynomial time algorithm to equitably color claw-free chordal graphs, and an \FPT\ algorithm parameterized by the treewidth of the complement graph.
 We then turn to \pname{Clique Coloring} and \pname{Biclique Coloring}.
 The first exact exponential time algorithm for biclique coloring, which builds upon ideas used for clique coloring, is presented.
 Afterwards, we give kernelization algorithms for both problems when parameterized by neighborhood diversity; using results on covering problems, an \FPT\ algorithm under the same parameterization is obtained for \pname{Clique Coloring}, which has optimal running time, up to the base of the exponent, unless the Exponential Time Hypothesis fails.

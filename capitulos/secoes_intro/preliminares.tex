@@ -1,4 +1,4 @@
-\section{Basic Definitions}
+\section{Basic definitions}
 \label{sec:basic_defs}
 
 We denote by $[n] = \{1, \dots, n\}$.
@@ -7,23 +7,26 @@ The \tdef{power set} $2^S$ of a set $S$ is the family of all subsets of $S$.
 A \tdef{k-partition} of $S$ into $k$ sets is denoted by $S \sim \{S_1, \dots, S_k\}$ such that $S_i \cap S_j = \emptyset$ and $\bigcup_{i \leq k} S_i = S$.
 A \tdef{k-(multi)cover} of $S$ is a (multi)family $\{S_1, \dots, S_k\}$ of subsets of $S$ such that $\bigcup_{i \in [k]} S_i = S$.
 A (multi)family $\mathcal{F}$ satisfies the \tdef{Helly condition} or \tdef{Helly property} if and only if, for every pairwise intersecting subfamily $\mathcal{F}'$ of $\mathcal{F}$, $\bigcap_{F \in \mathcal{F}'} F \neq \emptyset$.
+The \tdef{intersection graph} of a multifamily $\mathcal{F} \subseteq 2^S$, denoted by $G = \Omega(\mathcal{F})$ is the graph of order $|\mathcal{F}|$ and, for every $F_u, F_v \in \mathcal{F}$, $uv \in E(G) \Leftrightarrow F_u \cap F_v \neq \emptyset$.
+Any $\mathcal{F}$ such that $\Omega(\mathcal{F}) \simeq G$ is a \tdef{set representation} of $G$.
+A known theorem states that every graph is the intersection graph of a family of subgraphs of a graph~\citep{intersection_graphs}.
 
-A \tdef{simple graph} of \tdef{order} (or \tdef{size}) $n$ is an ordered pair $G = (V(G), E(G))$, where $V(G)$ is its \tdef{vertex set} of cardinality $n$ and its \tdef{edge set}, $E(G)$, is a family of subsets of $V(G)$, each of cardinality two. A graph is \tdef{trivial} if $|V(G)| = 1$.
-Instead of $\{u,v\} \in E(G)$, we identify an edge by $uv$, simply due to convenience. Moreover, when there is no ambiguity, we denote $V(G)$ by $V$, $E(G)$ by $E$, $|V|$ as $n$ and $|E|$ as $m$.
+A \tdef{simple graph} of \tdef{order} (or \tdef{size}) $n$ is an ordered pair $G = (V(G), E(G))$, where $V(G)$ is its \tdef{vertex set} of cardinality $n$ and its \tdef{edge set}, $E(G)$, is a family of pairs of distinct elements of $V(G)$. A graph is \tdef{trivial} if $|V(G)| = 1$.
+Instead of $\{u,v\} \in E(G)$, we denote an edge by $uv$, simply due to convenience. Moreover, when there is no ambiguity, we denote $V(G)$ by $V$, $E(G)$ by $E$, $|V|$ as $n$ and $|E|$ as $m$.
 
-We say that two vertices $u,v \in V$ are \tdef{adjacent} or \tdef{neighbours} if $uv \in E$.
+We say that two vertices $u,v \in V$ are \tdef{adjacent} or \tdef{neighbors} if $uv \in E$.
 A graph $G' = (V', E')$ is a \tdef{subgraph} of $G$ if $V' \subseteq V$ and $E' \subseteq E$.
 If $E' = \{uv \in E \mid u,v \in V'\}$ we say that $V'$ \tdef{induces} $G'$, $G' = G[V']$ and that $G'$ is the \tdef{induced subgraph} of $G$ by $V$.
 For simplicity, we denote by $G - v$ the graph $G[V(G) \setminus \{v\}]$ and, similarly, for $S \subseteq V(G)$, $G \setminus S$ is equivalent to $G[V(G) \setminus S]$.
 
-The \tdef{open neighbourhood}, or just \tdef{neighbourhood} of a vertex $v$ in $G$ is given by $N_G(v) = \{u \mid uv \in E(G)\}$, its \tdef{closed neighbourhood} by $N_G[v] = N_G(v) \cup \{v\}$ and its \tdef{degree} by $\deg_G(v) = |N_G(v)|$.
-A vertex is \tdef{simplicial} if its neighbours are pairwise adjacent.
-For a set $S \subseteq V$, we denote its open and closed neighbourhood as $N_G(S) = \bigcup_{v \in S} N_G(v) \setminus S$, $N_G[S] = N_G(S) \cup S$ and $\deg_G(S) = |N_G(S)|$, respectively.
+The \tdef{open neighborhood}, or just \tdef{neighborhood} of a vertex $v$ in $G$ is given by $N_G(v) = \{u \mid uv \in E(G)\}$, its \tdef{closed neighborhood} by $N_G[v] = N_G(v) \cup \{v\}$ and its \tdef{degree} by $\deg_G(v) = |N_G(v)|$.
+A vertex is \tdef{simplicial} if its neighbors are pairwise adjacent.
+For a set $S \subseteq V$, we denote its open and closed neighborhood as $N_G(S) = \bigcup_{v \in S} N_G(v) \setminus S$, $N_G[S] = N_G(S) \cup S$ and $\deg_G(S) = |N_G(S)|$, respectively.
 The \tdef{complement} $\overline{G}$ of $G$ is defined as $V(\overline{G}) = V(G)$ and $E(\overline{G}) = \{uv | uv \notin E\}$.
 Given a graph $G$, we denote its \tdef{maximum degree} by $\Delta(G)$ and \tdef{minimum degree} by $\delta(G)$.
 
 Two vertices $u,v$ are \tdef{false twins} if $N_G(u) = N_G(v)$ and \tdef{true twins} if $N_G[u] = N_G[v]$. $u,v$ are of the same \tdef{type} if they are either true or false twins.
-Being of the same type is an equivalence relation~\citep{neighbourhood_diversity}, and the number of different types on a graph $G$ is called its \tdef{neighbourhood diversity}, $\nd(G)$.
+Being of the same type is an equivalence relation~\citep{neighborhood_diversity}, and the number of different types on a graph $G$ is called its \tdef{neighborhood diversity}, $\nd(G)$.
 
 Two graphs $G$ and $H$ are \tdef{isomorphic} if and only if there is a bijection $f: V(G) \mapsto V(H)$ such that $uv \in E(G) \Leftrightarrow f(u)f(v) \in E(H)$.
 We denote isomorphism by $G \simeq H$.
@@ -41,7 +44,7 @@ $G$ is \tdef{acyclic} if and only if there is no induced cycle in $G$.
 A \tdef{matching} is a set of edges such no two share a common endpoint.
 A maximum matching is said to be \textit{perfect} if every vertex of the graph is contained in one edge of the matching.
 
-A graph $G$ is \tdef{connected} if and only if there is an induced path between every pair $u,v \in V$.
+A graph $G$ is \tdef{connected} if and only if there is an induced path between every pair $u,v \in V$, and \tdef{disconnected}, otherwise.
 A \tdef{connected component}, or simply a \tdef{component}, of $G$ is a maximal connected induced subgraph of $G$.
 Given a graph $G$, the \tdef{distance} $\dist_G(u,v)$ between two vertices $u,v$ in $G$ is the minimum number of edges in any path between them.
 If $u,v$ are in different components, we say that $\dist_G(u,v) = \infty$.
@@ -58,18 +61,17 @@ A \tdef{cutset} of a connected graph $G$ is a set $S \subset V$ such that $G \se
 In particular, a cut vertex is a cutset of size one.
 
 The \tdef{complete} graph $K_n$ of order $n$ is a graph where every pair of vertices is adjacent.
-A \tdef{clique} of $G$ with $n$ vertices is an induced subgraph of $G$ isomorphic to $K_n$.
-An \tdef{independent set} of $G$ with $n$ vertices is an induced subgraph of $G$ isomorphic to $\overline{K_n}$.
+A \tdef{clique} of $G$ of size $n$ is a set $S \subseteq V$ such that $G[S]$ is isomorphic to $K_n$.
+Similarly, an \tdef{independent set} of $G$ of size $n$ is a set $S \subseteq V$ such that $G[S]$ is isomorphic to $\overline{K_n}$.
 We denote by $\omega(G)$ and $\alpha(G)$ the size of the maximum induced clique and maximum independent set of a given $G$.
-A \tdef{vertex cover} of $G$ is a subset $U \subseteq V(G)$ such that, for every edge $uv \in E(G)$, at least one of $u,v$ belongs to $U$.
-The size of a minimum vertex cover of a graph is denote by $\tau(G)$, and can be computed in $\bigO{1.2738^{\tau(G)} + \tau(G)|V(G)|}$ time.
+An \tdef{edge clique cover} $\mathcal{Q} = \{Q_1, \dots, Q_n\}$ of a graph $G$ is a (multi)family of cliques of $G$ such that every edge of $G$ is contained in at least one element of $\mathcal{Q}$.
 
 A graph is a \tdef{cluster graph} if all of its connected components are cliques.
 Analogously, a graph is a \tdef{co-cluster graph} if its complement is a cluster graph.
 The \tdef{distance to cluster} (resp. \tdef{co-cluster}) of a graph $G$, denoted by $\dc(G)$ (resp. $\dcc(G)$), is the size of the smallest subset of vertices $U$ of $G$ such that $G - U$ is a (co-)cluster graph.
 These parameters can be computed in $\bigO{1.92^{\dc( G )}n^2 }$
 time and $\bigO{1.92^{\dcc( G )}n^2 }$ time, respectively~\citep{branching-cluster}.
-It is quite easy, however, to obtain a 3-approximation for them in polynomial time, it suffices to note that a graph is a cluster graph if and only if it is $P_3$-free, so while there is some $P_3$ in the graph, it is sufficient to remove all three vertices.
+It is quite easy, however, to obtain a 3-approximation for them in polynomial time, it suffices to note that a graph is a cluster graph if and only if it is $P_3$-free: while there is some $P_3$ in the graph, it suffices to remove all three vertices.
 The above values are examples of \tdef{structural graph parameters}.
 Determining certain parameters of a generic graph $G$ is efficient (such as $\Delta(G)$ and $\delta(G)$); however, others (such as $\omega(G)$ and $\alpha(G)$) are widely believed to be hard to ascertain.
 
@@ -83,7 +85,7 @@ A graph is \tdef{multipartite} if $V(G) \sim \{X_1, \dots,  X_p\}$ and $X_i$ is 
 A \tdef{hypergraph} $\hypergraph = (V, \mathcal{E})$ is a natural generalization of a graph.
 That is, $V(\hypergraph)$ is its vertex set and $\mathcal{E} \subseteq 2^{V}$ its \tdef{hyperedge} set~\citep{hypergraphs}.
 A graph $G$ is said to be a \tdef{host} of $\mathcal{H}$ if $V(G) = V(\hypergraph)$, every hyperedge of $\hypergraph$ induces a connected subgraph of $G$ and every edge of $G$ is contained in at least one hyperedge of $\mathcal{H}$.
-A hypergraph is \tdef{$k$-uniform} if all of its hyperedges have the same size.
+A hypergraph is \tdef{$k$-uniform} if all of its hyperedges have the same size $k$.
 
 A \tdef{transversal} of a hypergraph $\hypergraph$ is a set $X \subseteq V(\hypergraph)$ such that, for every hyperedge $\varepsilon \in \mathcal{E}(\hypergraph)$, $X \cap \varepsilon \neq \emptyset$.
 If $X$ is not a transversal we say that it is an \tdef{oblique}.
@@ -110,17 +112,17 @@ An algorithmically useful property of tree decompositions is the existence of a 
     \end{enumerate}
 \end{class_definition*}
 
-\section{Parameterized Complexity}
+\section{Parameterized complexity}
 
-We discuss problems in different complexity classes; in particular, we work with the usual classes $\P$, $\NP$,and the \tdef{polynomial hierarchy}~\citep{polynomial_hierarchy}.
+We discuss problems in different complexity classes; in particular, we work with the usual classes $\P$, $\NP$, and the \tdef{polynomial hierarchy}~\citep{polynomial_hierarchy}.
 We say that an algorithm is \tdef{efficient} if its running time is bounded by a polynomial on the size of the input and that a problem belonging to $\NPH$ is most likely intractable.
 As such, our complexity results will be given either by efficient algorithms or polynomial reductions from $\NPH$ problems.
 
 Besides the classic complexity classes, we also deal with the field of \tdef{parameterized complexity} (or \tdef{multivariate complexity}).
 In this area, algorithms are designed and analyzed not only with respect to the size of the input object, but also with other \tdef{parameters} of the input.
 Parameters come in all sorts of flavors.
-Many decision problems usually have some integer quantity representing a constraint of the problem.
-For instance, \pname{Vertex Cover} -- one of the classical examples of success of parameterized complexity ~~ asks for a set of size at most $k$ of vertices covering all the edges of the graph.
+Many decision problems usually have some integer quantity representing a constraint of the problem, such as the minimum/maximum size of a feasible solution; such quantities are usually called the \textit{natural parameter} of the problem.
+For instance, \pname{Vertex Cover} -- one of the classical examples of success of parameterized complexity -- asks for a set of size at most $k$ of vertices covering all the edges of the graph; in this case, $k$ is the natural parameter for \pname{Vertex Cover}.
 Other parameters are less problem specific and relate to the structure of the graph, such as diameter or maximum degree.
 The most prominent of these examples, however, is the graph parameter treewidth, which played a pivotal role in the theory of graph minors.
 Other previously discussed structural parameter is neighborhood diversity, distance to cluster and distance to co~cluster.
@@ -131,12 +133,12 @@ In fact, we shall use $\bigOs{\cdot}$ to omit polynomial factors of the running 
 In a slight abuse of notation, $k$ is simultaneously the parameter we are working with and the value of such parameter.
 An instance of a parameterized algorithm is, therefore, the pair $(x,k)$, with $x$ the input object and $k$ as previously defined.
 The class of all problems that admit an FPT algorithm is the class $\FPT$.
-If an algorithm has running time $\bigO{n^{f(k)}}$, for some computable function on $k$,  we say it is an \XP (slicewise polynomial) algorithm, and the corresponding problem it solves is in $\XP$. 
+If an algorithm has running time $\bigO{n^{f(k)}}$, for some computable function on $k$,  we say it is an \XP\ (slicewise polynomial) algorithm, and the corresponding problem it solves is in $\XP$. 
 
-Much like classical univariate theory, some problems do not appear to admit an \FPT algorithm for certain parameterizations. In particular, its widely believed that finding a clique of size $k$ in a graph, parameterized by $k$, is not in $\FPT$.
+Much like classical univariate theory, some problems do not appear to admit an \FPT\ algorithm for certain parameterizations. In particular, its widely believed that finding a clique of size $k$ in a graph, parameterized by $k$, is not in $\FPT$.
 In an analogue to the classical case, hardness results are usually given by what are called \tdef{parameterized reductions}.
 
-\begin{class_definition*}[Parameterized Reduction]
+\begin{class_definition*}[Parameterized reduction]
     A parameterized reduction from problem $\Pi$ to problem $\Pi'$ is a transformation from an instance $(x, k)$ of $\Pi$ to an instance $(x',k')$ of $\Pi'$ such that:
     \begin{enumerate}
         \item There is a solution to $(x,k)$ if and only if there is a solution to $(x',k')$;
@@ -150,13 +152,13 @@ We ask that $k'$ does not depend on $|x|$ - which doesn't always happen with pol
 These differences imply that polynomial reductions and parameterized reductions are incomparable, with some rare cases where the transformation is both polynomial and parameterized.
 
 Unlike the theory of $\NPcness$, where most hard problems are equivalent to each other under polynomial reductions, in parameterized complexity problems seem to be distributed along a hierarchy of difficulty.
-Before handling the classes themselves, we must first define the problems of parameterized complexity that play the same role as \pname{Satisfability} for the classical theory. 
+Before handling the classes themselves, we must first define the problems of parameterized complexity that play the same role as \pname{Satisfiability} for the classical theory. 
 
 The \tdef{depth} of a circuit is the length (in terms of number of gates) of the longest path from any one variable to the output.
 The \tdef{weft} of a circuit is the the maximum number of gates with more than 2 input variables in any path from any one variable to the circuit's output.
 The circuits with weft $t$ and depth $d$, denoted by \pname{WCS}$_{t,d}$, will be the fundamental problems of the $t$-th level of our hierarchy.
 
-\pproblem{weighted circuit satisfability of weft $t$ and depth $d$ (\pname{WCS}$_{t,d}$)}{A Boolean circuit $C$ with $n$ variables, weft $t$ and depth $d$.}{A positive integer $k$.}{Is $C$ satisfiable with exactly $k$ variables set to $\TRUEt$?}
+\pproblem{weighted circuit Satisfiability of weft $t$ and depth $d$ (\pname{WCS}$_{t,d}$)}{A Boolean circuit $C$ with $n$ variables, weft $t$ and depth $d$.}{A positive integer $k$.}{Is $C$ satisfiable with exactly $k$ variables set to $\TRUEt$?}
 
 \begin{class_definition*}[$\W$-hierarchy]
     For $t \geq 1$, a parameterized problem $\Pi$ is in $\W[t]$ if there is a parameterized reduction from $\tsc{wsc}_{t,d}$ to it, for some $d \geq 1$. Moreover,
@@ -172,22 +174,22 @@ One of the broadest class of techniques to be found in the realm of computing is
 Every real system, in one way or another, employs routines that try to prune the search space or reduce the input instance as much as possible before doing any heavy lifting.
 Such is the case with most optimization suites, such as CPLEX and Gurobi, where dozens upon dozens of pre-processing methods are readily available and in many cases successfully eliminate large chunks of the input before trying to solve the integer program directly.
 Furthermore, in many cases, simple heuristics or algorithms with terrible worst case running times perform surprisingly well, and, in many cases, there was no theoretically sound approach to explain this phenomenon.
-This lack of work on the subject is explained by the fact that, if an instance of a $\NPH$ problem can be reduced in polynomial time to one of bounded size, then $\P = \NP$~\citep{book-kernels}.
+This lack of work on the subject is explained by the fact that, if an instance of an $\NPH$ problem can be reduced in polynomial time to one of bounded size, then $\P = \NP$~\citep{book-kernels}.
 With the advent of parameterized algorithms, however, the situation is changing drastically.
-Using this framework it has become possible to derive upper on lower bounds on the sizes of the instances obtained after a set of pre-processing rules have been applied.
+Using this framework it has become possible to derive upper an lower bounds on the sizes of the instances obtained after a set of pre-processing rules have been applied.
 We define the notions of kernels and kernelization below.
 
 \begin{class_definition*}[Kernelization]
     A  \tdef{kernelization algorithm} is an algorithm that takes as input an instance $(x,k)$ of a parameterized problem $\Pi$ and its output is an equivalent instance $(x',k')$ of $\Pi$ such that $|x'| \leq f(k)$ and $k' \leq g(k)$, for some pair of computable functions $f,g$; instance $(x',k')$ is called the \tdef{kernel} of $(x,k)$.
 \end{class_definition*}
 
-It is not hard to see that a parameterized problem is in \FPT\ if and only if it admits a kernel.
+A central result in parameterized complexity is that a parameterized problem is in \FPT\ if and only if it admits a (possibly exponential) kernel~\cite{book-kernels}.
 Not all kernels are equal, and a natural desire is for the best (i.e. smallest) possible kernel.
 The size of the kernel is measured by the dependency of the kernel on the parameter -- that is, a kernel that satisfies $|x'| \leq 4k$ is much better than a kernel with $|x'| \leq k^2$.
 If this dependency is linear, we say that we have a \tdef{linear kernel}, if $f(k)$ is a quadratic function, than the kernel is \tdef{quadratic}, and so on.
 Let $k$ be the natural parameter for the following problems.
-Some famous examples of problems and their kernels include: \pname{Vertex Cover}, which admits a kernel of size $2k$; \pname{Max 3-Satisfability}, which has a kernel on $6k$ variables and $2k$ clauses; \pname{Independent Set} on planar graphs, with a kernel of size $4(k - 1)$;
-meanwhile, for \pname{Dominating Set} on graphs of girth at least five, there is a cubic kernel, but no known subcubic one.
+Some famous examples of problems and their kernels include: \pname{Vertex Cover}, which admits a kernel of size $2k$; \pname{Max 3-Satisfiability}, which has a kernel on $6k$ variables and $2k$ clauses; \pname{Independent Set} on planar graphs, with a kernel of size $4(k - 1)$;
+meanwhile, for \pname{Dominating Set} on graphs of girth at least five, there is a cubic kernel, but no known subcubic one~\citep{cygan_parameterized, book-kernels}.
 
 The bound on the instance size, however, can be exponential.
 For instance, \pname{Matching Cut} parameterized by the number of edges crossing the cut does not have a polynomial kernel~\citep{matching_cut_ipec}.
@@ -199,7 +201,7 @@ Despite appearing strong assumptions, if either of these hypotheses fail the imp
 
 For further reading and other more insightful discussions on the subjects of parameterized complexity and kernelization, we point to~\citep{downey_fellows, cygan_parameterized, book-kernels} from where most of the given definitions come from. 
 
-\section{Explicit Running Time Lower Bounds}
+\section{Explicit running time lower bounds}
 
 Both the theory of \NPcness\ and \W[1]-\Hness\ give us evidence that no polynomial or \FPT\ algorithm may exist for a myriad of problems.
 However, simply assuming that $\P \neq \NP$ or that $\FPT \neq \W[1]$ seems to not be enough to prove statements about asymptotic lower bounds on the running time of an algorithm.
@@ -216,16 +218,16 @@ A formula is said to be in $r$-CNF if the size of each clause is no larger than 
     Moreover, this disjunction can be computed by an algorithm running in time $2^{\epsilon n}n^{\bigO{1}}$.
 \end{class_definition*}
 
-Essentially, the Sparsification Lemma implies that, when performing a polynomial reduction \pname{$r$-Satisfability}, for \tdef{fixed $r$}, it suffices to assume the input instance on $n$ variables has $\bigO{n}$ \tdef{clauses}.
+Essentially, the Sparsification Lemma implies that, when performing a polynomial reduction \pname{$r$-Satisfiability}, for \tdef{fixed $r$}, it suffices to assume the input instance on $n$ variables has $\bigO{n}$ \tdef{clauses}.
 Impagliazzo and Paturi then conjecture a cornerstone of lower bound asymptotic analysis, the \tdef{Exponential Time Hypothesis}, commonly referred to as \ETH, and its strong version, known as \SETH.
 
 \begin{class_definition*}[Exponential Time Hypothesis]
-    There is a real number $s$ such that \pname{3-Satisfability} cannot be solved in $2^{sn}(n + m)^{\bigO{1}}$ time.
+    There is a real number $s$ such that \pname{3-Satisfiability} cannot be solved in $2^{sn}(n + m)^{\bigO{1}}$ time.
 \end{class_definition*}
 
 
 \begin{class_definition*}[Strong Exponential Time Hypothesis]
-    \pname{Satisfability} cannot be solved in $(2 - \epsilon)^{n}(n + m)^{\bigO{1}}$ time, for any $\epsilon > 0$.
+    \pname{Satisfiability} cannot be solved in $(2 - \epsilon)^{n}(n + m)^{\bigO{1}}$ time, for any $\epsilon > 0$.
 \end{class_definition*}
 
 
@@ -241,17 +243,17 @@ In terms of $\FPT$ algorithms, the existence of $2^{o(k)}n^{\bigO{1}}$ was ruled
 
 While most of the complexity theory community believes \ETH\ to be true, the same is not true for the Strong Exponential time Hypothesis~\citep{bad_seth}.
 The implications for \SETH, however, as the name suggests, are quite powerful.
-While \ETH\ is generally used to prove assertions on the exponent of the running times of many algorithms, \SETH\ allows for a \textit{much} finer-grained analysis, at the cost of much more complex reductions and arguments, specially because the hypothesis of the Sparsification Lemma \textit{are not respected by \pname{Satisfability}}.
+While \ETH\ is generally used to prove assertions on the exponent of the running times of many algorithms, \SETH\ allows for a \textit{much} finer-grained analysis, at the cost of much more complex reductions and arguments, specially because the hypothesis of the Sparsification Lemma \textit{are not respected by \pname{Satisfiability}}.
 \cite{seth_lokshtanov} give a series of reductions for many problems parameterized by treewidth.
 They show that the best known algorithms parameterized by treewidth for \pname{Independent Set}, \pname{Dominating Set}, \pname{Max Cut}, \pname{Odd Cycle Transversal}, \pname{Vertex $q$-Coloring} (for any $q \geq 3$), \pname{Partition Into Triangles} cannot be improved, unless \SETH\ is false.
 Recently, \cite{seth_subset_sum} proved what may surely be considered a breakthrough result: by using a hypothesis on the running time of \pname{Satsifability} (\SETH), they proved that the pseudo-polynomial dynamic programming algorithm given by \cite{bellman_dp} for \pname{Subset Sum} is optimal.
 
 
-\section{Graph Classes}
+\section{Graph classes}
 \label{sec:graph_classes}
 
 Most problems in graph theory can be tackled with an arbitrary input, that is, there is no particular property that we can exploit; this can happen if the considered application is too broad or little is known about its domain.
-However, it might be possible to guarantee certain characteristics for the given graph, either due constraints of the application~\citep{fernando_chordal} or due to theoretical interest.
+However, it might be possible to guarantee certain characteristics for the given graph, either due to constraints of the application~\citep{fernando_chordal} or due to theoretical interest.
 Regardless, such guarantees might be strong enough to provide an efficient algorithm to an otherwise $\NPH$ problem.
 When constraining our analysis to certain graphs, we refer to the family of all graphs that satisfy the same properties as a \tdef{graph class}.
 A subfamily of a class that satisfies additional properties is referred to as a \tdef{subclass}.
@@ -264,7 +266,7 @@ The vertices of degree one of a tree are called its \tdef{leaves}, and all other
 A \tdef{rooted tree} $T_v$ is a tree with a special vertex $v$, called its \tdef{root}.
 Rooted trees offer a straight forward ordering of the vertices of a tree and a nice way to decompose problems into smaller instances and combine their solutions.
 A \tdef{rooted subtree} $T_u$ of $T_v$ is the subgraph of $T_v$ induced by $u$ and all vertices of $T_v$ whose path to $v$ passes through $u$.
-The vertices in $T_u \setminus \{u\}$ are called the \tdef{descendants} of $u$ and its neighbours are its \tdef{children}.
+The vertices in $T_u \setminus \{u\}$ are called the \tdef{descendants} of $u$ and its neighbors are its \tdef{children}.
 
 A \tdef{forest} is a graph where every connected component is a tree.
 Many problems which are usually quite hard for general graphs, or even some classes, usually have a straightforward answer for forests, either using a greedy strategy or a slightly more sofisticated dynamic programming idea.
@@ -310,18 +312,14 @@ Many problems which are usually quite hard for general graphs, or even some clas
 \end{figure}
 
 
-\tdef{Chordal graphs} have many nice properties that enable the computation of different graph parameters in polynomial time~\citep{golumbic}. A \tdef{perfect elimination ordering} of a graph $G$ is an ordering $v_1, \dots, v_n$ of its vertices such that for the graph $G[\{v_i, \dots, v_n\}]$, $v_i$ is a simplicial vertex. As the name implies, chordal graphs are exactly the graphs where every cycle of size at least 4 has at least one chord. 
-
-\begin{class_definition*}[Chordal Graph]
-    For a graph $G$, the following properties are equivalent:
-    \begin{itemize}
-        \item[(i)] $G$ is chordal;
-        \item[(ii)] It is $C_k$-free, for any $k \geq 4$;
-        \item[(iii)] Every minimal cutset is a clique;
-        \item[(iv)] It is the intersection graph of subtrees of a tree;
-        \item[(v)] There is a perfect elimination ordering of its vertices.
-    \end{itemize}
-\end{class_definition*}
+\tdef{Chordal graphs} have many nice properties that enable the computation of different graph parameters in polynomial time~\citep{golumbic}. A \tdef{perfect elimination ordering} of a graph $G$ is an ordering $v_1, \dots, v_n$ of its vertices such that for the graph $G[\{v_i, \dots, v_n\}]$, $v_i$ is a simplicial vertex. As the name implies, chordal graphs are exactly the graphs where every cycle of size at least 4 has at least one chord; more over, the following statements are equivalent: (i) $G$ is chordal; (ii) $G$ is $C_k$-free, for every $k \geq 4$; (iii) every minimal cutset of $G$ is a clique; (iv) $G$ is the intersection graph of subtrees of a tree; (v) there is a perfect elimination ordering of the vertices of $G$.
+For a chordal graph $G$, its \tdef{clique tree} is a tree $\mathcal{T}(G)$ such that: its vertex set, each of which is called a \tdef{bag}, is the set of maximal cliques of $G$, and, for every vertex $v$ of $G$, the set of bags which contains $v$ induces a subtree of $\mathcal{T}(G)$. It can be shown that such a tree satisfies property \textit{(iv)}.
+For more on clique trees and other chordal graph properties please refer to~\citep{clique_tree}.
+Figure~\ref{fig:some_chordal} gives an example of a chordal graph and its clique tree.
+Not surprisingly, many subclasses of chordal graphs have also been studied, since even forests are chordal graphs.
+A \tdef{block graph} is a chordal graph where every minimal cutset is a single vertex.
+An \tdef{interval graph} is the intersection graph of a set of intervals over the real line.
+A \tdef{split graph} is a graph with a vertex set that can be partitioned into a clique and an independent set.
 
 \begin{figure}[!htb]
     \centering
@@ -398,25 +396,10 @@ Many problems which are usually quite hard for general graphs, or even some clas
     \label{fig:some_chordal}
 \end{figure}
 
-For a chordal graph $G$, its \tdef{clique tree} is a tree $\mathcal{T}(G)$ such that: its vertex set, each of which is called a \tdef{bag}, is the set of maximal cliques of $G$, and, for every vertex $v$ of $G$, the set of bags which contains $v$ induces a subtree of $\mathcal{T}(G)$. It can be shown that such a tree satisfies property \textit{(iv)}.
-For more on clique trees and other chordal graph properties please refer to~\citep{clique_tree}.
-
-Not surprisingly, many subclasses of chordal graphs have also been studied, since even forests are chordal graphs.
-A \tdef{block graph} is a chordal graph where every minimal cutset is a single vertex.
-An \tdef{interval graph} is the intersection graph of a set of intervals over the real numbers.
-A \tdef{split graph} is a graph whose vertex set can be partitioned into a clique and an independent set.
-
 \tdef{Cographs} are the graphs $G$ such that either $G$ or its complement is disconnected. At first glance, such property may not seem very helpful to the algorithm designer, but it is equivalent to a very nice recursive definition, first given in~\citep{cographs}.
 Given two graphs $G$ and $H$, we define their \tdef{disjoint union} as the graph $G \cup H$ with $V(G \cup H)= V(G) \cup V(H)$ and $E(G \cup H) = E(G) \cup E(H)$, and their \tdef{join} as the graph $G \otimes H$ with vertex set is $V(G \otimes H)= V(G) \cup V(H)$ and edge set $E(G \otimes H)= E(G) \cup E(H) \cup \{uv \mid u \in V(G), v \in V(H)\}$.
-
-\begin{class_definition*}[Cograph]
-    For a graph $G$, the following properties are equivalent:
-    \begin{itemize}
-        \item[(i)] $G$ is a cograph;
-        \item[(ii)] $G$ is $P_4$-free;
-        \item[(iii)] $G$ can be constructed from isolated vertices by successively applying disjoint union and join operations.
-    \end{itemize}
-\end{class_definition*}
+In particular, the following statements are equivalent: (i) $G$ is a cograph; (ii) $G$ is $P_4$-free; (iii) $G$ can be constructed from isolated vertices by successively applying disjoint union and join operations.
+Figure~\ref{fig:some_cograph} gives an example of a cograph.
 
 \begin{figure}[!htb]
     \centering
@@ -447,7 +430,7 @@ Given two graphs $G$ and $H$, we define their \tdef{disjoint union} as the graph
 
 Another important class on graph theory, and one with a very long history of research, is the class of \textit{regular graphs}.
 A graph $G$ is regular if all of vertices of $G$ have the same degree, and is $k$-regular if $\deg(v) = k$ for all $v \in V(G)$.
-Despite its simplicity, regular graphs appear in many different scenarios, such as in the E$\Delta$CC conjecture on \pname{Equitable Coloring}, a conjecture for \pname{Internal Partitions}, but even more in terms of algebraic graph theory~\citep{godsil}, a field dedicated to the analysis of many graph parameters through algebraic methods, such as spectral decompositions, graph polynomials, and interlacing.
+Despite its simplicity, regular graphs appear in many different scenarios, such as in the E$\Delta$CC conjecture on \pname{Equitable Coloring}, a conjecture for \pname{Internal Partitions}~\citep{internal_partition_regular6}, but even more in terms of algebraic graph theory~\citep{godsil}, a field dedicated to the analysis of many graph parameters through algebraic methods, such as spectral decompositions, graph polynomials, and interlacing.
 In particular, by using the eigenvalues of the adjacency matrix of a graph, or its Laplacian matrix, it is possible to derive bounds for a large collection of parameters, such as independence number and chromatic number, usually in polynomial time.
 Regular graphs, in particular, benefit greatly from this approach, with stronger results for this class when compared to other classes.
 

@@ -15,8 +15,9 @@ Before stating our \NP-hardness result, we need some definitions and observation
 
 \begin{observation}
     \label{obs:mono_bipartite}
-    For fixed $d \geq 1$, the graph $K_{d+1, 2d+1}$ is monochromatic.
-    Moreover, any vertex with $d+1$ neighbors in a monochromatic set is monochromatic.
+    For fixed every $d \geq 1$, if $u$ and $v$ have at least $2d+1$ common neighbors, the set $\{u,v\}$ is monochromatic.
+    In particular, the graph $K_{d+1, 2d+1}$ is monochromatic.
+    Moreover, if a vertex $v$ has at least $d+1$ neighbors in the monochromatic set $S$, $\{v\} \cup S$ is monochromatic.
 \end{observation}
 
 \begin{definition}[Spool]
@@ -59,7 +60,7 @@ An illustration of a $(2,3)$-spool is shown in Figure~\ref{fig:spool}.
 \end{figure}
 
 \begin{observation}
-    For fixed $d\geq 1$, a $(d, n)$-spool is monochromatic.
+    For fixed $d\geq 1$ and every $n \geq 1$, a $(d, n)$-spool is monochromatic.
 \end{observation}
 
 
@@ -74,7 +75,7 @@ An illustration of a $(2,3)$-spool is shown in Figure~\ref{fig:spool}.
 \end{proof}
 
 
-Chv\'atal~\cite{chvatal_matching_cut} proved that \textsc{Matching Cut} is \NP-hard for graphs of maximum degree at least four. In the next theorem, whose proof is inspired by the reduction of Chv\'atal~\cite{chvatal_matching_cut}, we prove the \NP-hardness of \pname{$d$-cut} for $(2d+2)$-regular graphs. In particular, for $d=1$ it implies the \NP-hardness of \pname{Matching Cut} for $4$-regular graphs, which is stronger than Chv\'atal~\cite{chvatal_matching_cut} hardness for graphs of maximum degree four.
+\cite{chvatal_matching_cut} proved that \textsc{Matching Cut} is \NP-hard for graphs of maximum degree at least four. In the next theorem, whose proof is inspired by the reduction of \cite{chvatal_matching_cut}, we prove the \NP-hardness of \pname{$d$-cut} for $(2d+2)$-regular graphs. In particular, for $d=1$ it implies the \NPHness\ of \pname{Matching Cut} for $4$-regular graphs.
 
 
 \begin{theorem}
@@ -97,7 +98,7 @@ Chv\'atal~\cite{chvatal_matching_cut} proved that \textsc{Matching Cut} is \NP-h
     For the first type, we denote the sets by $S(v^*, i)$, $i \in [2]$; for the second type, by $S_{\ell}(v, e, i, j)$, $\ell \in [2]$.
     For each set $S(v^*, i)$, we choose an arbitrary vertex and label it with $s(v^*, i)$.
     To conclude the construction of vertex gadgets, add every edge between $S_1(v, e, i, j)$ and $S_2(v, e, i, j)$, and form a perfect matching between $S(v^*, 1) \setminus \{s(v^*, 1)\}$ and $S(v^*, 2) \setminus \{s(v^*, 2)\}$.
-    Note that all inner vertices of these spools have degree $2d+2$, every vertex labeled $s(v^*, i)$ has $d+1$ neighbors, every other vertex in $S(v^*, i)$ has $d+2$, and every vertex in $S(v, e, i, j)$ has degree equal to $2d+1$.
+    Note that all inner vertices of a spool have degree $2d+2$, every vertex labeled $s(v^*, i)$ has $d+1$ neighbors, every other vertex in $S(v^*, i)$ has $d+2$, and every vertex in $S(v, e, i, j)$ has degree equal to $2d+1$.
     For an example of the edges between exterior vertices of the same vertex gadget, see Figure~\ref{fig:vert_relations}.
 
     \begin{figure}[!htb]
@@ -121,7 +122,7 @@ Chv\'atal~\cite{chvatal_matching_cut} proved that \textsc{Matching Cut} is \NP-h
                                     \Vertex[x=\bla, y=\bly, NoLabel]{e\w\x\y}
                                 \else
                                     \ifnum\y=\one
-                                        \Vertex[x=\bla, y=\bly, Math, LabelOut, Ldist=-4pt,Lpos=135,L={s(v^*, 1)}]{e\w\x\y}
+                                        \Vertex[x=\bla, y=\bly, Math, LabelOut, Ldist=-4pt,Lpos=180,L={s(v^*, 1)}]{e\w\x\y}
                                     \else
                                         \ifnum\y=\six
                                           \Vertex[x=\bla, y=\bly, Math, LabelOut, Ldist=1pt,Lpos=0,L={s(v^*, 2)}]{e\w\x\y}
@@ -552,7 +553,7 @@ Our next result is a natural generalization of Chvátal's algorithm~\cite{chvata
     %The only other case where we would not shorten $C$ is when $|C| = 3$ and $d \geq 3$, but trivially $(C, V(G) \setminus C)$ is a $3$-cut of $G$.
 \end{proof}
 
-Theorems~\ref{thm:regular_nph} and~\ref{thm:small_deg_poly} present a ``quasi-dichotomy'' for $d$-cut on graphs of bounded maximum degree.
+Theorems~\ref{thm:regular_nph} and~\ref{thm:small_deg_poly} settle the complexity of \pname{$d$-Cut } for a wide range of graphs, based on the maximum degree.
 Specifically, for $\Delta(G) \in \{d+3, \dots, 2d+1\}$, the complexity of the problem remains unknown.
 However, we believe that most, if not all, of these open cases can be solved in polynomial time; see the discussion in Section~\ref{sec:cuts_concl}.
 
@@ -560,10 +561,10 @@ However, we believe that most, if not all, of these open cases can be solved in 
 \subsection{Exact exponential algorithm}
 \label{sec:exact-algo}
 
-To conclude this section, we present a simple exact exponential algorithm which, for every $d \geq 1$, runs in time $\bigOs{c_d^n}$ for some constant $c_d < 2$.
+To conclude this subsection, we present a simple exact exponential algorithm which, for every $d \geq 1$, runs in time $\bigOs{c_d^n}$ for some constant $c_d < 2$.
 For the case $d=1$, the currently known algorithms~\cite{matching_cut_tcs,matching_cut_ipec} exploit structures that appear to get out of control when $d$ increases, and so has a better running time than the one described below.
 
-When an instance of size $n$ branches into $t$ subproblems of sizes at most $n - s_1, \dots, n - s_t$, respectively, the vector $(s_1, \dots, s_t)$ is called the \tdef{branching vector} of this branching rule, and the unique positive real root of the equation $x^n - \sum_{i \in [t]} x^{n - s_i} = 0$ is called the \tdef{branching factor} of the rule.
+When an instance of size $n$ branches into $t$ subproblems such that the $i$-th subproblem has size at most $n - s_i$, the vector $(s_1, \dots, s_t)$ is called the \tdef{branching vector} of the branching rule, and the unique positive real root of the equation $x^n - \sum_{i \in [t]} x^{n - s_i} = 0$ is called the \tdef{branching factor} of the rule.
 The total complexity of a branching algorithm is given by $\bigOs{\alpha^n}$, where $\alpha$ is the largest branching factor among all rules of the algorithm.
 For more on branching algorithms, we refer to~\cite{exact_exponential_algorithms}.
 
@@ -587,7 +588,7 @@ For more on branching algorithms, we refer to~\cite{exact_exponential_algorithms
     Our branching rules, and their respective branching vectors, are listed below.
 
     \begin{itemize}
-        \item[B1] If there is some $v \in A \cup B$ with $\dgr_D(v) \geq d+1$, choose a set $X \subseteq N_D(v)$ of size $d$ and branch on all possible possible bipartitions of $X$.
+        \item[B1] If there is some $v \in A \cup B$ with $\dgr_D(v) \geq d+1$, choose a set $X \subseteq N_D(v)$ of size $d$ and branch on all possible bipartitions of $X$.
         Note that, if all vertices of $X$ are in the other side of $v$, at least one vertex of $N_D(v) \setminus X$ must be in the same side as $v$.
         As such, this branching vector is of the form $\{d+1\} \times \{d\}^{2^d-1}$.
 
@@ -624,9 +625,11 @@ For more on branching algorithms, we refer to~\cite{exact_exponential_algorithms
 
     As to the running time of the algorithm, for rule B2 we have that the unique positive real root of $x^n - (2^d - 1)x^{n - d} = 0$ is of the closed form $x = \sqrt[\leftroot{2}d]{2^d - 1} < 2$.
     For rule B1, we have that the polynomial associated with the recurrence relation, $p_d(x) = x^n - (2^d - 1)x^{n - d} - x^{n - d - 1}$, verifies $p_d(1) = 1 - 2^d < 0$ and $p_d(2) = 2^{n - d - 1} > 0$.
-    Since it is a continuous function and $p_d(x)$ has an unique positive real root $c_d$, it holds that $1 < c_d < 2$.
+    Since it is a continuous function and $p_d(x)$ has a unique positive real root $c_d$, it holds that $1 < c_d < 2$.
     The final complexity of our algorithm is $\bigOs{c_d^n}$, with $\sqrt[\leftroot{2}d]{2^d - 1} < c_d < 2$, since $p_d\left(\sqrt[\leftroot{2}d]{2^d - 1}\right) = -(2^d - 1)^{\frac{n-d-1}{d}} < 0$.
-    Table~\ref{tab:exact_values} presents the branching factors for some values of $d$ for our two branching rules.
+\end{proof} 
+
+Table~\ref{tab:exact_values} presents the branching factors for some values of $d$ for our two branching rules.
 
 \begin{table}[!htb]
     \centering
@@ -640,4 +643,3 @@ For more on branching algorithms, we refer to~\cite{exact_exponential_algorithms
     \caption{Branching factors for some values of $d$.}
     \label{tab:exact_values}
 \end{table}
-\end{proof} 

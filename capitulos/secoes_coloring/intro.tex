@@ -1,10 +1,10 @@
-\section{Definitions and Related Work}
+\section{Definitions and related work}
 
 A \tdef{k-coloring} of a graph $G$ is a $k$-partition $\varphi = \{\varphi_1, \dots,\varphi_k\}$ of $V(G)$.
 Each $\varphi_i$ is a \tdef{color class} and $v \in V(G)$ is \tdef{colored} with color $i$ if and only if $v \in \varphi_i$.
 In a slight abuse of notation, we use $\varphi(v)$ to denote the color of $v$ and, for $X \subseteq V(G)$, $\varphi(X) = \bigcup_{v \in X} \{\varphi(v)\}$.
 
-\subsection{Proper Coloring}
+\subsection{Proper coloring}
 
 A \tdef{proper k-coloring} of $G$ is a $k$-coloring such that each $\varphi_i$ is an independent set.
 In the literature, proper coloring is usually referenced to as \tdef{Vertex Coloring}, a convention we also adopt.
@@ -32,7 +32,7 @@ The natural decision problem associated with vertex coloring simply asks whether
 
 Determining if a given instance of \pname{Vertex Coloring} is a $\YES$ instance is a classic problem in both graph theory and algorithmic complexity, being a known $\NPc$ problem.
 Some particular cases of \pname{Vertex Coloring} are still $\NPc$.
-For instance, even if we fix $k=3$ or restrict the input to $K_3$-free graphs the problem does not get any easier.
+For instance, even if we fix $k=3$ or restrict the input to $K_3$-free graphs the problem does not get any easier~\citep{garey_johnson, triangle_free_coloring}.
 
 It is worth to point out the subtle difference between the parameter $k$ being part of the input or being \tdef{fixed}.
 Informally, when $k$ is fixed, we are willing to pay exponential time only on $k$ to solve our problem, whereas when $k$ is part of the input, we are not.
@@ -54,8 +54,8 @@ $G$ is perfect if for every induced subgraph $G'$ of $G$, $\chi(G') = \omega(G')
 More particular cases for \pname{Vertex Coloring} have also been analyzed. For instance, \cite{coloring_art} present some results for graph classes that have two connected five-vertex forbidden induced subgraphs. There are some surveys on the subject, as such we point to~\citep{coloring_survey} and~\citep{coloring_survey2} for more on the classic \pname{Vertex Coloring} problem, since it is not the focus of this thesis.
 
 
-\subsection{Equitable Coloring}
-A $k$-coloring of an $n$ vertex graph is said to be \tdef{equitable} if for every color class $\varphi_i$, $\floor{\frac{n}{k}} \leq |\varphi_i| \leq \ceil{\frac{n}{k}}$ or, equivalently, if for, any two color class $\varphi_i$ and $\varphi_j$, $||\varphi_i| - |\varphi_j|| \leq 1$.
+\subsection{Equitable coloring}
+A $k$-coloring of an $n$ vertex graph is said to be \tdef{equitable} if for every color class $\varphi_i$, $\floor{\frac{n}{k}} \leq |\varphi_i| \leq \ceil{\frac{n}{k}}$ or, equivalently, if for, any two color classes $\varphi_i$ and $\varphi_j$, $||\varphi_i| - |\varphi_j|| \leq 1$.
 If $G$ admits a proper equitable $k$-coloring, we say that $G$ is \tdef{equitably k-colorable}.
 Unlike other coloring variants previously discussed, an equitably $k$-colorable graph is not necessarily equitably $(k+1)$-colorable.
 
@@ -122,16 +122,14 @@ Quite a lot of effort was put into finding classes where E$\Delta$CC holds, even
 A result given by~\cite{claw_free_de_werra}, combined with Brooks' Theorem, implies that every claw-free graph is equitably $k$-colorable for every $k \geq \chi(G)$.
 A very extensive survey on the subject was conducted by~\cite{equitable_survey}, where many of the results of the past 50 years were assembled.
 Among the many reported results, the E$\Delta$CC is known to hold for:
-bipartite graphs (with the obvious exceptions, where the ECC holds),
-trees,
-split graphs,
-planar graphs,
-\tdef{outerplanar graphs} (planar graphs with a drawing such that no vertex is within a polygon formed by other vertices),
-\tdef{low degeneracy graphs} (graphs such that every subgraph has a vertex with a small degree),
-\tdef{Kneser graphs} (complement of the intersection graph of $F \subset 2^{[n]}$, with every set of $F$ containing exactly $k$ elements),
-interval graphs,
-random graphs and
-some forms of graph products.
+bipartite graphs (with the obvious exceptions, where the ECC holds)~\citep{equitable_bipartite},
+planar graphs with maximum degree at least nine~\citep{equitable_planar},
+split graphs~\citep{equitable_split},
+\tdef{outerplanar graphs} (planar graphs with a drawing such that no vertex is within a polygon formed by other vertices)~\citep{equitable_outerplanar},
+\tdef{$d$-degenerate graphs} (graphs such that every induced subgraph has a vertex of degree at most $d$)~\citep{equitable_degenerate},
+non-trivial \tdef{Kneser graphs} (complement of the intersection graph of $F \subset 2^{[n]}$, with every set of $F$ containing exactly $k$ elements, where $n > 2k$)~\citep{equitable_kneser},
+interval graphs~\citep{equitable_interval}, and
+some forms of graph products~\citep{equitable_interval}.
 For the exact results please refer to the survey.
 
 Almost all complexity results for \pname{Equitable Coloring} arise from a related problem, known as \pname{Bounded Coloring}, an observation given by~\cite{equitable_treewidth}.
@@ -151,7 +149,7 @@ Among the complexity results for \pname{Bounded Coloring} and, consequently, \pn
 For cographs, we have a polynomial time algorithm when $k$ is fixed, otherwise the problem is $\NPc$~\citep{graph_partitioning1}, a situation similar to that of bipartite and interval graphs~\citep{graph_partitioning1}.
 A consequence of the hardness result for cographs is that \pname{Equitable Coloring} is $\NPc$ for graphs of bounded cliquewidth.
 
-On complements of \tdef{comparability graphs} (graphs representing a valid partial ordering) however, even if we fix $l$, \pname{Bounded Coloring} is still $\NPc$~\citep{chain_antichain}.
+On complements of \tdef{comparability graphs} (i.e. graphs representing a valid partial ordering) however, even if we fix $l$, \pname{Bounded Coloring} is still $\NPc$~\citep{chain_antichain}.
 \cite{colorful_treewidth} show that, when parameterized by treewidth, \pname{Equitable Coloring} is $\W[1]\text{-}\Hard$.
 Also in terms of treewidth, \cite{equitable_treewidth} give a polynomial time algorithm for graphs of bounded treewidth.
 Note that for all of the mentioned classes, \pname{Vertex Coloring} is polynomially solvable.
@@ -186,7 +184,7 @@ A summary of the known complexities is available in Table~\ref{tab:equitable_com
     \label{tab:equitable_complexity}
 \end{table}
 
-\subsection{Clique Coloring}
+\subsection{Clique coloring}
 A \tdef{k-clique-coloring} of $G$ is a $k$-coloring of $G$ such that no maximal clique of $G$ is entirely contained in a single color class.
 We say that $G$ is \tdef{k-clique-colorable} if $G$ admits a $k$-clique-coloring.
 The smallest integer $k$ such that $G$ is $k$-clique-colorable is called the \tdef{clique chromatic number} $\CN{C}(G)$ of $G$.
@@ -254,7 +252,7 @@ For a summary of the mentioned results, please refer to Table~\ref{tab:clique_co
     \label{tab:clique_color_complexity}
 \end{table}
 
-\subsection{Biclique Coloring}
+\subsection{Biclique coloring}
 A \tdef{k-biclique-coloring} of $G$ is a $k$-coloring of $G$ such that no maximal biclique of $G$ is entirely contained in a single color class.
 We say that $G$ is \tdef{k-biclique-colorable} if $G$ admits a $k$-biclique-coloring.
 The smallest integer $k$ such that $G$ is $k$-biclique-colorable is called the \tdef{biclique chromatic number} $\CN{B}(G)$ of $G$.

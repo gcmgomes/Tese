@@ -1,11 +1,11 @@
-\chapter{Introduction and Preliminaries}
+\chapter{Introduction and preliminaries}
 \label{ch:intro}
 
 Graphs are a mathematical tool mainly used to model situations where objects have some sort of interaction with each other.
 As such, they naturally arise on a plethora of problems from the most varied domains, ranging from geographical data to computer science, physics, chemistry and biology.
 Computer science, in particular, is heavily reliant on graphs and their many properties, being a core component of many database, network and artificial intelligence algorithms.
 In the information age, which encompasses the later 20th and early 21st centuries, the development of communication technologies has been a (if not the) focus point for human society.
-It is quite hard conceive a more fitting structure to the modelling of communication networks than a graph; the schematics of such a network are pretty much a drawing of a graph.
+It is quite hard to conceive a more fitting structure to the modeling of communication networks than a graph; the schematics of such a network are pretty much a drawing of a graph.
 In more recent years, the explosive popularity of online social networks has created a demand for extremely efficient and scalable implementations of graph structures and algorithms.
 
 Beside their wide applicability range, graphs by themselves have been the subject of countless investigations.
@@ -42,7 +42,7 @@ Nevertheless, their understanding was crucial to the development of a consistent
 In short, the study presented in this thesis, as many algorithmic graph theory works, is done from the structural and complexity point of view.
 While the reported results are mainly algorithms, hardness proofs, and kernelization techniques, most of these are heavily reliant on structural aspects, either by supporting themselves on previous results of the literature or by being structural themselves.
 Specifically, four partitioning problems were investigated: equitable coloring, clique coloring, biclique coloring, and a generalization of matching cut.
-For intersection graphs of maximal structures, motivated by the difficulty in working with biclique graphs, star graphs (intersection graph of maximal stars of a graph) are introduced and investigated.
+For intersection graphs of maximal structures, motivated by the difficulty in working with biclique graphs, star graphs (intersection graphs of maximal stars of a graph) are introduced and investigated.
 The following is a summary of the topics and results discussed in this thesis.
 
 \begin{itemize}
@@ -54,7 +54,7 @@ The following is a summary of the topics and results discussed in this thesis.
     Also in this chapter, both clique and biclique colorings are discussed.
     The first exact exponential time algorithm for biclique coloring, which builds upon ideas used for clique coloring, is presented.
     Then, kernelization algorithms for clique and biclique coloring when parameterized by neighborhood diversity are given; using results on covering problems, an $\FPT$ algorithm under the same parameterization is obtained for clique coloring, which has optimal running time, up to the base of the exponent, unless the Exponential Time Hypothesis fails.
-    For biclique coloring, an \FPT\ algorithm is given, but when parameterized by maximum number of colors and neighborhood diversity.
+    For biclique coloring, an \FPT\ algorithm is given, but when simultaneously parameterized by the maximum number of colors and neighborhood diversity.
     \item Chapter~\ref{ch:cuts} discusses generalizations of the matching cut problem.
     Most of the chapter is devoted to the study of the  $d$-cut problem.
     Among the presented results are included an \NP-\Hness\ proof for $(2d+2)$-regular graphs -- which has an important connection to a conjecture on the context of internal partitions -- as well as a polynomial time algorithm for graphs of maximum degree $d + 2$.
@@ -64,26 +64,29 @@ The following is a summary of the topics and results discussed in this thesis.
     The existence of polynomial kernels when parameterizing simultaneously by the number of edges crossing the cut, the treewidth, and the maximum degree is ruled out.
     Also, an exact exponential algorithm slightly faster than the naive brute force approach is described.
     We conclude the chapter with some remarks on two other generalizations of \pname{Matching Cut}, with some results in another version, which we called \pname{$\ell$-Nested Matching Cut}, and a brief discussion on a much harder problem, namely \pname{$p$-Way Matching Cut}.
-    \item Chapter~\ref{ch:star_graph} deals with star graphs, the intersection graph of the maximal stars of a graph, and with star-critical graphs which are minimal with respect to the star graph they generate.
+    \item Chapter~\ref{ch:star_graph} deals with star graphs, the intersection graphs of the maximal stars of a graph, and with star-critical graphs which are minimal with respect to the star graph they generate.
     The chapter begins with a bound on the number of vertices of star-critical graphs by a quadratic function of the size of its set of maximal stars.
     Afterwards, a Krausz-type characterization is given; both results are combined to show that the recognition problem belongs to \NP.
     Then, a series of properties of star graphs are proved.
-    In particular, it is shown that they are biconnected, that every edge belongs to at least one triangle, the structures that the pre-image must have in order to generate degree two vertices are characterized, and bound the diameter of the star graph with respect to the diameter of its pre-image is given.
-    Finally, a monotonicity theorem is provided, which is used to generate all star graphs on no more than eight vertices and prove that the class of star graphs and square graphs are not properly contained in each other.
+    In particular, it is shown that they are biconnected, that every edge belongs to at least one triangle, the structures that the pre-image must have in order to generate degree two vertices are characterized, and a bound on the diameter of the star graph with respect to the diameter of its pre-image is given.
+    Finally, a monotonicity theorem is provided, which is used to generate all star graphs on no more than eight vertices and prove that the classes of star graphs and square graphs are not properly contained in each other.
 \end{itemize}
 
 The following table summarizes the submissions and collaborators of each chapter.
 
 \begin{table}[!htb]
-\hspace{-2cm}
+\hspace{-3cm}
     \begin{tabular}{c|llll}
          Chapter                                & Title                       & Venue                         & Status    & Collaborators\\
          \hline
-         \multirow{2}{1cm}{\ref{ch:coloring}}   & Parameterized Complexity of & Discrete Mathematics \&       & Accepted  & Carlos V. Gomes \& \\
-                                                & Equitable Coloring          & Theoretical Computer Science  &           & Vinícius dos Santos \\
+         \multirow{2}{1cm}{\ref{ch:coloring}}   & Parameterized Complexity of & Discrete Mathematics \&       & Published  & Carlos V. Gomes \& \\
+                                                & Equitable Coloring          & Theoretical Computer Science  &             & Vinícius dos Santos \\
+        \hline
+        \multirow{2}{1cm}{\ref{ch:coloring}}    & Algorithms for Clique and   &                               & Under       & Carlos V. Gomes \& \\
+                                                & Biclique Coloring           &                               & Preparation & Vinícius dos Santos \\
          \hline
-         \multirow{4}{1cm}{\ref{ch:cuts}}       & Finding cuts of bounded     & International Symposium       & Under     & \\
-                                                & degree: complexity, FPT     & on Parameterized and Exact    & Review    & Ignasi Sau\\
+         \multirow{4}{1cm}{\ref{ch:cuts}}       & Finding cuts of bounded     & International Symposium       &      & \\
+                                                & degree: complexity, FPT     & on Parameterized and Exact    & Published    & Ignasi Sau\\
                                                 & and exact algorithms,       & Computation                   &           & \\
                                                 & and kernelization           &                               &           &\\
          \hline

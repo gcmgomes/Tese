@@ -1,4 +1,4 @@
-\section{Other Generalizations for \pname{Matching Cut}}
+\section{Other generalizations for \pname{Matching Cut}}
 
 In this section, we describe two other generalizations of \pname{Matching Cut} that we have investigated.
 For the first, \pname{$\ell$-Nested Matching Cut}, we present an exponential time algorithm and an attempt at using algorithms for \pname{Matching Cut} as a black box for this problem.
@@ -6,7 +6,7 @@ Most results given for \pname{$d$-Cut} and \pname{Matching Cut} can be adapted f
 The second problem we discuss here has been dubbed as \pname{$p$-way Matching Cut}.
 Unlike \pname{$d$-Cut} and \pname{$\ell$-Nested Matching Cut}, this version is much more challenging, and we limit ourselves to some attempts on tackling the problem.
 
-\subsection{Nested Cuts}
+\subsection{Nested cuts}
 
 We have already discussed \pname{$d$-Cut} at length throughout this chapter, so this section will detail some other directions we attempted to explore.
 Recall the definition of a matching cut: we would like each vertex of the graph, on the cut $(A,B)$, to have at most one neighbor across the cut.
@@ -22,7 +22,7 @@ The following observation gives some intuition as to the structure of the positi
 \begin{observation}
 	\label{obs:nested_cut}
     Let $G$ be a graph and $\ell \geq 3$ an integer.
-    $G$ admits an $\ell$-nested matching cut $\varphi$ if and only if there is an ($\ell-1$)-nested matching cut $\varphi' = \{A'_1, \dots, A'_{\ell - 1})\}$ with one $A'_i$ such that the subgraph induced by the vertices in $A'_i$ admits a matching cut $(B_1, B_2)$ where, for every $v \in \border(A'_i)$, it holds that $N[v] \subseteq B_1$ or $N[v] \subseteq B_2$.
+    $G$ admits an $\ell$-nested matching cut $\varphi$ if and only if there is an ($\ell-1$)-nested matching cut $\varphi' = \{A'_1, \dots, A'_{\ell - 1}\}$ with one $A'_i$ such that the subgraph induced by the vertices in $A'_i$ admits a matching cut $(B_1, B_2)$ where, for every $v \in \border(A'_i)$, it holds that $N[v] \subseteq B_1$ or $N[v] \subseteq B_2$.
 \end{observation}
 
 \begin{proof}
@@ -31,8 +31,8 @@ The following observation gives some intuition as to the structure of the positi
 	Now, for each $v \in \border(\varphi'_{\ell - 1})$, note that $v \in \border(\varphi_{\ell - 1}) \cup \border(\varphi_\ell)$.
 	Consequently, every neighbor of $v$ is in either the same side of the cut $(\varphi_{\ell - 1}, \varphi_\ell)$ as $v$, as we wanted.
 	
-	For the converse, it suffices to note that $\border(A') \cap \border(\varphi'_i) = \emptyset$ and $\border(B') \cap \border(\varphi'_i) = \emptyset$ precisely because of the constraint that $N[v] \subseteq A'$ or $N[v] \subseteq B'$.
-	As such, we can construct the desired $\ell$-nested matching cut as $\varphi = \{\varphi'_1, \dots, \varphi'_{\ell - 2}, A', B'\}$.
+	For the converse, it suffices to note that $\border(B_1) \cap \border(\varphi'_i) = \emptyset$ and $\border(B_2) \cap \border(\varphi'_i) = \emptyset$ precisely because of the constraint that $N[v] \subseteq B_1$ or $N[v] \subseteq B_2$.
+	As such, we can construct the desired $\ell$-nested matching cut as $\varphi = \{\varphi'_1, \dots, \varphi'_{\ell - 2}, B_1, B_2\}$.
 \end{proof}
 
 Observation~\ref{obs:nested_cut} is a first step towards an algorithm for \pname{$\ell$-Nested Matching Cut}.
@@ -53,11 +53,11 @@ Most of the arguments presented here work with slight modifications to graphs of
 
 \begin{itemize}
 	\item[R1] If there exists some $v \in A_i$ such that $N(v) \supseteq \{x,y\}$ and $x,y \in F$ and $xy \in E(G)$, add $x,y$ to $A_i$.
-	\item[R2] If there exists $v \in F$ and an unique $i \in [\ell]$ with $\deg_{A_i}(v) \geq 2$, add $v$ to $A_i$.
+	\item[R2] If there exists $v \in F$ and a unique $i \in [\ell]$ with $\deg_{A_i}(v) \geq 2$, add $v$ to $A_i$.
 	\item[R3] For every edge $uv$ with $u \in A_i$ and $v \in A_j$, add $N(u) \cap F$ to $A_i$ and $N(v) \cap F$ to $A_j$.
 	\item[R4] If there is a pair $u,v \in F$ with $N(u) = N(v) = \{x, y\}$ with $x \in A_i$ and $y \in A_j$, add $u$ to $A_i$ and $v$ to $A_j$.
 	\item[R5] If there is a pair $u,v \in F$ with $N(u) = N(v) = \{x, y\}$ with $x \in A_i$ and $y \in F$, add $x$ to $A_i$.
-	\item[R6] If there is a vertex $v \in F$ with $N(v) = \{x,y\}$, $x \in A_i$, $y \in A_j$, $N(x) \subseteq A_i \cup \{v\}$, and $N(y) \subseteq A_j \cup \{v\}$, add $v$ to $A_i$.
+	\item[R6] If there is a vertex $v \in F$ with $N(v) = \{x,y\}$, $x \in A_i$, $y \in A_j$, $N(x) \subseteq A_i \cup \{v\}$, and $N(y) \subseteq A_j \cup \{v\}$, add $u$ to $A_i$.
 	\item[R7] If there are vertices $u,v,w \in F$ with $\deg(u) = \deg(v) = \deg(w)$ arranged as in Figure~\ref{fig:r7}, add $\{u,v\}$ to $A_i$ and $w$ to $A_j$.
 	
 	\begin{figure}[!htb]
@@ -389,11 +389,11 @@ What remains to be shown is that it is, in fact, an $\ell$-nested matching cut o
 
 
 
-\subsection{Multiway Cuts}
+\subsection{Multiway cuts}
 
 The previous section dealt with partitions $\varphi$ such that each vertex has at most one neighbor in another part.
 We may relax this constraint, and ask that each vertex has at most one neighbor in \textit{each part other than its own}.
-Equivalently, given the integer $p \geq 2$, we want an $p$-partition of the vertices of the graph such that $(A_i, A_j)$ is a matching cut of $G[A_i \cup A_j]$.
+Equivalently, given the integer $p \geq 2$, we want a $p$-partition of the vertices of the graph such that $(A_i, A_j)$ is a matching cut of $G[A_i \cup A_j]$.
 A cut that satisfies this property is called a \tdef{$p$-Way matching cut}, with the problem of deciding whether or not a graph admits such a partition defined below.
 
 \problem{$p$-Way Matching Cut}{A graph $G$}{Does $G$ admit a $p$-Way matching cut?}
@@ -402,7 +402,7 @@ It is not hard to adapt either of the reductions given by~\cite{chvatal_matching
 The hard part, however, is finding an \FPT\ algorithm for \pname{$p$-Way Matching Cut} when parameterized by the number of edges crossing the cut.
 The powerful machinery provided by~\cite{marx_treewidth_reduction} does not appear to be capable of handling the constraint of each pair of parts is a matching cut.
 Whenever we attempted to give a graph class that captured this notion, we were either unable to reconstruct the cut on the original graph, or we found counter-examples that the treewidth reduction technique could produce that did not represent a $p$-way matching cut of the graph.
-Adapting the exact exponential algorithm of~\cite{matching_cut_ipec} also seems a challenging task; while we were successful for nested cuts, the structures used as branching rules appear to explode rapidly with the growth of $p$, a similar phenomenon is observed when trying to devise a kernelization algorithm
+Adapting the exact exponential algorithm of~\cite{matching_cut_ipec} also seems a challenging task; while we were successful for nested cuts, the structures used as branching rules appear to explode rapidly with the growth of $p$, a similar phenomenon is observed when trying to devise a kernelization algorithm.
 Aside from these challenging questions, most parameterized algorithms for \pname{Matching Cut} can be adapted for \pname{$p$-Way Matching Cut}, such as the ones parameterized by treewidth or distance to cluster, without much difficulty, but, much like \pname{$d$-Cut} all such algorithms have exponential dependencies on $p$, and asserting whether this is necessary or not would be nice. 
 
 

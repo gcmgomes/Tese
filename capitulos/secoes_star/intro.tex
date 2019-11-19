@@ -1,13 +1,5 @@
-\section{Intersection Graphs}
+\section{Intersection graphs}
 \label{sec:intersections}
-
-The \tdef{intersection graph} of a multifamily $\mathcal{F} \subseteq 2^S$, denoted by $G = \Omega(\mathcal{F})$ is the graph of order $|\mathcal{F}|$ and, for every $F_u, F_v \in \mathcal{F}$, $uv \in E(G) \Leftrightarrow F_u \cap F_v \neq \emptyset$.
-Any $\mathcal{F}$ such that $\Omega(\mathcal{F}) \simeq G$ is a \tdef{set representation} of $G$.
-A known theorem states that every graph is the intersection graph of a family of subgraphs of a graph~\citep{intersection_graphs}.
-
-An \tdef{edge clique cover} $\mathcal{Q} = \{Q_1, \dots, Q_n\}$ of a graph $G$ is a (multi)family of cliques of $G$ such that every edge of $G$ is contained in at least one element of $\mathcal{Q}$.
-The \tdef{dual edge clique cover} of a set representation $\mathcal{F} = \{F_1, \dots, F_n\}$, with $|\bigcup_{i \leq n} F_i| = m$, is defined as $\mathcal{Q}(\mathcal{F}) = \{Q_1, \dots, Q_m\}$ such that $Q_j = \{i \mid j \in F_i\}$.
-The \tdef{dual set representation} of an edge clique cover $\mathcal{Q} = \{Q_1, \dots, Q_m\}$, with $|\bigcup_{j \leq m} Q_j| = n$, is $\mathcal{F}(\mathcal{Q}) = \{F_1, \dots, F_n\}$ with $F_i = \{j \mid i \in Q_j\}$.
 
 Some interesting intersection graphs are usually defined in terms of the intersection of structures of other graphs. For instance, \tdef{line graphs} are precisely the graphs that are the intersection graphs of the edges of a graph; \tdef{clique graphs} are the intersection graphs of the maximal induced cliques of a graph.
 Both of these classes, however have nice characterizations in terms of edge clique covers, which are commonly called \tdef{Krausz-type characterizations}.
@@ -100,26 +92,78 @@ As was done for clique graphs, the iterated biclique operator has also been stud
 
 For other classical results in the area we point to~\citep{intersection_graphs}, from where most of the given definitions come from.
 
-\subsection{Maximal Stars}
+\subsection{Maximal stars}
+\label{sec:maximal_stars}
 
 Regarding stars, previous work handled the intersection graphs of (not necessarily maximal) substars of a tree~\citep{substar_graph} and of a star~\citep{starlike_graph}.
 For the first, a minimal infinite family of forbidden induced subgraphs was given, while, for the latter, a series of characterizations were shown (including a finite family of forbidden induced subgraphs).
 Stars are a particular case of bicliques, and both the biclique graph and star graph coincide for $C_4$-free graphs.
-In fact, this relationship was successfully applied to determine the complexity of biclique coloring~\citep{biclique_coloring_complexity}, using a reduction from \pname{QSAT}$_2$ to star coloring (a coloring of the vertices of a graph such that no maximal star is monochromatic).
+In fact, this relationship was successfully applied to determine the complexity of biclique coloring~\citep{biclique_coloring_complexity}, as discussed in Chapter~\ref{ch:coloring}.
 To the best of our knowledge, these are the main topics discussed in the literature that involve maximal stars in some way.
+The central object of study in this chapter is the intersection graph of maximal stars, which we formally define in Definition~\ref{def:star_graph}.
 
 
-The \tdef{star operator} $\K{S}$ applied on $H$ is the intersection graph of the induced maximal stars of $H$.
-The result of $\K{S}$ is called the \tdef{image graph}, or simply \tdef{image}.
-A graph $G$ is a \textit{star graph} if there is some graph $H$ such that $G \simeq \K{S}(H)$. 
-Given a star graph $G$, any $H$ such that $\K{S}(H) \simeq G$ is called a \tdef{pre-image} of $G$.
-The \tdef{center} of a star $s = K_{1,n}$ is the vertex of the partition of size one.
-A \tdef{leaf} of a star $K_{1,n}$ is one of the vertices of degree one.
+\begin{definition}\label{def:star_graph}
+    Let $\mathcal{G}$ be the set of all finite graphs and $\str(H)$ be the set of all induced maximal stars of a graph $H$. The \tdef{star operator} is the function $\K{S} : \mathcal{G} \mapsto \mathcal{G}$ such that, $\K{S}(H) = \Omega(\str(H))$.
+    If $G = \K{S}(H)$, we say that $H$ is a \tdef{pre-image} of $G$ and that $G$ is the \tdef{star graph} of $H$.
+    The \textit{iterated star operator} $\K{S}^i$ is defined as $\K{S}^1(H) = \K{S}(H)$ and $\K{S}^i(H) = \K{S}(\K{S}^{i-1}(H))$.
+\end{definition}
+
+When detailing which vertices belong to a star, we shall describe it by $\{v_1\}\{v_2, \dots, v_{p+1}\}$, with $v_1$ being its center and the other $p$ vertices its leaves.
+Unless noted, $G$ will be our star graph and $H$ the pre-image of $G$.%
+%The family of all maximal stars of $G$ is denoted by $\str(G)$.
+By Definition~\ref{def:star_graph}, two stars $s_a,s_b$ intersect if they share at least one vertex, with the possible cases being: (i) the centers of $s_a$ and $s_b$ coincide; (ii) the center of $s_a$ is a leaf of $s_b$; or (iii) $s_a$ and $s_b$ share at least one leaf.
+Note that conditions (i) and (iii) may be simultaneously satisfied.
+For an example of the intersection possibilities, please refer to Figure~\ref{fig:intersection_example}.
+
+
+\begin{figure}[!tb]
+    \centering
+        \begin{tikzpicture}[scale=1.2]
+            \GraphInit[unit=3,vstyle=Normal]
+            \SetVertexNormal[Shape=circle, FillColor = black, MinSize=3pt]
+            \tikzset{VertexStyle/.append style = {inner sep = \inners,outer sep = \outers}}
+            \SetVertexLabelOut
+            \begin{scope}[xshift=-3.5cm]
+                \Vertex[x=0,y=0, Math, Lpos=90]{c}
+                
+                \Vertex[a=135, d=1, Math, Lpos=135]{a}
+                \Vertex[a=225, d=1, Math, Lpos=225]{b}
+                
+                \Vertex[a=315, d=1, Math, Lpos=315]{e}
+                \Vertex[a=45, d=1, Math, Lpos=45]{d}
+                \node at (0,-1.5) {(i)};
+                \Edges(b,c,d,e,c,a,b)
+            \end{scope}
+            \begin{scope}[xshift=-1, yshift=0.5cm]
+                \Vertex[x=0,y=0, Math, Lpos=90, L={u}]{up}
+                \Vertex[x=1,y=0, Math, Lpos=90, L={v}]{vp}
+                
+                \Vertex[x=0,y=-1, Math, Lpos=270]{w}
+                \Vertex[x=1,y=-1, Math, Lpos=270]{z}
+                \node at (0.5,-2) {(ii)};
+                \Edges(w,up,vp,z)
+            \end{scope}
+            \begin{scope}[xshift=3.5cm]
+                \Vertex[x=0,y=0, Math, Lpos=180]{u}
+                \Vertex[x=1,y=0, Math, Lpos=0]{v}
+                
+                \Vertex[x=0.5,y=0.5, Math, NoLabel]{x_1}
+                \Vertex[x=0.5,y=1, Math, NoLabel]{x_2}
+                \Vertex[x=0.5,y=-0.5, Math, NoLabel]{x_3}
+                \Vertex[x=0.5,y=-1, Math, NoLabel]{x_4}
+                
+                \node at (0.5,-1.5) {(iii)};
+                \Edges(u,x_1,v,x_2,u,x_3,v,x_4,u)
+            \end{scope}
+        \end{tikzpicture}
+        \caption{(i) The stars $\{c\}\{a,e\}$ and $\{c\}\{b,d\}$ intersect only at their center; (ii) center of $\{u\}\{w,v\}$ is a leaf of star $\{v\}\{u,z\}$; (iii) the star centered at $u$ intersects the star centered at $v$ only at their leaves.\label{fig:intersection_example}}
+\end{figure}
+
+
 We say that star $s_a$ \textit{absorbs} star $s_b$ if, by removing one leaf of $s_b$, it becomes a substar of $s_a$.
-The \textit{iterated star operator} $\K{S}^i$ is defined as $\K{S}^1(G) = \K{S}^1(G)$ and $\K{S}^i(G) = \K{S}(\K{S}^{i-1}(G))$.
-
 A vertex $v$ is said to be \tdef{star-critical} if its removal changes the resulting star graph; that is, the star graph of $H$ and the star graph of $H \setminus \{v\}$ are not isomorphic.
-Similarly to clique-critical graphs~\citep{clique_critical_toft,clique_critical_alcon}, a graph is \textit{star-critical} if all of its vertices are star-critical.
+Similarly to clique-critical graphs~\cite{clique_critical_toft,clique_critical_alcon}, a graph is \textit{star-critical} if all of its vertices are star-critical.
 It is not hard to see that the only vertices which may be non-star-critical are simplicial vertices; for example, if there is a class of false twin simplicial vertices, all but one of them are certainly non-star-critical.
 
 When detailing which vertices belong to a star, we shall describe it by $\{v_1\}\{v_2, \dots, v_{n+1}\}$, with $v_1$ being its center and the other $n$ vertices its leaves.
@@ -256,7 +300,7 @@ For the entirety of this work, we assume that all of our graphs are connected.
 Before proceeding to the main results of this chapter, we make the following remark.
 
 \begin{observation}
-	Every vertex of degree at least two in a triangle free graph is the center of exactly one maximal star.
+	Every vertex of degree at least two in a $K_3$-free graph is the center of exactly one maximal star.
 \end{observation}
 
 The above observation immediately leads us to the property that every star graph of a triangle-free graph is closely related to the square of one of its induced subgraphs.
@@ -357,6 +401,6 @@ For a far more complicated star graph, we refer to Figure~\ref{fig:star_example}
 
 However, star graphs appear to be natural generalizations of square graphs~\citep{murty} in the sense that, when applying the squaring operation, for each vertex $v$ only the largest, non-induced star centered at $v$ is selected, and the intersection graph of these stars is generated.
 On the other hand, for star graphs, every \textit{induced} maximal star is used in the construction of the intersection graph.
-Despite the classes of star graphs and biclique graphs being equivalent when restricting the  pre-image domain to $C_4$-free graphs, we were unable to deepen the study biclique graphs; our efforts were hindered by some of the questions posed and developed upon in this work.
+Despite the classes of star graphs and biclique graphs being equivalent when restricting the  pre-image domain to $C_4$-free graphs, we were unable to deepen the study of biclique graphs; our efforts were hindered by some of the questions posed and developed upon in this work.
 
 
