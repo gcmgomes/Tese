@@ -78,7 +78,7 @@ Determining certain parameters of a generic graph $G$ is efficient (such as $\De
 A graph $G$ is \tdef{bipartite} if $V(G) \sim \{X, Y\}$ such that both $X$ and $Y$ are independent sets.
 Such property implies that a graph is bipartite if and only if it is $C_{2k+1}$-free, for any $k \geq 1$.
 A \tdef{biclique} $K_{n_1,n_2}$ is a bipartite graph with $|X| = n_1$, $|Y| = n_2$ and $uv \in E(G)$ for every pair $u \in X$ and $v \in Y$.
-A \tdef{star} is a biclique with $|X| = 1$ and $|Y| \geq 1$.
+A \tdef{star} is a biclique with $|X| = 1$ and $|Y| \geq 1$ and its \textit{center} is the vertex of maximum degree.
 Clearly, we can also define \tdef{induced bicliques} and \tdef{induced stars} much like induced cliques.
 A graph is \tdef{multipartite} if $V(G) \sim \{X_1, \dots,  X_p\}$ and $X_i$ is an independent set for all $i$; it is a \tdef{complete multipartite} graph if $uv \in E(G)$ whenever $u \in X_i$, $v \in X_j$ and $i \neq j$.
 
@@ -118,14 +118,20 @@ We discuss problems in different complexity classes; in particular, we work with
 We say that an algorithm is \tdef{efficient} if its running time is bounded by a polynomial on the size of the input and that a problem belonging to $\NPH$ is most likely intractable.
 As such, our complexity results will be given either by efficient algorithms or polynomial reductions from $\NPH$ problems.
 
-Besides the classic complexity classes, we also deal with the field of \tdef{parameterized complexity} (or \tdef{multivariate complexity}).
-In this area, algorithms are designed and analyzed not only with respect to the size of the input object, but also with other \tdef{parameters} of the input.
-Parameters come in all sorts of flavors.
+A problem being \NPH\ means that we believe that exists no \textit{exact} algorithm that runs in \textit{polynomial time} for \textit{all instances}.
+Nevertheless, these hard problems are usually the ones we are most interested in, as many of them model almost perfectly practical problems such as vehicle routing~\citep{vrp} and code compilation~\citep{compilers}.
+To cope with this hardness, algorithm designers usually give up on one of the three requirements of the perfect algorithm.
+If the optimality of the feasible solution is not as crucial but we want to solve whichever instance comes our way, we can make use of heuristics and metaheuristics~\citep{heuristics}, which usually yield no guarantee on the quality of the solution, or, if such a guarantee is desired, approximation algorithms~\citep{approximation}.
+On the other hand, if an exact solution is a must have, we may give up on the polynomial time constraint and use some quite powerful all-purpose tools such as integer linear optimization~\citep{linear_optimization}, or design ad-hoc exact exponential algorithms~\citep{exact_exponential_algorithms} that use clever tricks and problem properties to reduce the exponential factor as much as possible.
+
+All of the above areas have a rich literature with results on hundreds upon hundreds of problems.
+A much newer field -- known as \textit{parameterized complexity}, or \textit{multivariate complexity} -- arises when we sacrifice the constraint to solve all instances with a \textit{single} algorithm in exchange for polynomial time and optimality.
+In parameterized complexity, algorithms are designed and analyzed not only with respect to the size of the input object, but also with other \tdef{parameters} of the input, which come in all sorts of flavors.
 Many decision problems usually have some integer quantity representing a constraint of the problem, such as the minimum/maximum size of a feasible solution; such quantities are usually called the \textit{natural parameter} of the problem.
 For instance, \pname{Vertex Cover} -- one of the classical examples of success of parameterized complexity -- asks for a set of size at most $k$ of vertices covering all the edges of the graph; in this case, $k$ is the natural parameter for \pname{Vertex Cover}.
 Other parameters are less problem specific and relate to the structure of the graph, such as diameter or maximum degree.
 The most prominent of these examples, however, is the graph parameter treewidth, which played a pivotal role in the theory of graph minors.
-Other previously discussed structural parameter is neighborhood diversity, distance to cluster and distance to co~cluster.
+Other previously discussed structural parameters include neighborhood diversity, distance to cluster and distance to co~cluster.
 
 A problem is said to be \tdef{fixed-parameter tractable} (or \FPT) when \tdef{parameterized by} $k$ if there is an algorithm with running time $f(k)n^{\bigO{1}}$, where $n$ is the size of the input object.
 We denote complexities of this form by $\bigOs{f(k)}$.

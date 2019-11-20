@@ -109,8 +109,8 @@ The central object of study in this chapter is the intersection graph of maximal
     The \textit{iterated star operator} $\K{S}^i$ is defined as $\K{S}^1(H) = \K{S}(H)$ and $\K{S}^i(H) = \K{S}(\K{S}^{i-1}(H))$.
 \end{definition}
 
-When detailing which vertices belong to a star, we shall describe it by $\{v_1\}\{v_2, \dots, v_{p+1}\}$, with $v_1$ being its center and the other $p$ vertices its leaves.
-Unless noted, $G$ will be our star graph and $H$ the pre-image of $G$.%
+When detailing which vertices belong to a star $s$, we shall describe it by $s = \{v_1\}\{v_2, \dots, v_{p+1}\}$, with $v_1$ being its center, denoted by $c(s) = v_1$, and the other $p$ vertices its leaves.
+Unless noted, $G$ will be our star graph and $H$ the pre-image of $G$. %
 %The family of all maximal stars of $G$ is denoted by $\str(G)$.
 By Definition~\ref{def:star_graph}, two stars $s_a,s_b$ intersect if they share at least one vertex, with the possible cases being: (i) the centers of $s_a$ and $s_b$ coincide; (ii) the center of $s_a$ is a leaf of $s_b$; or (iii) $s_a$ and $s_b$ share at least one leaf.
 Note that conditions (i) and (iii) may be simultaneously satisfied.
@@ -400,7 +400,7 @@ For a far more complicated star graph, we refer to Figure~\ref{fig:star_example}
 \end{figure}
 
 However, star graphs appear to be natural generalizations of square graphs~\citep{murty} in the sense that, when applying the squaring operation, for each vertex $v$ only the largest, non-induced star centered at $v$ is selected, and the intersection graph of these stars is generated.
-On the other hand, for star graphs, every \textit{induced} maximal star is used in the construction of the intersection graph.
+On the other hand, for star graphs, every maximal \textit{induced} star is used in the construction of the intersection graph.
 Despite the classes of star graphs and biclique graphs being equivalent when restricting the  pre-image domain to $C_4$-free graphs, we were unable to deepen the study of biclique graphs; our efforts were hindered by some of the questions posed and developed upon in this work.
 
 
