@@ -157,14 +157,37 @@ For an example of the intersection possibilities, please refer to Figure~\ref{fi
                 \Edges(u,x_1,v,x_2,u,x_3,v,x_4,u)
             \end{scope}
         \end{tikzpicture}
-        \caption{(i) The stars $\{c\}\{a,e\}$ and $\{c\}\{b,d\}$ intersect only at their center; (ii) center of $\{u\}\{w,v\}$ is a leaf of star $\{v\}\{u,z\}$; (iii) the star centered at $u$ intersects the star centered at $v$ only at their leaves.\label{fig:intersection_example}}
+        \caption{(i) The stars $\{c\}\{a,e\}$ and $\{c\}\{b,d\}$ intersect only at their center; (ii) the center of $\{u\}\{w,v\}$ is a leaf of star $\{v\}\{u,z\}$; (iii) the star centered at $u$ intersects the star centered at $v$ only at their leaves.\label{fig:intersection_example}}
 \end{figure}
 
 
 We say that star $s_a$ \textit{absorbs} star $s_b$ if, by removing one leaf of $s_b$, it becomes a substar of $s_a$.
 A vertex $v$ is said to be \tdef{star-critical} if its removal changes the resulting star graph; that is, the star graph of $H$ and the star graph of $H \setminus \{v\}$ are not isomorphic.
-Similarly to clique-critical graphs~\cite{clique_critical_toft,clique_critical_alcon}, a graph is \textit{star-critical} if all of its vertices are star-critical.
-It is not hard to see that the only vertices which may be non-star-critical are simplicial vertices; for example, if there is a class of false twin simplicial vertices, all but one of them are certainly non-star-critical.
+Similarly to clique-critical graphs~\citep{clique_critical_toft,clique_critical_alcon}, a graph is \textit{star-critical} if all of its vertices are star-critical.
+All vertices of Figure~\ref{fig:example_critical} are star-critical; in particular, the removal of $x$ does not cause the absorption of any star, but the intersection of two maximal induced stars is precisely $x$, i.e., there is an edge of the star graph that depends on $x$ to exist.
+It is not hard to see that the only vertices which may be non-star-critical are simplicial vertices; for example, if there is a class of non-adjacent simplicial vertices that have the same neighborhood, all but one of them are certainly non-star-critical.
+
+
+\begin{figure}[!tb]
+    \centering
+        \begin{tikzpicture}[scale=1.2]
+            \GraphInit[unit=3,vstyle=Normal]
+            \SetVertexNormal[Shape=circle, FillColor = black, MinSize=3pt]
+            \tikzset{VertexStyle/.append style = {inner sep = \inners,outer sep = \outers}}
+            \SetVertexLabelOut
+            \begin{scope}
+                \Vertex[x=-0.5,y=0, Math, Lpos=135]{a}
+                \Vertex[x=-0.5,y=-1, Math, Lpos=225]{b}
+                \Vertex[x=0.5,y=-1, Math, Lpos=315]{c}
+                \Vertex[x=0.5,y=0, Math, Lpos=45]{d}
+                \Vertex[x=0,y=0.5, Math, Lpos=90]{x}
+                \Edges(a,b,c,a,d,b)
+                \Edges(c,d,x,a)
+            \end{scope}
+        \end{tikzpicture}
+        \caption{A star-critical graph. Vertex $x$ is star-critical as its removal would cause the stars $\{a\}\{b,x\}$ and $\{d\}\{c,x\}$ to not intersect.\label{fig:example_critical}}
+\end{figure}
+
 
 When detailing which vertices belong to a star, we shall describe it by $\{v_1\}\{v_2, \dots, v_{n+1}\}$, with $v_1$ being its center and the other $n$ vertices its leaves.
 If the star is a single edge, choose one of the vertices to be the center and the other to be the leaf arbitrarily.
